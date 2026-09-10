@@ -17,10 +17,16 @@ calculus/                       ← 微積分
   calculus.html                 ← 檔案庫頁面
   calculus.js                   ← 名詞資料
   微積分9_8.pdf                  ← 原始筆記
+  微積分9_10.pdf
 linear-algebra/                 ← 線性代數
   linear-algebra.html
   linear-algebra.js
   線性代數9_7-9_8.pdf
+  線性代數9_9.pdf
+computer-science/               ← 計算機概論
+  computer-science.html
+  computer-science.js
+  計算機概論9_10.pdf
 README.md
 ```
 
