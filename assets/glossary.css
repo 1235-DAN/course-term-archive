@@ -293,11 +293,6 @@ a:hover{ color:var(--accent-hover); text-decoration:underline; }
   font-family:var(--mono); font-size:.78rem; color:var(--text-faint);
   white-space:nowrap;
 }
-.card__zh{
-  font-size:.97rem; font-weight:600; color:var(--accent);
-  margin:3px 0 0;
-}
-.card__zh-alt{ font-weight:400; color:var(--text-faint); font-size:.85rem; }
 .card__tags{ display:flex; flex-wrap:wrap; gap:6px; margin:10px 0 0; }
 
 /* examples and figure share the row's width when there is room for both */
@@ -316,8 +311,42 @@ a:hover{ color:var(--accent-hover); text-decoration:underline; }
   font-size:.72rem;
 }
 
-.card__def{ margin:11px 0 0; }
-.card__def-zh{ margin:5px 0 0; color:var(--text-soft); font-size:.93rem; }
+.card__def{ margin:0; }
+
+/* ---- collapsed Chinese translation ---------------------------------- */
+
+.zh{ margin:15px 0 0; }
+.zh__sum{
+  display:inline-flex; align-items:center; gap:8px;
+  list-style:none; cursor:pointer; user-select:none;
+  font-size:.82rem; font-weight:600; color:var(--accent);
+  padding:5px 12px 5px 10px; border-radius:999px;
+  border:1px solid var(--accent-line); background:var(--accent-soft);
+  transition:border-color .15s, background .15s;
+}
+.zh__sum::-webkit-details-marker{ display:none; }   /* Safari */
+.zh__sum::before{
+  content:"▸"; font-size:.8em; line-height:1;
+  transition:transform .18s; transform-origin:50% 50%;
+}
+.zh[open] > .zh__sum::before{ transform:rotate(90deg); }
+.zh__sum:hover{ border-color:var(--accent); }
+.zh__en{
+  font-weight:400; font-size:.9em; color:var(--text-faint);
+  letter-spacing:.04em;
+}
+.zh__body{
+  margin:11px 0 0; padding:13px 15px;
+  border-left:3px solid var(--accent-line);
+  background:var(--bg-sunken);
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+}
+.zh__term{ margin:0; font-size:1rem; font-weight:600; color:var(--accent); }
+.zh__alt{ font-weight:400; font-size:.85rem; color:var(--text-faint); }
+.zh__def{ margin:6px 0 0; color:var(--text); font-size:.93rem; }
+.zh__notes{ margin:9px 0 0; padding:0 0 0 17px; }
+.zh__notes li{ margin:4px 0; color:var(--text-soft); font-size:.9rem; }
+.zh__notes li::marker{ color:var(--accent-line); }
 
 .card__notes{ margin:12px 0 0; padding:0 0 0 17px; }
 .card__notes li{ margin:4px 0; color:var(--text-soft); font-size:.92rem; }

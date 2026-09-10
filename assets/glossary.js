@@ -7,21 +7,31 @@
        3. GLOSSARY.mountSubject('<id>')  or  GLOSSARY.mountPortal()
 
    TERM SCHEMA (see data/*.js for live examples) — every field is optional
-   except id / term / zh:
+   except id / term / zh.
+
+   The CARD FACE IS ENGLISH ONLY. Everything Chinese (zh, zhAlt, defZh,
+   notesZh) is rendered collapsed inside the 中文翻譯 <details> dropdown, so
+   keep def / notes / example labels / figure captions in English.
 
      {
        id:     'augmented-matrix',      // unique, used for the #anchor
        term:   'Augmented matrix',      // English headword
        abbr:   'ERO',                   // optional abbreviation / symbol
+       aliases:['bar', '分隔線'],        // extra words the search should hit
+       tags:   ['9/8 ch1.1', 'matrix'], // first tag becomes the chapter chip
+
+       // --- shown on the card face (English) ---
+       def:    'Plain-English definition. Limited HTML is allowed.',
+       notes:  ['extra bullet', 'another bullet'],
+       examples:[ { label:'From the notes', html:'…' } ],
+       figure: { svg:'<svg …>', caption:'English caption' },
+
+       // --- inside the 中文翻譯 dropdown ---
        zh:     '增廣矩陣',               // Chinese translation (required)
        zhAlt:  '擴增矩陣',               // other accepted translation
-       aliases:['bar', '分隔線'],        // extra words the search should hit
-       tags:   ['9/8 ch1.1', 'matrix'], // first tag is treated as the source
-       def:    'Plain-English definition. Limited HTML is allowed.',
        defZh:  '中文說明。',
-       notes:  ['extra bullet', 'another bullet'],
-       examples:[ { label:'…', html:'…' } ],
-       figure: { svg:'<svg …>', caption:'…' },
+       notesZh:['中文補充一', '中文補充二'],
+
        added:  true                     // true => not in the original notes
      }
    ========================================================================== */
@@ -87,15 +97,24 @@
   function register(subject) {
     subject.terms = subject.terms || [];
     subject.terms.forEach(function (t) {
+      /* the Chinese half is indexed separately too, so a hit there can
+         auto-open the collapsed translation */
+      t._zhBlob = [
+        stripTags(t.zh || ''),
+        stripTags(t.zhAlt || ''),
+        stripTags(t.defZh || ''),
+        stripTags((t.notesZh || []).join(' '))
+      ]
+        .join('  ')
+        .toLowerCase();
+
       t._blob = [
         stripTags(t.term || ''),
         stripTags(t.abbr || ''),
-        stripTags(t.zh || ''),
-        stripTags(t.zhAlt || ''),
+        t._zhBlob,
         (t.aliases || []).join(' '),
         (t.tags || []).join(' '),
         stripTags(t.def || ''),
-        stripTags(t.defZh || ''),
         stripTags((t.notes || []).join(' ')),
         stripTags(
           (t.examples || [])
@@ -130,6 +149,14 @@
     return true;
   }
 
+  /* does any token land in the Chinese half? */
+  function matchesZh(term, toks) {
+    for (var i = 0; i < toks.length; i++) {
+      if (term._zhBlob.indexOf(toks[i]) !== -1) return true;
+    }
+    return false;
+  }
+
   /* Highlight the tokens without ever touching the inside of an HTML tag. */
   function mark(html, toks) {
     if (!toks.length) return html;
@@ -161,42 +188,69 @@
     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" ' +
     'stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>';
 
+  /* The Chinese half of a term, rendered collapsed inside a <details>.
+     The card face stays entirely English; this is what the reader opens. */
+  function zhHtml(t, toks) {
+    var parts = [];
+
+    if (t.zh) {
+      parts.push('<p class="zh__term">' + mark(t.zh, toks));
+      if (t.zhAlt)
+        parts.push(' <span class="zh__alt">／' + mark(t.zhAlt, toks) + '</span>');
+      parts.push('</p>');
+    }
+    if (t.defZh) parts.push('<p class="zh__def">' + mark(t.defZh, toks) + '</p>');
+    if (t.notesZh && t.notesZh.length) {
+      parts.push('<ul class="zh__notes">');
+      t.notesZh.forEach(function (n) {
+        parts.push('<li>' + mark(n, toks) + '</li>');
+      });
+      parts.push('</ul>');
+    }
+    if (!parts.length) return '';
+
+    /* if the search hit lands in the Chinese half, open it so the match
+       the reader searched for is actually visible */
+    var open = toks.length && matchesZh(t, toks) ? ' open' : '';
+
+    return (
+      '<details class="zh"' +
+      open +
+      '><summary class="zh__sum">中文翻譯<span class="zh__en">Chinese</span>' +
+      '</summary><div class="zh__body">' +
+      parts.join('') +
+      '</div></details>'
+    );
+  }
+
   /* One term = one full-width horizontal row: a left rail carrying the
-     headword, and a body carrying the definition, notes, examples and figure. */
+     headword, and a body carrying the English explanation, then the
+     collapsed Chinese translation. */
   function cardHtml(t, toks) {
     var h = ['<article class="card" id="' + esc(t.id) + '">'];
 
     /* ---- left rail ---- */
     h.push('<div class="card__side">');
 
-    /* term / abbr / zh may contain entities and light markup (I<sub>n</sub>,
+    /* term / abbr may contain entities and light markup (I<sub>n</sub>,
        &lfloor;x&rfloor;, A&#7488;), so they go through mark() but not esc(). */
     h.push('<h2 class="card__term">' + mark(t.term, toks));
     if (t.abbr)
       h.push(' <span class="card__abbr">' + mark(t.abbr, toks) + '</span>');
     h.push('</h2>');
 
-    h.push('<p class="card__zh">' + mark(t.zh, toks));
-    if (t.zhAlt)
-      h.push(
-        ' <span class="card__zh-alt">／' + mark(t.zhAlt, toks) + '</span>'
-      );
-    h.push('</p>');
-
     h.push('<div class="card__tags">');
     if (t.tags && t.tags[0])
       h.push('<span class="tag">' + esc(t.tags[0]) + '</span>');
-    if (t.added) h.push('<span class="tag tag--new">補充</span>');
+    if (t.added) h.push('<span class="tag tag--new">Supplement</span>');
     h.push('</div>');
 
     h.push('</div>');
 
-    /* ---- body ---- */
+    /* ---- body: English only ---- */
     h.push('<div class="card__body">');
 
     if (t.def) h.push('<p class="card__def">' + mark(t.def, toks) + '</p>');
-    if (t.defZh)
-      h.push('<p class="card__def-zh">' + mark(t.defZh, toks) + '</p>');
 
     if (t.notes && t.notes.length) {
       h.push('<ul class="card__notes">');
@@ -212,7 +266,7 @@
 
       if (t.examples && t.examples.length) {
         h.push('<div class="block block--ex">');
-        h.push('<p class="block__label">Example · 範例</p>');
+        h.push('<p class="block__label">Example</p>');
         t.examples.forEach(function (e) {
           h.push('<div class="ex">');
           if (e.label)
@@ -232,6 +286,8 @@
 
       h.push('</div>');
     }
+
+    h.push(zhHtml(t, toks));
 
     h.push('</div>');
 

@@ -1,9 +1,13 @@
 /* ==========================================================================
    data/linear-algebra.js — 線性代數 term data
-   Source notes: 線性代數9_7-9_8.pdf  (9/7 + 9/8, ch 1.1)
+   Source notes: 線性代數9_7-9_8.pdf (ch1.1), 線性代數9_9.pdf (ch1.2)
+
+   The card face is ENGLISH ONLY: term / def / notes / example labels /
+   figure captions. Everything Chinese — zh, zhAlt, defZh, notesZh — is
+   rendered inside the collapsed 中文翻譯 dropdown.
+
    Terms flagged `added: true` were NOT in the handwritten notes; they fill
-   gaps so each entry stands on its own. Everything else is straight from
-   the notes, with the definitions written out in full.
+   gaps so each entry stands on its own.
    ========================================================================== */
 
 (function () {
@@ -59,21 +63,23 @@
           'multiplied by a constant and added together: ' +
           '<span class="mono">a&#8321;x&#8321; + a&#8322;x&#8322; + &hellip; + a<sub>n</sub>x<sub>n</sub> = b</span>. ' +
           'No products of variables, no powers, no roots, no trig.',
+        notes: [
+          'So <span class="mono">xy = 1</span>, <span class="mono">x² + y = 3</span> and ' +
+            '<span class="mono">&radic;x = 2</span> are all <em>not</em> linear.'
+        ],
         defZh:
           '每個變數都只出現一次方、各自乘上常數再相加的方程式：' +
           'a&#8321;x&#8321; + a&#8322;x&#8322; + … + a<sub>n</sub>x<sub>n</sub> = b。' +
           '不能有變數相乘、次方、根號或三角函數。',
-        notes: [
-          '<strong>補充</strong>：所以 xy = 1、x² + y = 3、&radic;x = 2 都<em>不是</em>線性方程式。'
-        ],
+        notesZh: ['所以 xy = 1、x² + y = 3、&radic;x = 2 都<em>不是</em>線性方程式。'],
         examples: [
           {
-            label: '筆記原文的例子',
+            label: 'From the notes',
             html:
               '<p>2x + 3y + 5z = 5</p>' +
-              '<p>variables 變數：x, y, z</p>' +
-              '<p>coefficients 係數：2, 3, 5</p>' +
-              '<p>constant term 常數項：5</p>'
+              '<p>variables: x, y, z</p>' +
+              '<p>coefficients: 2, 3, 5</p>' +
+              '<p>constant term: 5</p>'
           }
         ]
       },
@@ -85,12 +91,19 @@
         aliases: ['unknown', '未知數', 'x y z'],
         tags: ['9/7 ch1.1', 'equations'],
         def: 'The unknown quantities being solved for — the letters in the equation.',
-        defZh: '方程式中要求解的未知量，也就是式子裡的那些字母。',
         notes: [
-          '變數多的時候慣用下標寫法 x&#8321;, x&#8322;, &hellip;, x<sub>n</sub>，比 x, y, z 好推廣。'
+          'With many variables the subscript form x&#8321;, x&#8322;, …, x<sub>n</sub> is ' +
+            'preferred over x, y, z, because it generalises.'
+        ],
+        defZh: '方程式中要求解的未知量，也就是式子裡的那些字母。',
+        notesZh: [
+          '變數多的時候慣用下標寫法 x&#8321;, x&#8322;, …, x<sub>n</sub>，比 x, y, z 好推廣。'
         ],
         examples: [
-          { label: '筆記原文', html: '<p>2x + 3y + 5z = 5 &nbsp;&rarr;&nbsp; variables：x, y, z</p>' }
+          {
+            label: 'From the notes',
+            html: '<p>2x + 3y + 5z = 5 &nbsp;&rarr;&nbsp; variables: x, y, z</p>'
+          }
         ]
       },
 
@@ -101,13 +114,22 @@
         aliases: ['multiplier', '倍數'],
         tags: ['9/7 ch1.1', 'equations'],
         def: 'The constant multiplying each variable.',
-        defZh: '乘在每個變數前面的那個常數。',
         notes: [
-          '<strong>補充</strong>：沒寫出來的係數是 1，減號代表 &minus;1（x &minus; y 的係數是 1 和 &minus;1）。',
-          '把所有係數依原位置排成矩陣，就是 <a href="#coefficient-matrix">係數矩陣</a>。'
+          'An unwritten coefficient is 1, and a minus sign means &minus;1 — in ' +
+            '<span class="mono">x &minus; y</span> the coefficients are 1 and &minus;1.',
+          'Laying every coefficient out in its original position gives the ' +
+            '<a href="#coefficient-matrix">matrix of coefficients</a>.'
+        ],
+        defZh: '乘在每個變數前面的那個常數。',
+        notesZh: [
+          '沒寫出來的係數是 1，減號代表 &minus;1（x &minus; y 的係數是 1 和 &minus;1）。',
+          '把所有係數依原位置排成矩陣，就是<a href="#coefficient-matrix">係數矩陣</a>。'
         ],
         examples: [
-          { label: '筆記原文', html: '<p>2x + 3y + 5z = 5 &nbsp;&rarr;&nbsp; coefficients：2, 3, 5</p>' }
+          {
+            label: 'From the notes',
+            html: '<p>2x + 3y + 5z = 5 &nbsp;&rarr;&nbsp; coefficients: 2, 3, 5</p>'
+          }
         ]
       },
 
@@ -120,12 +142,19 @@
         def:
           'The number standing alone on the right-hand side of the equation — the part ' +
           'with no variable attached.',
-        defZh: '等號右邊那個獨立的數字，沒有搭配任何變數的部分。',
         notes: [
-          '在 <a href="#augmented-matrix">增廣矩陣</a> 裡，常數項就是分隔線右邊那一行。'
+          'In an <a href="#augmented-matrix">augmented matrix</a> the constant terms are ' +
+            'exactly the column to the right of the bar.'
+        ],
+        defZh: '等號右邊那個獨立的數字，沒有搭配任何變數的部分。',
+        notesZh: [
+          '在<a href="#augmented-matrix">增廣矩陣</a>裡，常數項就是分隔線右邊那一行。'
         ],
         examples: [
-          { label: '筆記原文', html: '<p>2x + 3y + 5z = 5 &nbsp;&rarr;&nbsp; constant term：5</p>' }
+          {
+            label: 'From the notes',
+            html: '<p>2x + 3y + 5z = 5 &nbsp;&rarr;&nbsp; constant term: 5</p>'
+          }
         ]
       },
 
@@ -141,7 +170,7 @@
           'equals sign and right side together.',
         defZh: '宣稱兩個式子相等的敘述；左式、等號、右式合起來整條才叫一個方程式。',
         examples: [
-          { label: '筆記原文', html: '<p>equations：2x + 3y + 5 = 5　（等式）</p>' }
+          { label: 'From the notes', html: '<p>equations: 2x + 3y + 5 = 5</p>' }
         ]
       },
 
@@ -156,23 +185,26 @@
           'Several linear equations in the same variables, to be satisfied ' +
           '<strong>all at once</strong>. Solving the system means finding the values that ' +
           'work in every equation simultaneously.',
+        notes: [
+          'The notes put it as <span class="mono">system = many linear equations</span>.',
+          'A system of m equations in n variables is called an m &times; n system.'
+        ],
         defZh:
           '好幾條共用同一組變數的線性方程式，要<strong>同時</strong>成立。' +
           '解方程組就是找出讓每一條式子都成立的那組值。',
-        notes: [
+        notesZh: [
           '筆記寫法：<span class="mono">system = many linear equations</span>。',
-          '<strong>補充</strong>：m 條方程式、n 個變數的方程組稱為 m &times; n 系統。'
+          'm 條方程式、n 個變數的方程組稱為 m &times; n 系統。'
         ],
         examples: [
           {
-            label: '筆記原文的一般式',
-            html:
-              SYS([
-                'a&#8321;x + b&#8321;y + c&#8321;z = d&#8321;',
-                'a&#8322;x + b&#8322;y + c&#8322;z = d&#8322;',
-                '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#8942;',
-                'a<sub>n</sub>x + b<sub>n</sub>y + c<sub>n</sub>z = d<sub>n</sub>'
-              ])
+            label: 'The general form, from the notes',
+            html: SYS([
+              'a&#8321;x + b&#8321;y + c&#8321;z = d&#8321;',
+              'a&#8322;x + b&#8322;y + c&#8322;z = d&#8322;',
+              '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#8942;',
+              'a<sub>n</sub>x + b<sub>n</sub>y + c<sub>n</sub>z = d<sub>n</sub>'
+            ])
           }
         ]
       },
@@ -188,19 +220,21 @@
           'How this course distinguishes the three kinds of object by typeface: ' +
           '<strong>bold lowercase</strong> = vector, <strong>light lowercase</strong> = scalar, ' +
           '<strong>light uppercase</strong> = matrix.',
+        notes: [
+          'Bold is hard to write by hand, so an arrow (v&#8407;) or an underline ' +
+            '(<u>v</u>) is normally used instead.'
+        ],
         defZh:
           '這門課用字體區分三種東西：<strong>粗體小寫</strong>是向量、' +
           '<strong>細體小寫</strong>是純量、<strong>細體大寫</strong>是矩陣。',
-        notes: [
-          '手寫時粗體不好表現，通常改成加箭頭（v&#8407;）或加底線（<u>v</u>）。'
-        ],
+        notesZh: ['手寫時粗體不好表現，通常改成加箭頭（v&#8407;）或加底線（<u>v</u>）。'],
         examples: [
           {
-            label: '筆記原文',
+            label: 'From the notes',
             html:
-              '<p>粗體小寫 &nbsp;&rarr;&nbsp; vector（向量）：<strong>u</strong>, v&#8407;, u&#8407;</p>' +
-              '<p>細體小寫 &nbsp;&rarr;&nbsp; scalar（純量）：a, k, &lambda;</p>' +
-              '<p>細體大寫 &nbsp;&rarr;&nbsp; matrix（矩陣）：A, B, I</p>'
+              '<p>bold lowercase &nbsp;&rarr;&nbsp; vector: <strong>u</strong>, v&#8407;, u&#8407;</p>' +
+              '<p>light lowercase &nbsp;&rarr;&nbsp; scalar: a, k, &lambda;</p>' +
+              '<p>light uppercase &nbsp;&rarr;&nbsp; matrix: A, B, I</p>'
           }
         ]
       },
@@ -215,15 +249,19 @@
           'An ordered list of numbers, written either as a <strong>column</strong> or as a ' +
           '<strong>row</strong>. It is the same data either way, but the two shapes behave ' +
           'differently in matrix multiplication.',
+        notes: [
+          'An n-dimensional vector is just an n&times;1 or 1&times;n matrix — a vector is a ' +
+            'special case of a matrix.'
+        ],
         defZh:
           '一串有順序的數，可以寫成<strong>直的</strong>（column）或<strong>橫的</strong>（row）。' +
           '資料一樣，但在矩陣乘法裡兩種形狀的行為不同。',
-        notes: [
+        notesZh: [
           '一個 n 維向量其實就是 n&times;1 或 1&times;n 的矩陣 &mdash; 向量是矩陣的特例。'
         ],
         examples: [
           {
-            label: '筆記原文：同一個向量的兩種寫法',
+            label: 'From the notes — one vector, two shapes',
             html:
               '<p>column ' +
               M([[1], [3], ['&minus;2']]) +
@@ -243,8 +281,12 @@
         def:
           'A single number (as opposed to a vector or a matrix). Scalars are what you ' +
           'multiply vectors and matrices <em>by</em>.',
+        notes: [
+          'In this course the scalars are the real numbers &#8477; (some texts use the ' +
+            'complex numbers &#8450;).'
+        ],
         defZh: '單一一個數（相對於向量與矩陣）。純量是用來「乘」向量或矩陣的那個東西。',
-        notes: ['本課的純量就是實數 &#8477;（有些課本會用複數 &#8450;）。']
+        notesZh: ['本課的純量就是實數 &#8477;（有些課本會用複數 &#8450;）。']
       },
 
       {
@@ -256,15 +298,10 @@
         def:
           'A rectangular array of numbers arranged in rows and columns. It is the ' +
           'bookkeeping device that lets us handle a whole system of equations at once.',
-        defZh:
-          '把數字排成橫列與直行的長方形陣列。它是讓我們一次處理整個方程組的記帳工具。',
-        notes: ['複數是 matrices（不是 matrixes）。'],
-        examples: [
-          {
-            label: '一個 3&times;3 矩陣',
-            html: EX_COEF
-          }
-        ]
+        notes: ['The plural is <em>matrices</em>, not "matrixes".'],
+        defZh: '把數字排成橫列與直行的長方形陣列。它是讓我們一次處理整個方程組的記帳工具。',
+        notesZh: ['複數是 matrices（不是 matrixes）。'],
+        examples: [{ label: 'A 3×3 matrix', html: EX_COEF }]
       },
 
       /* ============================================ 9/7 — solutions */
@@ -286,24 +323,28 @@
           '<strong>1. a unique solution</strong>, <strong>2. no solution</strong>, or ' +
           '<strong>3. infinitely many solutions</strong>. There is no fourth possibility — ' +
           'a linear system can never have, say, exactly two solutions.',
+        notes: [
+          'With two variables, picture lines: crossing at a point &rarr; unique; ' +
+            'parallel &rarr; none; coincident &rarr; infinitely many.',
+          'Cases 1 and 3 are called <a href="#consistent">consistent</a>; case 2 is inconsistent.'
+        ],
         defZh:
           '線性方程組只會有三種結果：<strong>1. 唯一解</strong>、<strong>2. 無解</strong>、' +
-          '<strong>3. 無限多解</strong>。沒有第四種 — 線性方程組不可能剛好有兩組解。',
-        notes: [
+          '<strong>3. 無限多解</strong>。沒有第四種 &mdash; 線性方程組不可能剛好有兩組解。',
+        notesZh: [
           '兩個變數時可以用直線想像：相交一點 &rarr; 唯一解；平行 &rarr; 無解；重合 &rarr; 無限多解。',
-          '<strong>補充</strong>：有解（型態 1、3）叫 <a href="#consistent">consistent 相容</a>，無解（型態 2）叫 inconsistent 不相容。'
+          '有解（型態 1、3）叫 <a href="#consistent">consistent 相容</a>，無解（型態 2）叫 inconsistent 不相容。'
         ],
         examples: [
           {
-            label: '筆記原文',
-            html:
-              '<p>1. unique solution</p><p>2. no solution</p><p>3. infinite solutions</p>'
+            label: 'From the notes',
+            html: '<p>1. unique solution</p><p>2. no solution</p><p>3. infinite solutions</p>'
           }
         ],
         figure: {
-          caption: '兩變數的幾何圖像：相交／平行／重合',
+          caption: 'Two variables: crossing / parallel / coincident',
           svg:
-            '<svg viewBox="0 0 340 128" role="img" aria-label="三種解的幾何圖像">' +
+            '<svg viewBox="0 0 340 128" role="img" aria-label="three solution types">' +
             '<g stroke="currentColor" stroke-width="1.1" opacity=".45">' +
             '<path d="M14 92 H100 M24 14 V100"/>' +
             '<path d="M127 92 H213 M137 14 V100"/>' +
@@ -316,9 +357,9 @@
             'stroke-dasharray="6 5"/>' +
             '<circle cx="58" cy="56" r="4" fill="var(--accent)"/>' +
             '<g fill="currentColor" font-size="10" font-family="sans-serif" text-anchor="middle">' +
-            '<text x="57" y="116">unique 唯一解</text>' +
-            '<text x="170" y="116">none 無解</text>' +
-            '<text x="283" y="116">infinite 無限多</text></g></svg>'
+            '<text x="57" y="116">unique</text>' +
+            '<text x="170" y="116">none</text>' +
+            '<text x="283" y="116">infinite</text></g></svg>'
         }
       },
 
@@ -332,8 +373,15 @@
         def:
           'A system is <strong>consistent</strong> if it has at least one solution, and ' +
           '<strong>inconsistent</strong> if it has none.',
-        defZh: '至少有一組解就叫<strong>相容</strong>（consistent）；完全沒有解就叫<strong>不相容</strong>。',
         notes: [
+          'Why this is here: the notes list the three solution types but give no name for ' +
+            'the split between "types 1 and 3" and "type 2".',
+          'Reaching <span class="mono">0 = (non-zero)</span> during elimination — say ' +
+            '<span class="mono">0 = 5</span> — is the signal that a system is inconsistent.'
+        ],
+        defZh:
+          '至少有一組解就叫<strong>相容</strong>（consistent）；完全沒有解就叫<strong>不相容</strong>。',
+        notesZh: [
           '為什麼補這個：筆記列了三種解的型態，但沒給這組把「型態 1、3」和「型態 2」分開的標準名稱。',
           '消去後出現 0 = 非零數（例如 0 = 5）就是不相容的訊號。'
         ]
@@ -349,10 +397,14 @@
         def:
           'The set of <em>all</em> ordered tuples that satisfy every equation in the system. ' +
           '"Solving the system" means describing this set, not just finding one member of it.',
+        notes: [
+          'Type 1 gives a single point, type 2 the empty set &empty;, type 3 a line or plane ' +
+            'described with a parameter.'
+        ],
         defZh:
           '所有能同時滿足方程組每一條式子的有序組所成的集合。' +
           '「解方程組」是把這個集合描述清楚，不只是找到其中一組。',
-        notes: [
+        notesZh: [
           '型態 1 的解集合是一個點，型態 2 是空集合 &empty;，型態 3 是一條線／一個平面（用參數表示）。'
         ]
       },
@@ -366,16 +418,19 @@
         aliases: ['entry', 'a_ij', '項'],
         tags: ['9/8 ch1.1', 'matrix parts'],
         def: 'A single number sitting inside the matrix.',
-        defZh: '矩陣裡面的單一個數字。',
         notes: [
-          '<strong>補充</strong>：位置用兩個下標標記，a<sub>ij</sub> 表示第 i 列（row）、第 j 行（column）的元素 &mdash; 永遠先列後行。'
+          'Positions carry two subscripts: <span class="mono">a<sub>ij</sub></span> is the ' +
+            'element in row i and column j — row first, always.'
+        ],
+        defZh: '矩陣裡面的單一個數字。',
+        notesZh: [
+          '位置用兩個下標標記，a<sub>ij</sub> 表示第 i 列（row）、第 j 行（column）的元素 &mdash; 永遠先列後行。'
         ],
         examples: [
-          { label: '筆記原文', html: '<p>element = the number in the matrix</p>' },
+          { label: 'From the notes', html: '<p>element = the number in the matrix</p>' },
           {
-            label: '定位',
-            html:
-              '<p>在 ' + EX_COEF + ' 中，a<sub>23</sub> = 1（第 2 列第 3 行）</p>'
+            label: 'Locating an element',
+            html: '<p>in ' + EX_COEF + ' , a<sub>23</sub> = 1 (row 2, column 3)</p>'
           }
         ]
       },
@@ -388,19 +443,25 @@
         aliases: ['horizontal', '橫的', '水平'],
         tags: ['9/8 ch1.1', 'matrix parts'],
         def: 'A <strong>horizontal</strong> line of numbers in the matrix.',
-        defZh: '矩陣裡<strong>橫向</strong>的一排數字。',
         notes: [
-          '<strong>注意中文用語差異</strong>：台灣課本 row = 「列」、column = 「行」；' +
-          '中國課本恰好相反（row = 行）。讀不同來源的資料時要確認一下。',
-          '在方程組裡，一個 row 就對應一條方程式 &mdash; 所以「列運算」等於「對整條方程式做運算」。'
+          'In a system, one row is one equation — which is why "row operations" means ' +
+            '"operations on a whole equation".',
+          '<strong>Careful with the Chinese</strong>: Taiwanese texts use 列 for row and ' +
+            '行 for column; mainland texts swap them. Check which convention a source uses.'
+        ],
+        defZh: '矩陣裡<strong>橫向</strong>的一排數字。',
+        notesZh: [
+          '在方程組裡，一個 row 就對應一條方程式 &mdash; 所以「列運算」等於「對整條方程式做運算」。',
+          '<strong>注意中文用語差異</strong>：台灣課本 row =「列」、column =「行」；' +
+            '中國課本恰好相反（row = 行）。讀不同來源的資料時要確認一下。'
         ],
         examples: [
-          { label: '筆記原文', html: '<p>row = horizontal line of number</p>' }
+          { label: 'From the notes', html: '<p>row = horizontal line of number</p>' }
         ],
         figure: {
-          caption: '橫的是 row（列），直的是 column（行）',
+          caption: 'Horizontal is a row, vertical is a column',
           svg:
-            '<svg viewBox="0 0 320 130" role="img" aria-label="矩陣的列與行">' +
+            '<svg viewBox="0 0 320 130" role="img" aria-label="rows and columns">' +
             '<g fill="var(--accent-soft)"><rect x="60" y="56" width="152" height="24" rx="3"/>' +
             '<rect x="140" y="20" width="34" height="96" rx="3"/></g>' +
             '<g fill="none" stroke="currentColor" stroke-width="1.5">' +
@@ -413,8 +474,8 @@
             '<text x="80" y="106">1</text><text x="118" y="106">-1</text>' +
             '<text x="157" y="106">-2</text><text x="196" y="106">-6</text></g>' +
             '<g fill="var(--accent)" font-size="10.5" font-family="sans-serif">' +
-            '<text x="244" y="72">row 列</text>' +
-            '<text x="157" y="14" text-anchor="middle">column 行</text></g></svg>'
+            '<text x="244" y="72">row</text>' +
+            '<text x="157" y="14" text-anchor="middle">column</text></g></svg>'
         }
       },
 
@@ -426,13 +487,18 @@
         aliases: ['vertical', '直的', '垂直', 'vetical'],
         tags: ['9/8 ch1.1', 'matrix parts'],
         def: 'A <strong>vertical</strong> line of numbers in the matrix.',
-        defZh: '矩陣裡<strong>直向</strong>的一排數字。',
         notes: [
+          'In a system, one column corresponds to one variable (the last column being the ' +
+            'constant terms).',
+          'Same warning as for row: Taiwanese 行 = column, mainland 行 = row.'
+        ],
+        defZh: '矩陣裡<strong>直向</strong>的一排數字。',
+        notesZh: [
           '在方程組裡，一個 column 對應一個變數（最後一行則是常數項）。',
-          '同上：台灣 column = 「行」，中國 column = 「列」，用語剛好相反。'
+          '同上：台灣 column =「行」，中國 column =「列」，用語剛好相反。'
         ],
         examples: [
-          { label: '筆記原文', html: '<p>column = vertical line of number</p>' }
+          { label: 'From the notes', html: '<p>column = vertical line of number</p>' }
         ]
       },
 
@@ -445,14 +511,18 @@
         def:
           'The matrix left over after deleting some rows and/or some columns from a ' +
           'matrix, keeping the remaining entries in their original relative positions.',
+        notes: [
+          'The <a href="#coefficient-matrix">coefficient matrix</a> is the submatrix you get ' +
+            'by deleting the last column of the <a href="#augmented-matrix">augmented matrix</a>.'
+        ],
         defZh:
           '從一個矩陣中刪掉某些列和／或某些行之後剩下的矩陣，其餘元素保持原本的相對位置。',
-        notes: [
+        notesZh: [
           '<a href="#coefficient-matrix">係數矩陣</a>就是<a href="#augmented-matrix">增廣矩陣</a>刪掉最後一行得到的子矩陣。'
         ],
         examples: [
           {
-            label: '刪掉第 3 列與第 3 行',
+            label: 'Delete row 3 and column 3',
             html:
               '<p>' +
               EX_COEF +
@@ -477,18 +547,22 @@
         def:
           'Written <span class="mono">m &times; n</span>, meaning <strong>m rows by ' +
           'n columns</strong> — always rows first.',
-        defZh: '寫成 m &times; n，意思是「m 列 &times; n 行」 — 永遠先講列（橫）再講行（直）。',
-        notes: ['記法：先橫後直、先 row 後 column，和 a<sub>ij</sub> 的下標順序一致。'],
+        notes: [
+          'The order matches the subscripts in <span class="mono">a<sub>ij</sub></span>: ' +
+            'row before column, every time.'
+        ],
+        defZh: '寫成 m &times; n，意思是「m 列 &times; n 行」 &mdash; 永遠先講列（橫）再講行（直）。',
+        notesZh: ['記法：先橫後直、先 row 後 column，和 a<sub>ij</sub> 的下標順序一致。'],
         examples: [
           {
-            label: '筆記原文',
+            label: 'From the notes',
             html:
               '<p>2&times;3 matrix ' +
               M([
                 [2, 0, 1],
                 [3, 2, 1]
               ]) +
-              '（2 列 3 行）</p>'
+              ' (2 rows, 3 columns)</p>'
           }
         ]
       },
@@ -503,14 +577,24 @@
         def:
           'A matrix with the same number of rows as columns — an ' +
           '<span class="mono">n &times; n</span> matrix.',
-        defZh: '列數與行數相同的矩陣，也就是 n &times; n 的矩陣。',
         notes: [
-          '<strong>補充</strong>：只有方陣才談得上行列式（determinant）、反矩陣（inverse）與特徵值 &mdash; 後面章節會一直用到。'
+          'Only square matrices have a determinant, an inverse or eigenvalues — all of which ' +
+            'later chapters lean on constantly.'
+        ],
+        defZh: '列數與行數相同的矩陣，也就是 n &times; n 的矩陣。',
+        notesZh: [
+          '只有方陣才談得上行列式（determinant）、反矩陣（inverse）與特徵值 &mdash; 後面章節會一直用到。'
         ],
         examples: [
           {
-            label: '筆記原文',
-            html: '<p>2&times;2 matrix ' + M([['&#9633;', '&#9633;'], ['&#9633;', '&#9633;']]) + ' &rarr; square matrix</p>'
+            label: 'From the notes',
+            html:
+              '<p>2&times;2 matrix ' +
+              M([
+                ['&#9633;', '&#9633;'],
+                ['&#9633;', '&#9633;']
+              ]) +
+              ' &rarr; square matrix</p>'
           }
         ]
       },
@@ -526,7 +610,7 @@
         defZh: '只有一列（一橫排）的矩陣，大小為 1 &times; n。',
         examples: [
           {
-            label: '筆記原文',
+            label: 'From the notes',
             html: '<p>1&times;3 matrix ' + M([[1, 0, 0]]) + ' &rarr; row matrix</p>'
           }
         ]
@@ -543,7 +627,7 @@
         defZh: '只有一行（一直排）的矩陣，大小為 m &times; 1。',
         examples: [
           {
-            label: '筆記原文',
+            label: 'From the notes',
             html: '<p>3&times;1 matrix ' + M([[3], [1], [5]]) + ' &rarr; column matrix</p>'
           }
         ]
@@ -559,15 +643,21 @@
         def:
           'The square matrix with <strong>1 on the main diagonal and 0 everywhere else</strong>. ' +
           'It is the "do nothing" matrix: <span class="mono">AI = IA = A</span>.',
+        notes: [
+          'It plays the role that the number 1 plays for ordinary multiplication — hence ' +
+            '<em>identity</em>.',
+          'The n fixes the size, written I&#8322;, I&#8323;. The main diagonal runs from the ' +
+            'top-left corner to the bottom-right.'
+        ],
         defZh:
           '主對角線上全是 1、其餘位置全是 0 的方陣。它是矩陣乘法裡的「不動」元素：AI = IA = A。',
-        notes: [
-          '<strong>補充</strong>：角色相當於數字裡的 1，所以叫 identity（單位／恆等）。',
-          '<strong>補充</strong>：n 決定大小，寫成 I&#8322;、I&#8323;；主對角線是從左上到右下那條。'
+        notesZh: [
+          '角色相當於數字裡的 1，所以叫 identity（單位／恆等）。',
+          'n 決定大小，寫成 I&#8322;、I&#8323;；主對角線是從左上到右下那條。'
         ],
         examples: [
           {
-            label: '筆記原文',
+            label: 'From the notes',
             html:
               '<p>I&#8322; = ' +
               M([
@@ -594,8 +684,13 @@
         tags: ['9/8 ch1.1', 'matrix shapes'],
         added: true,
         def: 'A matrix all of whose entries are 0.',
-        defZh: '所有元素都是 0 的矩陣。',
         notes: [
+          'Why this is here: it is the "do nothing" element for addition ' +
+            '(<span class="mono">A + O = A</span>), mirroring what the identity matrix does ' +
+            'for multiplication.'
+        ],
+        defZh: '所有元素都是 0 的矩陣。',
+        notesZh: [
           '為什麼補這個：它是加法裡的「不動」元素（A + O = A），和單位矩陣在乘法裡的角色相對應。'
         ]
       },
@@ -610,17 +705,20 @@
         def:
           'A square matrix whose off-diagonal entries are all 0; only the main diagonal ' +
           'may be non-zero.',
+        notes: [
+          'The <a href="#identity-matrix">identity matrix</a> is the special case where every ' +
+            'diagonal entry is 1.'
+        ],
         defZh: '主對角線以外全是 0 的方陣；只有主對角線上可以有非零的數。',
-        notes: ['<a href="#identity-matrix">單位矩陣</a>是對角線全為 1 的對角矩陣，屬於它的特例。'],
+        notesZh: ['<a href="#identity-matrix">單位矩陣</a>是對角線全為 1 的對角矩陣，屬於它的特例。'],
         examples: [
           {
-            label: '例',
-            html:
-              M([
-                [2, 0, 0],
-                [0, '&minus;1', 0],
-                [0, 0, 5]
-              ])
+            label: 'Example',
+            html: M([
+              [2, 0, 0],
+              [0, '&minus;1', 0],
+              [0, 0, 5]
+            ])
           }
         ]
       },
@@ -638,15 +736,19 @@
           '<span class="mono">A&#7488;</span> is the (j, i) entry of A. An ' +
           '<span class="mono">m &times; n</span> matrix transposes to ' +
           '<span class="mono">n &times; m</span>.',
+        notes: [
+          'Why this is here: the notes write a column vector as ' +
+            '<span class="mono">[1 3 &minus;2]&#7488;</span> — that superscript T is the transpose.'
+        ],
         defZh:
           '把列變成行得到的矩陣：A&#7488; 的 (i, j) 位置就是 A 的 (j, i) 位置。' +
           'm &times; n 轉置後變成 n &times; m。',
-        notes: [
+        notesZh: [
           '為什麼補這個：筆記用 [1 3 &minus;2]&#7488; 表示直的向量，那個上標 T 就是轉置。'
         ],
         examples: [
           {
-            label: '行列互換',
+            label: 'Rows become columns',
             html:
               '<p>' +
               M([
@@ -674,20 +776,15 @@
         def:
           'The matrix holding only the coefficients of the system, each in its original ' +
           'row-and-column position. The constant terms are left out.',
-        defZh:
-          '只放方程組係數的矩陣，每個係數保持原本的列、行位置；常數項不放進來。',
         notes: [
-          '<strong>補充</strong>：缺項的係數要補 0 &mdash; 位置對不上就整個矩陣的意思都錯了。'
+          'A missing term needs a 0 in its place — if the positions do not line up, the ' +
+            'whole matrix means something else.'
         ],
+        defZh: '只放方程組係數的矩陣，每個係數保持原本的列、行位置；常數項不放進來。',
+        notesZh: ['缺項的係數要補 0 &mdash; 位置對不上就整個矩陣的意思都錯了。'],
         examples: [
-          {
-            label: '筆記原文的系統',
-            html: '<p>' + EX_SYS + '</p>'
-          },
-          {
-            label: '&rarr; in matrix of coefficient',
-            html: '<p>' + EX_COEF + '</p>'
-          }
+          { label: 'The system, from the notes', html: '<p>' + EX_SYS + '</p>' },
+          { label: '&rarr; in matrix of coefficient', html: '<p>' + EX_COEF + '</p>' }
         ]
       },
 
@@ -702,23 +799,25 @@
           'The coefficient matrix with the column of constant terms attached on the right, ' +
           'usually separated by a vertical bar. It carries the <em>complete</em> information ' +
           'of the system, which is why row operations are performed on it.',
+        notes: [
+          'One equation &harr; one row; one variable &harr; one column; right of the bar ' +
+            '&harr; right of the equals sign.',
+          'For m equations in n variables the augmented matrix is m &times; (n+1).'
+        ],
         defZh:
           '在係數矩陣右邊接上常數項那一行（通常用一條豎線分隔）。' +
           '它帶有方程組的<em>完整</em>資訊，所以列運算都是對它做的。',
-        notes: [
+        notesZh: [
           '一條方程式 &harr; 一列（row）；一個變數 &harr; 一行（column）；豎線右邊 &harr; 等號右邊。',
           'm 條方程式、n 個變數的增廣矩陣大小是 m &times; (n+1)。'
         ],
         examples: [
-          {
-            label: '&rarr; in matrix of augmented（筆記原文）',
-            html: '<p>' + EX_AUG + '</p>'
-          }
+          { label: '&rarr; in matrix of augmented (from the notes)', html: '<p>' + EX_AUG + '</p>' }
         ],
         figure: {
-          caption: '豎線左邊是係數，右邊是常數項；每一列就是一條方程式',
+          caption: 'Coefficients left of the bar, constants right; each row is one equation',
           svg:
-            '<svg viewBox="0 0 330 150" role="img" aria-label="增廣矩陣的結構">' +
+            '<svg viewBox="0 0 330 150" role="img" aria-label="augmented matrix structure">' +
             '<g fill="var(--accent-soft)"><rect x="236" y="34" width="34" height="84" rx="3"/></g>' +
             '<g fill="none" stroke="currentColor" stroke-width="1.5">' +
             '<path d="M62 30 h-9 v92 h9"/><path d="M278 30 h9 v92 h9"/></g>' +
@@ -731,8 +830,8 @@
             '<text x="90" y="116">1</text><text x="143" y="116">-1</text><text x="196" y="116">-2</text>' +
             '<text x="253" y="116">-6</text></g>' +
             '<g font-size="10.5" font-family="sans-serif" text-anchor="middle">' +
-            '<text x="143" y="22" fill="currentColor">coefficients 係數</text>' +
-            '<text x="253" y="22" fill="var(--accent)">constants 常數</text>' +
+            '<text x="143" y="22" fill="currentColor">coefficients</text>' +
+            '<text x="253" y="22" fill="var(--accent)">constants</text>' +
             '<text x="90" y="140" fill="currentColor">x&#8321;</text>' +
             '<text x="143" y="140" fill="currentColor">x&#8322;</text>' +
             '<text x="196" y="140" fill="currentColor">x&#8323;</text></g></svg>'
@@ -752,22 +851,27 @@
           'into the other by elementary row operations. They look different but describe ' +
           'systems with <strong>exactly the same solution set</strong>. The symbol is ' +
           '<span class="mono">~</span>.',
+        notes: [
+          'From the notes: <span class="mono">Different augmented matrix but same solution.</span>',
+          'This is exactly why elimination is allowed — every step leaves the answer alone ' +
+            'and only makes it easier to see.'
+        ],
         defZh:
           '兩個增廣矩陣如果能透過基本列運算互相轉換，就稱為<strong>列等價</strong>。' +
           '它們長得不一樣，但代表的方程組有<strong>完全相同的解集合</strong>。符號是 <span class="mono">~</span>。',
-        notes: [
+        notesZh: [
           '筆記原文：<span class="mono">Different augmented matrix but same solution.</span>',
           '這正是消去法能用的理由 &mdash; 化簡的每一步都不改變答案，只把答案變得更明顯。'
         ],
         examples: [
           {
-            label: '同一個系統，兩種長相',
+            label: 'One system, two appearances',
             html:
               '<p>' +
               M([[1, 1], [2, 3]], [[2], [3]]) +
               ' ~ ' +
               M([[1, 1], [0, 1]], [[2], ['&minus;1']]) +
-              '</p><p>解都是 x&#8321; = 3, x&#8322; = &minus;1</p>'
+              '</p><p>both give x&#8321; = 3, x&#8322; = &minus;1</p>'
           }
         ]
       },
@@ -785,34 +889,44 @@
           '<strong>1. Interchange</strong> two rows. ' +
           '<strong>2. Multiply</strong> a row by a non-zero scalar. ' +
           '<strong>3. Add</strong> a multiple of one row to another row.',
+        notes: [
+          'The notes write the third as "Add a multiple of the element of one row"; the full ' +
+            'statement is <strong>to <em>another</em> row</strong> — without naming the ' +
+            'receiving row there is nowhere to put the result.',
+          'In the second operation the multiplier <strong>must be non-zero</strong>. ' +
+            'Multiplying by 0 wipes out a whole equation, which is irreversible and can ' +
+            'invent solutions that were never there.',
+          'It works on <em>rows</em> only, never columns — a row is an equation, a column is a ' +
+            'variable, so swapping columns silently swaps the variables.'
+        ],
         defZh:
           '對增廣矩陣的列可以做的三種合法操作。每一種都可逆，所以都不會改變解集合：' +
           '<strong>1. 對調</strong>兩列。<strong>2. 乘上</strong>一個非零純量。' +
           '<strong>3. 把某一列的倍數加到另一列</strong>。',
-        notes: [
+        notesZh: [
           '筆記第 3 條寫成「Add a multiple of the element of one row」，完整說法是' +
-          '<strong>加到「另一」列</strong>（add a multiple of one row <em>to another row</em>）&mdash; ' +
-          '少了受方就不知道結果放哪裡。',
-          '<strong>補充</strong>：第 2 條的倍數<strong>必須非零</strong>。乘 0 會把一整條方程式抹掉，變成不可逆、可能多出假的解。',
-          '<strong>補充</strong>：只能對「列」做，不能對「行」做 &mdash; 一列是一條方程式，一行是一個變數，換行等於偷換變數。'
+            '<strong>加到「另一」列</strong>（add a multiple of one row <em>to another row</em>）&mdash; ' +
+            '少了受方就不知道結果放哪裡。',
+          '第 2 條的倍數<strong>必須非零</strong>。乘 0 會把一整條方程式抹掉，變成不可逆、可能多出假的解。',
+          '只能對「列」做，不能對「行」做 &mdash; 一列是一條方程式，一行是一個變數，換行等於偷換變數。'
         ],
         examples: [
           {
-            label: '筆記原文',
+            label: 'From the notes',
             html:
               '<p>&#9312; Interchange</p>' +
               '<p>&#9313; Multiply</p>' +
               '<p>&#9314; Add a multiple of the element of one row</p>'
           },
           {
-            label: '三種操作的記法',
+            label: 'Standard shorthand',
             html:
               '<p>&#9312; R&#8321; &harr; R&#8322;</p>' +
-              '<p>&#9313; kR&#8321; &rarr; R&#8321;　(k &ne; 0)</p>' +
+              '<p>&#9313; kR&#8321; &rarr; R&#8321;&nbsp;&nbsp;(k &ne; 0)</p>' +
               '<p>&#9314; R&#8322; + kR&#8321; &rarr; R&#8322;</p>'
           },
           {
-            label: '第 3 種：用 R&#8321; 把 R&#8322; 的第一項清成 0',
+            label: 'Operation 3: clearing the first entry of R&#8322;',
             html:
               '<p>' +
               M([[1, 1], [2, 3]], [[2], [3]]) +
@@ -823,31 +937,7 @@
         ]
       },
 
-      {
-        id: 'gaussian-elimination',
-        term: 'Gaussian elimination',
-        zh: '高斯消去法',
-        aliases: ['elimination', '消去法', 'gauss', 'gauss-jordan'],
-        tags: ['9/9 ch1.2', 'echelon'],
-        added: true,
-        def:
-          'The procedure of applying elementary row operations, column by column, to drive ' +
-          'the augmented matrix into a staircase shape from which the solution can be read ' +
-          'off directly.',
-        defZh:
-          '有系統地一行一行套用基本列運算，把增廣矩陣化成階梯狀，' +
-          '讓解可以直接讀出來的做法。',
-        notes: [
-          '為什麼補這個：ch1.1 給了三種 ERO 這些「工具」、ch1.2 給了 ' +
-            '<a href="#reduced-echelon-form">reduced echelon form</a> 這個目標，' +
-            '而這個名字就是連接兩者的那套流程。',
-          '做法：由左到右，用每一行的<a href="#pivot">主元</a>把它<em>下方</em>的元素清成 0。',
-          '<strong>補充</strong>：只清主元下方 &rarr; 得到 echelon form，稱 Gaussian elimination；' +
-            '連主元<em>上方</em>也清掉、並把主元化成 1 &rarr; 得到 reduced echelon form，' +
-            '這一版通常叫 <strong>Gauss-Jordan elimination</strong>（高斯-喬登消去法）。'
-        ]
-      },
-
+      /* ============================================ 9/9 — echelon */
       {
         id: 'pivot',
         term: 'Pivot',
@@ -859,28 +949,36 @@
           'The entry a row is anchored on during elimination — the position of that row\'s ' +
           'first non-zero element, i.e. where its step in the staircase begins. In reduced ' +
           'echelon form every pivot is a <a href="#leading-1">leading 1</a>.',
+        notes: [
+          'The column a pivot sits in is a <strong>pivot column</strong>; its variable is ' +
+            'determined. A column with no pivot belongs to a ' +
+            '<a href="#free-variable">free variable</a>.',
+          'The number of pivots is the <strong>rank</strong> of the matrix, and that decides ' +
+            'whether the system has a unique solution or infinitely many.'
+        ],
         defZh:
           '消去時每一列所倚靠的那個位置 &mdash; 該列第一個非零元素所在處，也就是階梯的轉折點。' +
           '在 reduced echelon form 中，每個主元都是一個 leading 1。',
-        notes: [
-          '<strong>補充</strong>：主元所在的那一行叫 <strong>pivot column</strong>（主行），' +
-            '它對應的變數是被綁定的；沒有主元的行對應 <a href="#free-variable">自由變數</a>。',
-          '<strong>補充</strong>：主元的個數就是矩陣的 <strong>rank</strong>（秩），' +
-            '它決定方程組是唯一解還是無限多解。'
+        notesZh: [
+          '主元所在的那一行叫 <strong>pivot column</strong>（主行），' +
+            '它對應的變數是被綁定的；沒有主元的行對應<a href="#free-variable">自由變數</a>。',
+          '主元的個數就是矩陣的 <strong>rank</strong>（秩），它決定方程組是唯一解還是無限多解。'
         ],
         examples: [
           {
-            label: '筆記原文',
-            html: '<p>pivot：每一階梯基準點</p>'
+            label: 'From the notes',
+            html:
+              '<p>pivot：每一階梯基準點</p>' +
+              '<p>&rarr; "the reference point of each step"</p>'
           },
           {
-            label: '主元位置（&#9646; 為主元）',
+            label: 'Pivot positions (&#9646; marks a pivot)',
             html:
               M([
                 ['&#9646;', '&lowast;', '&lowast;', '&lowast;'],
                 [0, 0, '&#9646;', '&lowast;'],
                 [0, 0, 0, '&#9646;']
-              ]) + '<p>三個主元 &rarr; rank = 3</p>'
+              ]) + '<p>three pivots &rarr; rank = 3</p>'
           }
         ]
       },
@@ -897,54 +995,62 @@
           'A matrix is in <strong>reduced echelon form</strong> when it satisfies all four ' +
           'conditions below. It is the finish line of elimination: once the augmented matrix ' +
           'is in this shape, the solution can be read straight off — no back-substitution needed.',
+        notes: [
+          '<strong>&#9312;</strong> Any row consisting entirely of zeros is grouped at the ' +
+            '<strong>bottom</strong> of the matrix.',
+          '<strong>&#9313;</strong> The first non-zero element of each other row is ' +
+            '<strong>1</strong>; this element is called a <a href="#leading-1">leading 1</a>.',
+          '<strong>&#9314;</strong> The leading 1 of each row after the first row is positioned ' +
+            '<strong>to the right of</strong> the leading 1 of the previous row — that is the staircase.',
+          '<strong>&#9315;</strong> All other elements in the column containing a leading 1 are ' +
+            '<strong>zero</strong>.',
+          'Conditions &#9312;&#9313;&#9314; together give plain ' +
+            '<a href="#row-echelon-form">echelon form</a>; adding &#9315; is what makes it ' +
+            '<em>reduced</em> — &#9315; is the step that also clears the entries <em>above</em> ' +
+            'each leading 1.'
+        ],
         defZh:
           '同時滿足下面四個條件的矩陣就是 <strong>reduced echelon form</strong>。' +
           '它是消去法的終點：增廣矩陣化到這個形狀後，解可以直接讀出來，不必再回代。',
-        notes: [
-          '<strong>&#9312;</strong> Any row consisting entirely of zeros is grouped at the ' +
-            '<strong>bottom</strong> of the matrix.　（全零的列都排到最底下）',
-          '<strong>&#9313;</strong> The first non-zero element of each other row is ' +
-            '<strong>1</strong>; this element is called a <a href="#leading-1">leading 1</a>.　' +
-            '（其餘每一列的第一個非零元素必須是 1，這個元素叫 leading 1）',
-          '<strong>&#9314;</strong> The leading 1 of each row after the first row is positioned ' +
-            '<strong>to the right of</strong> the leading 1 of the previous row.　' +
-            '（每列的 leading 1 都在上一列 leading 1 的右邊 &mdash; 這就是「階梯」）',
-          '<strong>&#9315;</strong> All other elements in the column containing a leading 1 are ' +
-            '<strong>zero</strong>.　（leading 1 所在那一行的其他元素都要是 0）',
-          '<strong>補充</strong>：&#9312;&#9313;&#9314; 合起來是 ' +
-            '<a href="#row-echelon-form">echelon form</a>（列梯形）；再加上 &#9315; 才叫 ' +
-            '<em>reduced</em>（簡化）&mdash; &#9315; 就是把 leading 1 <em>上方</em>也清成 0 的那一步。'
+        notesZh: [
+          '<strong>&#9312;</strong> 全零的列都排到最底下。',
+          '<strong>&#9313;</strong> 其餘每一列的第一個非零元素必須是 1，這個元素叫 ' +
+            '<a href="#leading-1">leading 1</a>。',
+          '<strong>&#9314;</strong> 每列的 leading 1 都在上一列 leading 1 的右邊 &mdash; 這就是「階梯」。',
+          '<strong>&#9315;</strong> leading 1 所在那一行的其他元素都要是 0。',
+          '&#9312;&#9313;&#9314; 合起來是 <a href="#row-echelon-form">echelon form</a>（列梯形）；' +
+            '再加上 &#9315; 才叫 <em>reduced</em>（簡化）&mdash; &#9315; 就是把 leading 1 ' +
+            '<em>上方</em>也清成 0 的那一步。'
         ],
         examples: [
           {
-            label: '是 reduced echelon form',
+            label: 'In reduced echelon form',
             html:
               M([[1, 0, 0], [0, 1, 0], [0, 0, 1]], [[3], ['&minus;1'], [2]]) +
-              '<p>直接讀出 x&#8321;=3, x&#8322;=&minus;1, x&#8323;=2</p>'
+              '<p>read off x&#8321;=3, x&#8322;=&minus;1, x&#8323;=2</p>'
           },
           {
-            label: '不是 &mdash; 違反 &#9315;（leading 1 上方還有非零）',
+            label: 'Not — breaks &#9315; (non-zero above a leading 1)',
             html:
               M([
                 [1, 2, 0],
                 [0, 1, 0],
                 [0, 0, 1]
-              ]) + '<p>第 2 行的 2 在 leading 1 上方，要再清成 0</p>'
+              ]) + '<p>the 2 in column 2 sits above a leading 1 and must be cleared</p>'
           },
           {
-            label: '不是 &mdash; 違反 &#9312;（全零列不在最底下）',
-            html:
-              M([
-                [1, 0, 0],
-                [0, 0, 0],
-                [0, 1, 0]
-              ])
+            label: 'Not — breaks &#9312; (zero row not at the bottom)',
+            html: M([
+              [1, 0, 0],
+              [0, 0, 0],
+              [0, 1, 0]
+            ])
           }
         ],
         figure: {
-          caption: '階梯往右下走；每個 leading 1 的上下都是 0',
+          caption: 'The staircase steps right and down; above and below each leading 1 is 0',
           svg:
-            '<svg viewBox="0 0 330 150" role="img" aria-label="簡化列梯形的形狀">' +
+            '<svg viewBox="0 0 330 150" role="img" aria-label="reduced echelon form shape">' +
             '<g fill="none" stroke="currentColor" stroke-width="1.5">' +
             '<path d="M52 22 h-9 v106 h9"/><path d="M288 22 h9 v106 h9"/></g>' +
             '<g fill="var(--accent-soft)">' +
@@ -964,8 +1070,9 @@
             '<path d="M62 60 L104 60 L104 92 L170 92 L170 124 L236 124" fill="none" ' +
             'stroke="var(--accent)" stroke-width="2" stroke-dasharray="5 4" opacity=".8"/>' +
             '<g fill="currentColor" font-size="10.5" font-family="sans-serif">' +
-            '<text x="255" y="18" text-anchor="middle">常數項</text>' +
-            '<text x="165" y="145" text-anchor="middle">虛線＝階梯，每階往右移一行</text></g></svg>'
+            '<text x="271" y="18" text-anchor="middle">constants</text>' +
+            '<text x="165" y="145" text-anchor="middle">dashed = the staircase, one column right per step</text>' +
+            '</g></svg>'
         }
       },
 
@@ -980,28 +1087,34 @@
           'The <strong>first non-zero element of a row</strong> in a matrix being reduced to ' +
           'echelon form. It <strong>must be 1</strong> — that requirement is what condition ' +
           '&#9313; of reduced echelon form demands.',
+        notes: [
+          'The notes highlight <em>It must be 1</em> — it is one of the things that decides ' +
+            'whether a matrix counts as reduced echelon form at all.',
+          'If a row starts with k (k &ne; 0), multiplying the whole row by 1/k turns it into a ' +
+            '1. That is exactly <a href="#elementary-row-operation">ERO</a> &#9313;, so it can ' +
+            'always be done.',
+          'An all-zero row has no leading 1, which is why condition &#9312; sends those rows ' +
+            'to the bottom.'
+        ],
         defZh:
           '在化為 reduced echelon form 的過程中，一列的<strong>第一個非零元素</strong>。' +
           '它<strong>必須是 1</strong> &mdash; 這正是 reduced echelon form 條件 &#9313; 的要求。',
-        notes: [
+        notesZh: [
           '筆記把 <em>It must be 1</em> 特別畫了螢光 &mdash; 這是能不能算 reduced echelon form 的關鍵之一。',
-          '<strong>補充</strong>：如果某列首項是 k（k &ne; 0），把整列乘上 1/k 就變成 1，' +
+          '如果某列首項是 k（k &ne; 0），把整列乘上 1/k 就變成 1，' +
             '這正是<a href="#elementary-row-operation">基本列運算</a>的第 &#9313; 種，所以永遠做得到。',
-          '<strong>補充</strong>：全零的列沒有 leading 1，依條件 &#9312; 它們要被排到最底下。'
+          '全零的列沒有 leading 1，依條件 &#9312; 它們要被排到最底下。'
         ],
         examples: [
           {
-            label: '筆記原文',
+            label: 'From the notes',
             html:
-              '<p>leading 1：The first nonzero element of each other row in a matrix ' +
+              '<p>leading 1: The first nonzero element of each other row in a matrix ' +
               'being reduced echelon form. <mark>It must be 1</mark></p>'
           },
           {
-            label: '把首項變成 leading 1',
-            html:
-              M([[3, 6, 9]]) +
-              '&nbsp;&nbsp;&#8531;R&#8321;&nbsp;&nbsp;' +
-              M([[1, 2, 3]])
+            label: 'Turning a first entry into a leading 1',
+            html: M([[3, 6, 9]]) + '&nbsp;&nbsp;&#8531;R&#8321;&nbsp;&nbsp;' + M([[1, 2, 3]])
           }
         ]
       },
@@ -1017,21 +1130,26 @@
           'A variable whose column contains <strong>no pivot</strong> once the matrix is in ' +
           'reduced echelon form. It can be set to anything, and the pivot variables are then ' +
           'determined by it — which is exactly why such a system has infinitely many solutions.',
+        notes: [
+          'Why this is here: it links ch1.1\'s "infinitely many solutions" to ch1.2\'s pivots — ' +
+            'the number of free variables is the number of parameters in the answer.',
+          'Counting: free variables = total variables &minus; pivots (rank).'
+        ],
         defZh:
           '矩陣化成 reduced echelon form 後，<strong>那一行沒有主元</strong>的變數。' +
           '它可以任意取值，其他主元變數再隨它而定 &mdash; 這就是無限多解的來源。',
-        notes: [
+        notesZh: [
           '為什麼補這個：它把 ch1.1 的「無限多解」和 ch1.2 的主元直接接起來 &mdash; ' +
             '有幾個自由變數，解就有幾個參數。',
           '數量關係：自由變數個數 = 變數總數 &minus; 主元個數（rank）。'
         ],
         examples: [
           {
-            label: 'x&#8323; 那一行沒有主元',
+            label: 'Column x&#8323; has no pivot',
             html:
               M([[1, 0, 2], [0, 1, '&minus;1']], [[5], [3]]) +
-              '<p>令 x&#8323; = t（自由）</p>' +
-              '<p>則 x&#8321; = 5 &minus; 2t，x&#8322; = 3 + t</p>'
+              '<p>let x&#8323; = t (free)</p>' +
+              '<p>then x&#8321; = 5 &minus; 2t,&nbsp; x&#8322; = 3 + t</p>'
           }
         ]
       },
@@ -1049,26 +1167,67 @@
           'The staircase shape without the "reduced" part: all-zero rows sit at the bottom and ' +
           'each pivot lies strictly to the right of the pivot above it, but the entries ' +
           '<em>above</em> a pivot need not be zero, and pivots need not be 1.',
+        notes: [
+          'Why this is here: the notes define only <em>reduced</em> echelon form. Textbooks and ' +
+            'exercises often say plain "echelon form", meaning the version that satisfies only ' +
+            'the first three conditions — the difference is condition &#9315;.',
+          'Side by side: echelon form = &#9312;&#9313;&#9314; (with &#9313; relaxed to "first ' +
+            'entry non-zero"); <a href="#reduced-echelon-form">reduced echelon form</a> = ' +
+            '&#9312;&#9313;&#9314;&#9315;.'
+        ],
         defZh:
           '只有階梯、還沒「簡化」的形狀：全零列在最底下、每個主元都在上一列主元的右邊，' +
           '但主元<em>上方</em>不必是 0，主元本身也不必是 1。',
-        notes: [
+        notesZh: [
           '為什麼補這個：筆記只定義了 <em>reduced</em> echelon form（四個條件）。' +
-            '課本與題目常單獨提 echelon form，指的是只滿足前三個條件的版本，' +
-            '兩者差在條件 &#9315;。',
+            '課本與題目常單獨提 echelon form，指的是只滿足前三個條件的版本，兩者差在條件 &#9315;。',
           '對照：echelon form = &#9312;&#9313;&#9314;（且 &#9313; 可放寬成「首項非零」）；' +
             '<a href="#reduced-echelon-form">reduced echelon form</a> = &#9312;&#9313;&#9314;&#9315;。'
         ],
         examples: [
           {
-            label: '階梯形（&#9646; 為主元）',
-            html:
-              M([
-                ['&#9646;', '&lowast;', '&lowast;'],
-                [0, '&#9646;', '&lowast;'],
-                [0, 0, '&#9646;']
-              ])
+            label: 'Echelon, but not reduced (&#9646; = pivot)',
+            html: M([
+              ['&#9646;', '&lowast;', '&lowast;'],
+              [0, '&#9646;', '&lowast;'],
+              [0, 0, '&#9646;']
+            ])
           }
+        ]
+      },
+
+      {
+        id: 'gaussian-elimination',
+        term: 'Gaussian elimination',
+        zh: '高斯消去法',
+        aliases: ['elimination', '消去法', 'gauss', 'gauss-jordan'],
+        tags: ['9/9 ch1.2', 'echelon'],
+        added: true,
+        def:
+          'The procedure of applying elementary row operations, column by column, to drive ' +
+          'the augmented matrix into a staircase shape from which the solution can be read ' +
+          'off directly.',
+        notes: [
+          'Why this is here: ch1.1 gives the three EROs as tools and ch1.2 gives ' +
+            '<a href="#reduced-echelon-form">reduced echelon form</a> as the goal — this is the ' +
+            'name of the procedure joining them.',
+          'How: left to right, use each column\'s <a href="#pivot">pivot</a> to clear the ' +
+            'entries <em>below</em> it.',
+          'Clearing only below a pivot gives echelon form and is called Gaussian elimination; ' +
+            'also clearing <em>above</em> each pivot and scaling pivots to 1 gives reduced ' +
+            'echelon form, and that version is usually called ' +
+            '<strong>Gauss-Jordan elimination</strong>.'
+        ],
+        defZh:
+          '有系統地一行一行套用基本列運算，把增廣矩陣化成階梯狀，讓解可以直接讀出來的做法。',
+        notesZh: [
+          '為什麼補這個：ch1.1 給了三種 ERO 這些「工具」、ch1.2 給了 ' +
+            '<a href="#reduced-echelon-form">reduced echelon form</a> 這個目標，' +
+            '而這個名字就是連接兩者的那套流程。',
+          '做法：由左到右，用每一行的<a href="#pivot">主元</a>把它<em>下方</em>的元素清成 0。',
+          '只清主元下方 &rarr; 得到 echelon form，稱 Gaussian elimination；' +
+            '連主元<em>上方</em>也清掉、並把主元化成 1 &rarr; 得到 reduced echelon form，' +
+            '這一版通常叫 <strong>Gauss-Jordan elimination</strong>（高斯-喬登消去法）。'
         ]
       },
 
@@ -1083,17 +1242,20 @@
           'A system in which every constant term is 0. It is always consistent, because ' +
           'setting all variables to 0 (the <strong>trivial solution</strong>) always works — ' +
           'so it has either exactly one solution or infinitely many, never none.',
+        notes: [
+          'Why this is here: it removes one of the three solution types outright, and it is ' +
+            'the special case most used later when reasoning about solution structure.'
+        ],
         defZh:
           '所有常數項都是 0 的方程組。它一定有解，因為全部變數取 0（<strong>零解</strong>）永遠成立 &mdash; ' +
           '所以只會是唯一解或無限多解，絕不會無解。',
-        notes: [
+        notesZh: [
           '為什麼補這個：它把「三種解型態」直接砍掉一種，是後面判斷解結構最常用的特例。'
         ],
         examples: [
           {
-            label: '增廣矩陣的最後一行全為 0',
-            html:
-              M([[1, 1, 1], [2, 3, 1]], [[0], [0]])
+            label: 'The last column of the augmented matrix is all zeros',
+            html: M([[1, 1, 1], [2, 3, 1]], [[0], [0]])
           }
         ]
       }

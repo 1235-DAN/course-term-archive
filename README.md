@@ -28,8 +28,11 @@ README.md
 
 ## 怎麼用
 
-- **一則名詞一條橫向方塊**：左邊是英文名詞＋中譯＋章節標籤，右邊是定義、補充、
-  範例與圖示。方塊底色與頁面底色分開，一眼就看得出邊界。
+- **一則名詞一條橫向方塊**：左邊是英文名詞＋章節標籤，右邊是定義、補充、範例與圖示。
+  方塊左緣有科目色的色條，底色也與頁面底色分開，一眼就看得出邊界。
+- **卡片正面全英文**。中譯與中文說明收在底部的 **中文翻譯** 下拉式方塊裡，
+  點開才顯示 — 逼自己先讀英文，讀不懂再開來對照。
+  用中文搜尋時命中的那張卡會**自動展開**，不用再手動點。
 - **搜尋**：上方搜尋欄。中文、英文、符號都能打，會同時比對名詞、中譯、定義、
   補充說明與範例。多個關鍵字用空白隔開＝必須全部命中。
 - **快速鍵**：按 `/` 跳到搜尋欄，按 `Esc` 清空。
@@ -54,25 +57,41 @@ README.md
 打開該科目資料夾裡的資料檔（例如 `calculus/calculus.js`），在 `terms: [ … ]`
 陣列裡複製一筆物件改內容就好。只有 `id` / `term` / `zh` 是必填：
 
+**最重要的規則：卡片正面一律英文。** `def` / `notes` / 範例的 `label` /
+圖說的 `caption` 都寫英文；中文一律放進 `zh` / `zhAlt` / `defZh` / `notesZh`，
+引擎會自動收進「中文翻譯」下拉方塊。
+
 ```js
 {
   id:     'chain-rule',              // 唯一，會變成 #網址錨點，用小寫連字號
   term:   'Chain rule',              // 英文名詞（標題）
   abbr:   'd/dx',                    // 選填：縮寫或符號
+  aliases:['composite', '複合'],      // 選填：額外的搜尋關鍵字（中英都可）
+  tags:   ['9/15 ch3.6', 'derivative'], // 第一個 tag 會變成章節晶片
+
+  // ---- 顯示在卡片正面（英文）----
+  def:    'English definition. 可以用 <strong>HTML</strong>。',
+  notes:  ['An English bullet.', 'Another one.'],   // 選填
+  examples:[                                        // 選填
+    { label: 'From the notes', html: '<p>(f∘g)&prime; = f&prime;(g(x))·g&prime;(x)</p>' }
+  ],
+  figure: { svg:'<svg viewBox="0 0 340 120">…</svg>', caption:'English caption' },
+
+  // ---- 收在「中文翻譯」下拉方塊裡 ----
   zh:     '連鎖律',                   // 中譯（必填）
   zhAlt:  '鏈鎖法則',                 // 選填：另一種譯法
-  aliases:['composite', '複合'],      // 選填：額外的搜尋關鍵字
-  tags:   ['9/15 ch3.6', 'derivative'], // 第一個 tag 會變成章節晶片
-  def:    'English definition. 可以用 <strong>HTML</strong>。',
   defZh:  '中文說明。',
-  notes:  ['補充說明一', '補充說明二'],   // 選填：條列
-  examples:[                          // 選填：範例區塊
-    { label: '筆記原文', html: '<p>(f∘g)&prime; = f&prime;(g(x))·g&prime;(x)</p>' }
-  ],
-  figure: { svg:'<svg viewBox="0 0 340 120">…</svg>', caption:'圖說' }, // 選填
-  added:  true                        // 若不在筆記裡就加這行，會顯示「補充」標籤
+  notesZh:['中文補充一', '中文補充二'],
+
+  added:  true                        // 若不在筆記裡就加這行，會顯示 Supplement 標籤
 }
 ```
+
+`notes` 與 `notesZh` 是各自獨立的兩份，不必一一對應 — 有些說明只在中文有意義
+（例如「台灣叫列、中國叫行」），就只寫在 `notesZh`。
+
+「筆記原文」的範例可以保留手寫筆記裡的中文原句（那是引用，不是解釋），
+但最好在下一行補一句英文翻譯，正面才讀得通。
 
 ### 排版小工具
 
