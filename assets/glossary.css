@@ -7,13 +7,13 @@
 :root{
   --hue: 250;
 
-  --bg:            #eae7de;
+  --bg:            #e6e2d7;
   --bg-elev:       #ffffff;
   --bg-sunken:     #f5f3ec;
   --text:          #1e2227;
   --text-soft:     #57606c;
   --text-faint:    #8a919c;
-  --border:        #dbd5c7;
+  --border:        #d7d0bf;
   --border-strong: #cec7b8;
 
   --accent:        hsl(var(--hue) 58% 42%);
@@ -42,13 +42,13 @@
 
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
-    --bg:            #0e1013;
-    --bg-elev:       #1e232b;
+    --bg:            #0a0c0f;
+    --bg-elev:       #242b36;
     --bg-sunken:     #171b22;
     --text:          #e8e6e1;
     --text-soft:     #a3aab5;
     --text-faint:    #757d89;
-    --border:        #333944;
+    --border:        #3c4452;
     --border-strong: #3c424c;
 
     --accent:        hsl(var(--hue) 72% 68%);
@@ -70,13 +70,13 @@
 }
 
 :root[data-theme="dark"]{
-  --bg:            #0e1013;
-  --bg-elev:       #1e232b;
+  --bg:            #0a0c0f;
+  --bg-elev:       #242b36;
   --bg-sunken:     #171b22;
   --text:          #e8e6e1;
   --text-soft:     #a3aab5;
   --text-faint:    #757d89;
-  --border:        #333944;
+  --border:        #3c4452;
   --border-strong: #3c424c;
 
   --accent:        hsl(var(--hue) 72% 68%);
@@ -223,37 +223,66 @@ a:hover{ color:var(--accent-hover); text-decoration:underline; }
 
 /* ---------- cards ------------------------------------------------------- */
 
+/* Extra surfaces used only by the term boxes. The headword rail is a faint
+   tint of the subject accent, so each box reads as its own bright panel
+   against the deeper page ground. */
+:root{
+  --rail:      hsl(var(--hue) 62% 97.5%);
+  --shadow-lg: 0 2px 5px rgba(28,32,38,.09), 0 18px 34px -14px rgba(28,32,38,.34);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --rail:      hsl(var(--hue) 22% 21%);
+    --shadow-lg: 0 2px 5px rgba(0,0,0,.5), 0 18px 34px -14px rgba(0,0,0,.9);
+  }
+}
+:root[data-theme="dark"]{
+  --rail:      hsl(var(--hue) 22% 21%);
+  --shadow-lg: 0 2px 5px rgba(0,0,0,.5), 0 18px 34px -14px rgba(0,0,0,.9);
+}
+
 /* one term per row: a full-width horizontal band */
 .cards{
-  display:flex; flex-direction:column; gap:14px;
+  display:flex; flex-direction:column; gap:15px;
   padding:20px 0 70px;
 }
 
 .card{
   display:grid;
-  grid-template-columns:minmax(180px, 240px) 1fr;
-  column-gap:24px;
+  grid-template-columns:minmax(190px, 250px) 1fr;
   background:var(--bg-elev);
   border:1px solid var(--border);
   border-radius:var(--radius);
-  box-shadow:var(--shadow-sm);
-  padding:18px 22px 19px;
+  box-shadow:var(--shadow-md);
+  padding:0;            /* the rail and body carry their own padding */
+  overflow:hidden;      /* so the accent stripe follows the rounded corner */
   scroll-margin-top:170px;
-  transition:box-shadow .18s, border-color .18s;
+  transition:box-shadow .18s, border-color .18s, transform .18s;
 }
-.card:hover{ box-shadow:var(--shadow-md); }
-.card:target{ border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft); }
+.card:hover{
+  box-shadow:var(--shadow-lg);
+  border-color:var(--accent-line);
+  transform:translateY(-1px);
+}
+.card:target{ border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft), var(--shadow-lg); }
 
-/* left rail: the headword */
-.card__side{ border-right:1px solid var(--border); padding-right:22px; }
-.card__body{ min-width:0; }
+/* left rail: the headword, on a tinted panel with an accent stripe */
+.card__side{
+  background:var(--rail);
+  border-left:4px solid var(--accent);
+  border-right:1px solid var(--border);
+  padding:17px 18px 17px 17px;
+}
+.card__body{ min-width:0; padding:17px 22px 19px; }
 
 @media (max-width:760px){
-  .card{ grid-template-columns:1fr; row-gap:12px; }
+  .card{ grid-template-columns:1fr; }
   .card__side{
-    border-right:0; padding-right:0;
-    border-bottom:1px solid var(--border); padding-bottom:11px;
+    border-right:0;
+    border-bottom:1px solid var(--border);
+    padding:15px 18px 14px 17px;
   }
+  .card__body{ padding:16px 18px 18px; }
 }
 
 .card__term{
@@ -278,7 +307,8 @@ a:hover{ color:var(--accent-hover); text-decoration:underline; }
 .tag{
   font-size:.7rem; letter-spacing:.04em;
   padding:3px 8px; border-radius:999px; white-space:nowrap;
-  border:1px solid var(--border); color:var(--text-faint);
+  border:1px solid var(--border); color:var(--text-soft);
+  background:var(--bg-elev);   /* keeps it legible on the tinted rail */
 }
 .tag--new{
   background:var(--new-bg); color:var(--new-text);
