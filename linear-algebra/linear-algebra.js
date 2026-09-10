@@ -36,9 +36,14 @@
     nameZh: '線性代數',
     page: 'linear-algebra/linear-algebra.html', // relative to index.html
     hue: 232, // indigo
-    source: '線性代數9_7-9_8.pdf（9/7、9/8 ch 1.1）',
-    sourceFile: '線性代數9_7-9_8.pdf', // sits in this same folder; linked in the footer
-    blurb: '線性方程組的語言：方程式的零件、矩陣的零件與大小、增廣矩陣與基本列運算。',
+    // every source PDF sits in this same folder; the footer links to each one
+    sources: [
+      { file: '線性代數9_7-9_8.pdf', label: '線性代數9_7-9_8.pdf（ch1.1）' },
+      { file: '線性代數9_9.pdf', label: '線性代數9_9.pdf（ch1.2）' }
+    ],
+    blurb:
+      '線性方程組的語言：方程式的零件、矩陣的零件與大小、增廣矩陣與基本列運算，' +
+      '以及消去法的終點 — 簡化列梯形。',
 
     terms: [
       /* ============================================ 9/7 — equations */
@@ -822,8 +827,8 @@
         id: 'gaussian-elimination',
         term: 'Gaussian elimination',
         zh: '高斯消去法',
-        aliases: ['elimination', '消去法', 'gauss'],
-        tags: ['9/8 ch1.1', 'row operations'],
+        aliases: ['elimination', '消去法', 'gauss', 'gauss-jordan'],
+        tags: ['9/9 ch1.2', 'echelon'],
         added: true,
         def:
           'The procedure of applying elementary row operations, column by column, to drive ' +
@@ -833,26 +838,201 @@
           '有系統地一行一行套用基本列運算，把增廣矩陣化成階梯狀，' +
           '讓解可以直接讀出來的做法。',
         notes: [
-          '為什麼補這個：筆記給了三種 ERO 這些「工具」，但還沒說要拿它們去做什麼 &mdash; 目標就是這個。',
-          '做法：由左到右，用每一行的主元把它下方的元素全部清成 0。'
+          '為什麼補這個：ch1.1 給了三種 ERO 這些「工具」、ch1.2 給了 ' +
+            '<a href="#reduced-echelon-form">reduced echelon form</a> 這個目標，' +
+            '而這個名字就是連接兩者的那套流程。',
+          '做法：由左到右，用每一行的<a href="#pivot">主元</a>把它<em>下方</em>的元素清成 0。',
+          '<strong>補充</strong>：只清主元下方 &rarr; 得到 echelon form，稱 Gaussian elimination；' +
+            '連主元<em>上方</em>也清掉、並把主元化成 1 &rarr; 得到 reduced echelon form，' +
+            '這一版通常叫 <strong>Gauss-Jordan elimination</strong>（高斯-喬登消去法）。'
         ]
       },
 
       {
-        id: 'leading-entry',
-        term: 'Leading entry (pivot)',
+        id: 'pivot',
+        term: 'Pivot',
         zh: '主元',
-        zhAlt: '領先元／樞紐',
-        aliases: ['pivot', 'leading one', '首項'],
-        tags: ['9/8 ch1.1', 'row operations'],
+        zhAlt: '樞紐元／階梯基準點',
+        aliases: ['leading entry', '首項', '基準點', '階梯'],
+        tags: ['9/9 ch1.2', 'echelon'],
+        def:
+          'The entry a row is anchored on during elimination — the position of that row\'s ' +
+          'first non-zero element, i.e. where its step in the staircase begins. In reduced ' +
+          'echelon form every pivot is a <a href="#leading-1">leading 1</a>.',
+        defZh:
+          '消去時每一列所倚靠的那個位置 &mdash; 該列第一個非零元素所在處，也就是階梯的轉折點。' +
+          '在 reduced echelon form 中，每個主元都是一個 leading 1。',
+        notes: [
+          '<strong>補充</strong>：主元所在的那一行叫 <strong>pivot column</strong>（主行），' +
+            '它對應的變數是被綁定的；沒有主元的行對應 <a href="#free-variable">自由變數</a>。',
+          '<strong>補充</strong>：主元的個數就是矩陣的 <strong>rank</strong>（秩），' +
+            '它決定方程組是唯一解還是無限多解。'
+        ],
+        examples: [
+          {
+            label: '筆記原文',
+            html: '<p>pivot：每一階梯基準點</p>'
+          },
+          {
+            label: '主元位置（&#9646; 為主元）',
+            html:
+              M([
+                ['&#9646;', '&lowast;', '&lowast;', '&lowast;'],
+                [0, 0, '&#9646;', '&lowast;'],
+                [0, 0, 0, '&#9646;']
+              ]) + '<p>三個主元 &rarr; rank = 3</p>'
+          }
+        ]
+      },
+
+      {
+        id: 'reduced-echelon-form',
+        term: 'Reduced echelon form',
+        abbr: 'RREF',
+        zh: '簡化列梯形形式',
+        zhAlt: '最簡列梯形',
+        aliases: ['rref', 'reduced row echelon', '簡化', '最簡', '梯形'],
+        tags: ['9/9 ch1.2', 'echelon'],
+        def:
+          'A matrix is in <strong>reduced echelon form</strong> when it satisfies all four ' +
+          'conditions below. It is the finish line of elimination: once the augmented matrix ' +
+          'is in this shape, the solution can be read straight off — no back-substitution needed.',
+        defZh:
+          '同時滿足下面四個條件的矩陣就是 <strong>reduced echelon form</strong>。' +
+          '它是消去法的終點：增廣矩陣化到這個形狀後，解可以直接讀出來，不必再回代。',
+        notes: [
+          '<strong>&#9312;</strong> Any row consisting entirely of zeros is grouped at the ' +
+            '<strong>bottom</strong> of the matrix.　（全零的列都排到最底下）',
+          '<strong>&#9313;</strong> The first non-zero element of each other row is ' +
+            '<strong>1</strong>; this element is called a <a href="#leading-1">leading 1</a>.　' +
+            '（其餘每一列的第一個非零元素必須是 1，這個元素叫 leading 1）',
+          '<strong>&#9314;</strong> The leading 1 of each row after the first row is positioned ' +
+            '<strong>to the right of</strong> the leading 1 of the previous row.　' +
+            '（每列的 leading 1 都在上一列 leading 1 的右邊 &mdash; 這就是「階梯」）',
+          '<strong>&#9315;</strong> All other elements in the column containing a leading 1 are ' +
+            '<strong>zero</strong>.　（leading 1 所在那一行的其他元素都要是 0）',
+          '<strong>補充</strong>：&#9312;&#9313;&#9314; 合起來是 ' +
+            '<a href="#row-echelon-form">echelon form</a>（列梯形）；再加上 &#9315; 才叫 ' +
+            '<em>reduced</em>（簡化）&mdash; &#9315; 就是把 leading 1 <em>上方</em>也清成 0 的那一步。'
+        ],
+        examples: [
+          {
+            label: '是 reduced echelon form',
+            html:
+              M([[1, 0, 0], [0, 1, 0], [0, 0, 1]], [[3], ['&minus;1'], [2]]) +
+              '<p>直接讀出 x&#8321;=3, x&#8322;=&minus;1, x&#8323;=2</p>'
+          },
+          {
+            label: '不是 &mdash; 違反 &#9315;（leading 1 上方還有非零）',
+            html:
+              M([
+                [1, 2, 0],
+                [0, 1, 0],
+                [0, 0, 1]
+              ]) + '<p>第 2 行的 2 在 leading 1 上方，要再清成 0</p>'
+          },
+          {
+            label: '不是 &mdash; 違反 &#9312;（全零列不在最底下）',
+            html:
+              M([
+                [1, 0, 0],
+                [0, 0, 0],
+                [0, 1, 0]
+              ])
+          }
+        ],
+        figure: {
+          caption: '階梯往右下走；每個 leading 1 的上下都是 0',
+          svg:
+            '<svg viewBox="0 0 330 150" role="img" aria-label="簡化列梯形的形狀">' +
+            '<g fill="none" stroke="currentColor" stroke-width="1.5">' +
+            '<path d="M52 22 h-9 v106 h9"/><path d="M288 22 h9 v106 h9"/></g>' +
+            '<g fill="var(--accent-soft)">' +
+            '<rect x="62" y="28" width="42" height="26" rx="3"/>' +
+            '<rect x="128" y="60" width="42" height="26" rx="3"/>' +
+            '<rect x="194" y="92" width="42" height="26" rx="3"/></g>' +
+            '<g fill="var(--accent)" font-family="monospace" font-size="15" ' +
+            'font-weight="700" text-anchor="middle">' +
+            '<text x="83" y="47">1</text><text x="149" y="79">1</text>' +
+            '<text x="215" y="111">1</text></g>' +
+            '<g fill="currentColor" font-family="monospace" font-size="15" ' +
+            'text-anchor="middle" opacity=".75">' +
+            '<text x="149" y="47">0</text><text x="215" y="47">0</text><text x="271" y="47">*</text>' +
+            '<text x="83" y="79">0</text><text x="215" y="79">0</text><text x="271" y="79">*</text>' +
+            '<text x="83" y="111">0</text><text x="149" y="111">0</text><text x="271" y="111">*</text>' +
+            '</g>' +
+            '<path d="M62 60 L104 60 L104 92 L170 92 L170 124 L236 124" fill="none" ' +
+            'stroke="var(--accent)" stroke-width="2" stroke-dasharray="5 4" opacity=".8"/>' +
+            '<g fill="currentColor" font-size="10.5" font-family="sans-serif">' +
+            '<text x="255" y="18" text-anchor="middle">常數項</text>' +
+            '<text x="165" y="145" text-anchor="middle">虛線＝階梯，每階往右移一行</text></g></svg>'
+        }
+      },
+
+      {
+        id: 'leading-1',
+        term: 'Leading 1',
+        zh: '領先 1',
+        zhAlt: '前導 1',
+        aliases: ['leading one', 'leading', '首項 1', '第一個非零'],
+        tags: ['9/9 ch1.2', 'echelon'],
+        def:
+          'The <strong>first non-zero element of a row</strong> in a matrix being reduced to ' +
+          'echelon form. It <strong>must be 1</strong> — that requirement is what condition ' +
+          '&#9313; of reduced echelon form demands.',
+        defZh:
+          '在化為 reduced echelon form 的過程中，一列的<strong>第一個非零元素</strong>。' +
+          '它<strong>必須是 1</strong> &mdash; 這正是 reduced echelon form 條件 &#9313; 的要求。',
+        notes: [
+          '筆記把 <em>It must be 1</em> 特別畫了螢光 &mdash; 這是能不能算 reduced echelon form 的關鍵之一。',
+          '<strong>補充</strong>：如果某列首項是 k（k &ne; 0），把整列乘上 1/k 就變成 1，' +
+            '這正是<a href="#elementary-row-operation">基本列運算</a>的第 &#9313; 種，所以永遠做得到。',
+          '<strong>補充</strong>：全零的列沒有 leading 1，依條件 &#9312; 它們要被排到最底下。'
+        ],
+        examples: [
+          {
+            label: '筆記原文',
+            html:
+              '<p>leading 1：The first nonzero element of each other row in a matrix ' +
+              'being reduced echelon form. <mark>It must be 1</mark></p>'
+          },
+          {
+            label: '把首項變成 leading 1',
+            html:
+              M([[3, 6, 9]]) +
+              '&nbsp;&nbsp;&#8531;R&#8321;&nbsp;&nbsp;' +
+              M([[1, 2, 3]])
+          }
+        ]
+      },
+
+      {
+        id: 'free-variable',
+        term: 'Free variable',
+        zh: '自由變數',
+        aliases: ['free', '參數', 'parameter'],
+        tags: ['9/9 ch1.2', 'echelon'],
         added: true,
         def:
-          'The first non-zero entry of a row, reading left to right. Pivots are the anchors ' +
-          'that elimination uses to clear out the entries below them.',
+          'A variable whose column contains <strong>no pivot</strong> once the matrix is in ' +
+          'reduced echelon form. It can be set to anything, and the pivot variables are then ' +
+          'determined by it — which is exactly why such a system has infinitely many solutions.',
         defZh:
-          '一列從左往右數第一個非零的元素。消去法就是靠主元把它下方的元素清成 0。',
+          '矩陣化成 reduced echelon form 後，<strong>那一行沒有主元</strong>的變數。' +
+          '它可以任意取值，其他主元變數再隨它而定 &mdash; 這就是無限多解的來源。',
         notes: [
-          '主元的個數（rank，秩）決定了方程組是唯一解還是無限多解 &mdash; 之後的章節會回到這裡。'
+          '為什麼補這個：它把 ch1.1 的「無限多解」和 ch1.2 的主元直接接起來 &mdash; ' +
+            '有幾個自由變數，解就有幾個參數。',
+          '數量關係：自由變數個數 = 變數總數 &minus; 主元個數（rank）。'
+        ],
+        examples: [
+          {
+            label: 'x&#8323; 那一行沒有主元',
+            html:
+              M([[1, 0, 2], [0, 1, '&minus;1']], [[5], [3]]) +
+              '<p>令 x&#8323; = t（自由）</p>' +
+              '<p>則 x&#8321; = 5 &minus; 2t，x&#8322; = 3 + t</p>'
+          }
         ]
       },
 
@@ -863,16 +1043,21 @@
         zh: '列梯形形式',
         zhAlt: '階梯形',
         aliases: ['echelon', '梯形', 'staircase'],
-        tags: ['9/8 ch1.1', 'row operations'],
+        tags: ['9/9 ch1.2', 'echelon'],
         added: true,
         def:
-          'The staircase shape that elimination aims for: all-zero rows sit at the bottom, ' +
-          'and each pivot lies strictly to the right of the pivot in the row above it.',
+          'The staircase shape without the "reduced" part: all-zero rows sit at the bottom and ' +
+          'each pivot lies strictly to the right of the pivot above it, but the entries ' +
+          '<em>above</em> a pivot need not be zero, and pivots need not be 1.',
         defZh:
-          '消去法要達到的階梯形狀：全零的列都在最底下，而且每一列的主元都嚴格在上一列主元的右邊。',
+          '只有階梯、還沒「簡化」的形狀：全零列在最底下、每個主元都在上一列主元的右邊，' +
+          '但主元<em>上方</em>不必是 0，主元本身也不必是 1。',
         notes: [
-          '為什麼補這個：這是 ch1.1 三種 ERO 的直接終點，也是下一節的主題。',
-          '再進一步把主元化成 1、並清掉主元<em>上方</em>的元素，就是簡化列梯形 RREF。'
+          '為什麼補這個：筆記只定義了 <em>reduced</em> echelon form（四個條件）。' +
+            '課本與題目常單獨提 echelon form，指的是只滿足前三個條件的版本，' +
+            '兩者差在條件 &#9315;。',
+          '對照：echelon form = &#9312;&#9313;&#9314;（且 &#9313; 可放寬成「首項非零」）；' +
+            '<a href="#reduced-echelon-form">reduced echelon form</a> = &#9312;&#9313;&#9314;&#9315;。'
         ],
         examples: [
           {

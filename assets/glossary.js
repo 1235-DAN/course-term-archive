@@ -341,13 +341,19 @@
       ' · ',
       s.terms.length,
       ' 個名詞 · 來源：',
-      /* the source PDF now lives in this same folder, so link straight to it */
-      s.sourceFile
-        ? '<a href="' +
-          esc(s.sourceFile) +
-          '">' +
-          esc(s.source || s.sourceFile) +
-          '</a>'
+      /* the source PDFs live in this same folder, so link straight to them */
+      s.sources && s.sources.length
+        ? s.sources
+            .map(function (src) {
+              return (
+                '<a href="' +
+                esc(src.file) +
+                '">' +
+                esc(src.label || src.file) +
+                '</a>'
+              );
+            })
+            .join('、')
         : esc(s.source || '課堂筆記'),
       '　標示「補充」者為筆記之外的補齊內容。',
       '</footer>'

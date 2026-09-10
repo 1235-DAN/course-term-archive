@@ -8,3 +8,6 @@ desktop.ini
 .vscode/
 .idea/
 *.swp
+
+# local scratch (PDF reading helper, temp copies)
+_*

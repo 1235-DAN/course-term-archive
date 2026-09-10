@@ -13,8 +13,8 @@
     nameZh: '微積分',
     page: 'calculus/calculus.html', // relative to index.html
     hue: 24, // warm amber
-    source: '微積分9_8.pdf（9/8 ch 1.1）',
-    sourceFile: '微積分9_8.pdf', // sits in this same folder; linked in the footer
+    // every source PDF sits in this same folder; the footer links to each one
+    sources: [{ file: '微積分9_8.pdf', label: '微積分9_8.pdf（9/8 ch1.1）' }],
     blurb: '函數的基本語言：定義域與值域、取整函數、奇偶性、以及常見的函數家族。',
 
     terms: [
