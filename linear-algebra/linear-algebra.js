@@ -57,7 +57,7 @@
         zh: '線性方程式',
         zhAlt: '一次方程式',
         aliases: ['linear', '一次'],
-        tags: ['9/7 ch1.1', 'equations'],
+        tags: ['ch1.1', 'equations'],
         def:
           'An equation in which every variable appears to the first power only, ' +
           'multiplied by a constant and added together: ' +
@@ -89,7 +89,7 @@
         term: 'Variable',
         zh: '變數',
         aliases: ['unknown', '未知數', 'x y z'],
-        tags: ['9/7 ch1.1', 'equations'],
+        tags: ['ch1.1', 'equations'],
         def: 'The unknown quantities being solved for — the letters in the equation.',
         notes: [
           'With many variables the subscript form x&#8321;, x&#8322;, …, x<sub>n</sub> is ' +
@@ -112,7 +112,7 @@
         term: 'Coefficient',
         zh: '係數',
         aliases: ['multiplier', '倍數'],
-        tags: ['9/7 ch1.1', 'equations'],
+        tags: ['ch1.1', 'equations'],
         def: 'The constant multiplying each variable.',
         notes: [
           'An unwritten coefficient is 1, and a minus sign means &minus;1 — in ' +
@@ -138,7 +138,7 @@
         term: 'Constant term',
         zh: '常數項',
         aliases: ['right hand side', 'rhs', '等號右邊'],
-        tags: ['9/7 ch1.1', 'equations'],
+        tags: ['ch1.1', 'equations'],
         def:
           'The number standing alone on the right-hand side of the equation — the part ' +
           'with no variable attached.',
@@ -164,7 +164,7 @@
         zh: '方程式',
         zhAlt: '等式',
         aliases: ['equals', '等號'],
-        tags: ['9/7 ch1.1', 'equations'],
+        tags: ['ch1.1', 'equations'],
         def:
           'A statement that two expressions are equal — the whole line, left side, ' +
           'equals sign and right side together.',
@@ -180,7 +180,7 @@
         zh: '線性方程組',
         zhAlt: '聯立方程組',
         aliases: ['system', '聯立', 'simultaneous'],
-        tags: ['9/7 ch1.1', 'equations'],
+        tags: ['ch1.1', 'equations'],
         def:
           'Several linear equations in the same variables, to be satisfied ' +
           '<strong>all at once</strong>. Solving the system means finding the values that ' +
@@ -215,7 +215,7 @@
         term: 'Notation convention',
         zh: '符號慣例',
         aliases: ['bold', 'lowercase', 'uppercase', '粗體', '大寫', '小寫', '符號'],
-        tags: ['9/7 ch1.1', 'notation'],
+        tags: ['ch1.1', 'notation'],
         def:
           'How this course distinguishes the three kinds of object by typeface: ' +
           '<strong>bold lowercase</strong> = vector, <strong>light lowercase</strong> = scalar, ' +
@@ -244,7 +244,7 @@
         term: 'Vector',
         zh: '向量',
         aliases: ['column vector', 'row vector', '行向量', '列向量'],
-        tags: ['9/7 ch1.1', 'notation'],
+        tags: ['ch1.1', 'notation'],
         def:
           'An ordered list of numbers, written either as a <strong>column</strong> or as a ' +
           '<strong>row</strong>. It is the same data either way, but the two shapes behave ' +
@@ -277,7 +277,7 @@
         term: 'Scalar',
         zh: '純量',
         aliases: ['number', '單一數值'],
-        tags: ['9/7 ch1.1', 'notation'],
+        tags: ['ch1.1', 'notation'],
         def:
           'A single number (as opposed to a vector or a matrix). Scalars are what you ' +
           'multiply vectors and matrices <em>by</em>.',
@@ -294,7 +294,7 @@
         term: 'Matrix',
         zh: '矩陣',
         aliases: ['matrices', 'array', '陣列'],
-        tags: ['9/7 ch1.1', 'notation'],
+        tags: ['ch1.1', 'notation'],
         def:
           'A rectangular array of numbers arranged in rows and columns. It is the ' +
           'bookkeeping device that lets us handle a whole system of equations at once.',
@@ -317,7 +317,7 @@
           '無解',
           '無限多解'
         ],
-        tags: ['9/7 ch1.1', 'solutions'],
+        tags: ['ch1.1', 'solutions'],
         def:
           'A system of linear equations has exactly one of three outcomes: ' +
           '<strong>1. a unique solution</strong>, <strong>2. no solution</strong>, or ' +
@@ -368,7 +368,7 @@
         term: 'Consistent / inconsistent system',
         zh: '相容／不相容方程組',
         aliases: ['有解', '無解', 'solvable'],
-        tags: ['9/7 ch1.1', 'solutions'],
+        tags: ['ch1.1', 'solutions'],
         added: true,
         def:
           'A system is <strong>consistent</strong> if it has at least one solution, and ' +
@@ -392,7 +392,7 @@
         term: 'Solution set',
         zh: '解集合',
         aliases: ['solution', '解'],
-        tags: ['9/7 ch1.1', 'solutions'],
+        tags: ['ch1.1', 'solutions'],
         added: true,
         def:
           'The set of <em>all</em> ordered tuples that satisfy every equation in the system. ' +
@@ -416,7 +416,7 @@
         zh: '元素',
         zhAlt: '元／entry',
         aliases: ['entry', 'a_ij', '項'],
-        tags: ['9/8 ch1.1', 'matrix parts'],
+        tags: ['ch1.1', 'matrix parts'],
         def: 'A single number sitting inside the matrix.',
         notes: [
           'Positions carry two subscripts: <span class="mono">a<sub>ij</sub></span> is the ' +
@@ -441,7 +441,7 @@
         zh: '列',
         zhAlt: '橫列',
         aliases: ['horizontal', '橫的', '水平'],
-        tags: ['9/8 ch1.1', 'matrix parts'],
+        tags: ['ch1.1', 'matrix parts'],
         def: 'A <strong>horizontal</strong> line of numbers in the matrix.',
         notes: [
           'In a system, one row is one equation — which is why "row operations" means ' +
@@ -485,7 +485,7 @@
         zh: '行',
         zhAlt: '直行',
         aliases: ['vertical', '直的', '垂直', 'vetical'],
-        tags: ['9/8 ch1.1', 'matrix parts'],
+        tags: ['ch1.1', 'matrix parts'],
         def: 'A <strong>vertical</strong> line of numbers in the matrix.',
         notes: [
           'In a system, one column corresponds to one variable (the last column being the ' +
@@ -507,7 +507,7 @@
         term: 'Submatrix',
         zh: '子矩陣',
         aliases: ['sub matrix', '部分矩陣'],
-        tags: ['9/8 ch1.1', 'matrix parts'],
+        tags: ['ch1.1', 'matrix parts'],
         def:
           'The matrix left over after deleting some rows and/or some columns from a ' +
           'matrix, keeping the remaining entries in their original relative positions.',
@@ -543,7 +543,7 @@
         zh: '矩陣的大小',
         zhAlt: '階數／維度',
         aliases: ['dimension', 'm x n', '2x3', '幾乘幾'],
-        tags: ['9/8 ch1.1', 'matrix shapes'],
+        tags: ['ch1.1', 'matrix shapes'],
         def:
           'Written <span class="mono">m &times; n</span>, meaning <strong>m rows by ' +
           'n columns</strong> — always rows first.',
@@ -573,7 +573,7 @@
         zh: '方陣',
         zhAlt: '方形矩陣',
         aliases: ['n x n', '正方'],
-        tags: ['9/8 ch1.1', 'matrix shapes'],
+        tags: ['ch1.1', 'matrix shapes'],
         def:
           'A matrix with the same number of rows as columns — an ' +
           '<span class="mono">n &times; n</span> matrix.',
@@ -605,7 +605,7 @@
         zh: '列矩陣',
         zhAlt: '列向量',
         aliases: ['row vector', '1 x n'],
-        tags: ['9/8 ch1.1', 'matrix shapes'],
+        tags: ['ch1.1', 'matrix shapes'],
         def: 'A matrix with only one row — size <span class="mono">1 &times; n</span>.',
         defZh: '只有一列（一橫排）的矩陣，大小為 1 &times; n。',
         examples: [
@@ -622,7 +622,7 @@
         zh: '行矩陣',
         zhAlt: '行向量',
         aliases: ['column vector', 'n x 1'],
-        tags: ['9/8 ch1.1', 'matrix shapes'],
+        tags: ['ch1.1', 'matrix shapes'],
         def: 'A matrix with only one column — size <span class="mono">m &times; 1</span>.',
         defZh: '只有一行（一直排）的矩陣，大小為 m &times; 1。',
         examples: [
@@ -639,7 +639,7 @@
         abbr: 'I<sub>n</sub>',
         zh: '單位矩陣',
         aliases: ['I', 'unit matrix', '對角線 1'],
-        tags: ['9/8 ch1.1', 'matrix shapes'],
+        tags: ['ch1.1', 'matrix shapes'],
         def:
           'The square matrix with <strong>1 on the main diagonal and 0 everywhere else</strong>. ' +
           'It is the "do nothing" matrix: <span class="mono">AI = IA = A</span>.',
@@ -681,7 +681,7 @@
         abbr: 'O',
         zh: '零矩陣',
         aliases: ['null matrix', '全零'],
-        tags: ['9/8 ch1.1', 'matrix shapes'],
+        tags: ['ch1.1', 'matrix shapes'],
         added: true,
         def: 'A matrix all of whose entries are 0.',
         notes: [
@@ -700,7 +700,7 @@
         term: 'Diagonal matrix',
         zh: '對角矩陣',
         aliases: ['main diagonal', '主對角線'],
-        tags: ['9/8 ch1.1', 'matrix shapes'],
+        tags: ['ch1.1', 'matrix shapes'],
         added: true,
         def:
           'A square matrix whose off-diagonal entries are all 0; only the main diagonal ' +
@@ -729,7 +729,7 @@
         abbr: 'A&#7488;',
         zh: '轉置矩陣',
         aliases: ['A transpose', '轉置'],
-        tags: ['9/8 ch1.1', 'matrix shapes'],
+        tags: ['ch1.1', 'matrix shapes'],
         added: true,
         def:
           'The matrix obtained by turning rows into columns: the (i, j) entry of ' +
@@ -772,7 +772,7 @@
         term: 'Matrix of coefficients',
         zh: '係數矩陣',
         aliases: ['coefficient matrix', 'A', '係數'],
-        tags: ['9/8 ch1.1', 'matrix form'],
+        tags: ['ch1.1', 'matrix form'],
         def:
           'The matrix holding only the coefficients of the system, each in its original ' +
           'row-and-column position. The constant terms are left out.',
@@ -794,7 +794,7 @@
         zh: '增廣矩陣',
         zhAlt: '擴增矩陣',
         aliases: ['augmented', 'bar', '分隔線', '常數項'],
-        tags: ['9/8 ch1.1', 'matrix form'],
+        tags: ['ch1.1', 'matrix form'],
         def:
           'The coefficient matrix with the column of constant terms attached on the right, ' +
           'usually separated by a vertical bar. It carries the <em>complete</em> information ' +
@@ -845,7 +845,7 @@
         abbr: '~',
         zh: '列等價',
         aliases: ['equivalent', '等價', 'same solution'],
-        tags: ['9/8 ch1.1', 'row operations'],
+        tags: ['ch1.1', 'row operations'],
         def:
           'Two augmented matrices are <strong>row equivalent</strong> when one can be turned ' +
           'into the other by elementary row operations. They look different but describe ' +
@@ -882,7 +882,7 @@
         abbr: 'ERO',
         zh: '基本列運算',
         aliases: ['interchange', 'multiply', 'add', '對調', '相加', '列運算'],
-        tags: ['9/8 ch1.1', 'row operations'],
+        tags: ['ch1.1', 'row operations'],
         def:
           'The three legal moves on the rows of an augmented matrix. Each one is reversible, ' +
           'so none of them changes the solution set: ' +
@@ -944,7 +944,7 @@
         zh: '主元',
         zhAlt: '樞紐元／階梯基準點',
         aliases: ['leading entry', '首項', '基準點', '階梯'],
-        tags: ['9/9 ch1.2', 'echelon'],
+        tags: ['ch1.2', 'echelon'],
         def:
           'The entry a row is anchored on during elimination — the position of that row\'s ' +
           'first non-zero element, i.e. where its step in the staircase begins. In reduced ' +
@@ -990,7 +990,7 @@
         zh: '簡化列梯形形式',
         zhAlt: '最簡列梯形',
         aliases: ['rref', 'reduced row echelon', '簡化', '最簡', '梯形'],
-        tags: ['9/9 ch1.2', 'echelon'],
+        tags: ['ch1.2', 'echelon'],
         def:
           'A matrix is in <strong>reduced echelon form</strong> when it satisfies all four ' +
           'conditions below. It is the finish line of elimination: once the augmented matrix ' +
@@ -1082,7 +1082,7 @@
         zh: '領先 1',
         zhAlt: '前導 1',
         aliases: ['leading one', 'leading', '首項 1', '第一個非零'],
-        tags: ['9/9 ch1.2', 'echelon'],
+        tags: ['ch1.2', 'echelon'],
         def:
           'The <strong>first non-zero element of a row</strong> in a matrix being reduced to ' +
           'echelon form. It <strong>must be 1</strong> — that requirement is what condition ' +
@@ -1124,7 +1124,7 @@
         term: 'Free variable',
         zh: '自由變數',
         aliases: ['free', '參數', 'parameter'],
-        tags: ['9/9 ch1.2', 'echelon'],
+        tags: ['ch1.2', 'echelon'],
         added: true,
         def:
           'A variable whose column contains <strong>no pivot</strong> once the matrix is in ' +
@@ -1161,7 +1161,7 @@
         zh: '列梯形形式',
         zhAlt: '階梯形',
         aliases: ['echelon', '梯形', 'staircase'],
-        tags: ['9/9 ch1.2', 'echelon'],
+        tags: ['ch1.2', 'echelon'],
         added: true,
         def:
           'The staircase shape without the "reduced" part: all-zero rows sit at the bottom and ' +
@@ -1201,7 +1201,7 @@
         term: 'Gaussian elimination',
         zh: '高斯消去法',
         aliases: ['elimination', '消去法', 'gauss', 'gauss-jordan'],
-        tags: ['9/9 ch1.2', 'echelon'],
+        tags: ['ch1.2', 'echelon'],
         added: true,
         def:
           'The procedure of applying elementary row operations, column by column, to drive ' +
@@ -1236,7 +1236,7 @@
         term: 'Homogeneous system',
         zh: '齊次方程組',
         aliases: ['homogeneous', 'trivial solution', '零解', '齊次'],
-        tags: ['9/8 ch1.1', 'solutions'],
+        tags: ['ch1.1', 'solutions'],
         added: true,
         def:
           'A system in which every constant term is 0. It is always consistent, because ' +

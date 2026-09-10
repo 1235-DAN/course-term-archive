@@ -109,7 +109,7 @@
     page: 'computer-science/computer-science.html', // relative to index.html
     hue: 290, // violet
     // every source PDF sits in this same folder; the footer links to each one
-    sources: [{ file: '計算機概論9_10.pdf', label: '計算機概論9_10.pdf（9/10 ch1.1）' }],
+    sources: [{ file: '計算機概論9_10.pdf', label: '計算機概論9_10.pdf（ch1.1）' }],
     blurb: '電腦的兩種基本模型 — 圖靈模型與馮紐曼模型，以及馮紐曼電腦裡的四個子系統。',
 
     terms: [
@@ -119,7 +119,7 @@
         term: 'Turing model',
         zh: '圖靈模型',
         aliases: ['turing', 'alan turing', 'programmable data processor', '圖靈機'],
-        tags: ['9/10 ch1.1', 'models'],
+        tags: ['ch1.1', 'models'],
         def:
           'A model of the computer as a <strong>programmable data processor</strong>: input ' +
           'data goes in, output data comes out, and a <strong>program</strong> supplied from ' +
@@ -165,7 +165,7 @@
         zh: '馮紐曼模型',
         zhAlt: '范紐曼模型',
         aliases: ['von neumann', 'neumann', 'stored program', '馮諾伊曼', '四個子系統'],
-        tags: ['9/10 ch1.1', 'models'],
+        tags: ['ch1.1', 'models'],
         def:
           'A computer design in which the <strong>program and the data are stored in the same ' +
           'memory</strong>. The machine is split into four subsystems — ' +
@@ -216,7 +216,7 @@
         zh: '記憶體',
         zhAlt: '主記憶體',
         aliases: ['main memory', 'ram', 'storage', '儲存'],
-        tags: ['9/10 ch1.1', 'subsystems'],
+        tags: ['ch1.1', 'subsystems'],
         def:
           'The storage area where the <strong>data and the program</strong> are kept ' +
           '<strong>during processing</strong>.',
@@ -246,7 +246,7 @@
         abbr: 'ALU',
         zh: '算術邏輯單元',
         aliases: ['arithmetic', 'logic', 'calculation', '運算'],
-        tags: ['9/10 ch1.1', 'subsystems'],
+        tags: ['ch1.1', 'subsystems'],
         def:
           'The subsystem that carries out the <strong>calculations and logic operations</strong>.',
         notes: [
@@ -282,7 +282,7 @@
         abbr: 'CU',
         zh: '控制單元',
         aliases: ['controller', 'control', '控制器'],
-        tags: ['9/10 ch1.1', 'subsystems'],
+        tags: ['ch1.1', 'subsystems'],
         def:
           'The subsystem that <strong>controls the operation of the ALU, the memory and the ' +
           'input/output subsystem</strong> — it decides what happens next, and when.',
@@ -309,7 +309,7 @@
         abbr: 'I/O',
         zh: '輸入／輸出子系統',
         aliases: ['input', 'output', 'io', 'i/o', 'peripheral', '周邊', '輸入', '輸出'],
-        tags: ['9/10 ch1.1', 'subsystems'],
+        tags: ['ch1.1', 'subsystems'],
         def:
           'The subsystem that connects the computer to the outside world: it accepts ' +
           '<strong>input data</strong> and delivers <strong>output data</strong>.',
@@ -340,7 +340,7 @@
         zh: '中央處理器',
         zhAlt: '中央處理單元',
         aliases: ['processor', 'cpu', '處理器'],
-        tags: ['9/10 ch1.1', 'subsystems'],
+        tags: ['ch1.1', 'subsystems'],
         added: true,
         def:
           'The <a href="#alu">ALU</a> and the <a href="#control-unit">control unit</a> taken ' +
@@ -364,7 +364,7 @@
         zh: '內儲程式概念',
         zhAlt: '儲存程式概念',
         aliases: ['stored program', '內儲程式', '程式儲存'],
-        tags: ['9/10 ch1.1', 'models'],
+        tags: ['ch1.1', 'models'],
         added: true,
         def:
           'The idea that a program is kept in <a href="#memory">memory</a> in the same way as ' +
@@ -392,7 +392,7 @@
         term: 'Program',
         zh: '程式',
         aliases: ['instructions', 'software', '指令', '軟體'],
-        tags: ['9/10 ch1.1', 'models'],
+        tags: ['ch1.1', 'models'],
         added: true,
         def: 'A set of instructions that tells the computer what to do with the data.',
         notes: [

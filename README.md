@@ -42,7 +42,7 @@ README.md
 - **搜尋**：上方搜尋欄。中文、英文、符號都能打，會同時比對名詞、中譯、定義、
   補充說明與範例。多個關鍵字用空白隔開＝必須全部命中。
 - **快速鍵**：按 `/` 跳到搜尋欄，按 `Esc` 清空。
-- **篩選晶片**：依章節（9/7 ch1.1、9/8 ch1.1…）篩選，或切「只看筆記原文 / 只看補充」。
+- **篩選晶片**：依章節（ch1.1、ch1.2…）篩選，或切「只看筆記原文 / 只看補充」。
 - **深層連結**：`calculus/calculus.html#even-function` 會直接跳到並highlight該張方塊。
 - **深淺色**：右上角 `Theme` 切換，選擇會記在瀏覽器裡。
 
@@ -73,7 +73,7 @@ README.md
   term:   'Chain rule',              // 英文名詞（標題）
   abbr:   'd/dx',                    // 選填：縮寫或符號
   aliases:['composite', '複合'],      // 選填：額外的搜尋關鍵字（中英都可）
-  tags:   ['9/15 ch3.6', 'derivative'], // 第一個 tag 會變成章節晶片
+  tags:   ['ch3.6', 'derivative'],  // 第一個 tag 只寫章節（不寫日期），會變成章節晶片
 
   // ---- 顯示在卡片正面（英文）----
   def:    'English definition. 可以用 <strong>HTML</strong>。',
@@ -132,8 +132,7 @@ SYS(['x + y = 2', 'x - y = 0'])     // 方程組
    nameZh:     '物理',                      // 中文科目名
    page:       'physics/physics.html',     // 相對於 index.html 的路徑
    hue:        150,                        // 主色色相 0–360（微積分 24、線性代數 232）
-   source:     'physics9_20.pdf（9/20 ch1）', // 頁尾顯示的來源文字
-   sourceFile: 'physics9_20.pdf',          // 同資料夾裡的 PDF，頁尾會連過去
+   sources:    [{ file: 'physics9_20.pdf', label: 'physics9_20.pdf（ch1）' }], // 同資料夾裡的 PDF，頁尾會連過去；標籤只寫章節
    blurb:      '一句話介紹，顯示在入口網站的卡片上。',
    terms:      [ … ]                       // 換成自己的名詞
    ```

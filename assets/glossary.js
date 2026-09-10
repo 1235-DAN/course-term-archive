@@ -18,7 +18,7 @@
        term:   'Augmented matrix',      // English headword
        abbr:   'ERO',                   // optional abbreviation / symbol
        aliases:['bar', '分隔線'],        // extra words the search should hit
-       tags:   ['9/8 ch1.1', 'matrix'], // first tag becomes the chapter chip
+       tags:   ['ch1.1', 'matrix'],      // first tag = chapter only (no dates), becomes the chip
 
        // --- shown on the card face (English) ---
        def:    'Plain-English definition. Limited HTML is allowed.',
@@ -133,6 +133,28 @@
 
   function stripTags(html) {
     return String(html).replace(/<[^>]*>/g, ' ');
+  }
+
+  /* The distinct chapters of a subject (the first tag of each term), in
+     numeric order — ch1.2 before ch1.10, ch2.1 after both. */
+  function chaptersOf(s) {
+    var list = [];
+    s.terms.forEach(function (t) {
+      var c = t.tags && t.tags[0];
+      if (c && list.indexOf(c) === -1) list.push(c);
+    });
+    function nums(c) {
+      return (String(c).match(/\d+/g) || []).map(Number);
+    }
+    return list.sort(function (a, b) {
+      var x = nums(a),
+        y = nums(b);
+      for (var i = 0; i < Math.max(x.length, y.length); i++) {
+        var d = (x[i] || 0) - (y[i] || 0);
+        if (d) return d;
+      }
+      return a < b ? -1 : a > b ? 1 : 0;
+    });
   }
 
   /* ---------- search ---------------------------------------------------- */
@@ -358,11 +380,7 @@
     document.title = s.nameZh + ' 名詞檔案庫 · ' + s.name;
 
     /* chapter chips come from the first tag of every term */
-    var chapters = [];
-    s.terms.forEach(function (t) {
-      var c = t.tags && t.tags[0];
-      if (c && chapters.indexOf(c) === -1) chapters.push(c);
-    });
+    var chapters = chaptersOf(s);
 
     root.innerHTML = [
       '<header class="topbar">',
@@ -548,11 +566,7 @@
       var added = s.terms.filter(function (t) {
         return t.added;
       }).length;
-      var chapters = [];
-      s.terms.forEach(function (t) {
-        var c = t.tags && t.tags[0];
-        if (c && chapters.indexOf(c) === -1) chapters.push(c);
-      });
+      var chapters = chaptersOf(s);
       return [
         '<a class="subject" style="--hue:' + s.hue + '" href="' + esc(s.page) + '">',
         '<h2 class="subject__zh">' + esc(s.nameZh) + '</h2>',

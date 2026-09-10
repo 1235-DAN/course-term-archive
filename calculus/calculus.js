@@ -71,8 +71,8 @@
     hue: 24, // warm amber
     // every source PDF sits in this same folder; the footer links to each one
     sources: [
-      { file: '微積分9_8.pdf', label: '微積分9_8.pdf（9/8 ch1.1）' },
-      { file: '微積分9_10.pdf', label: '微積分9_10.pdf（9/8–9/10 ch1.1）' }
+      { file: '微積分9_8.pdf', label: '微積分9_8.pdf（ch1.1）' },
+      { file: '微積分9_10.pdf', label: '微積分9_10.pdf（ch1.1）' }
     ],
     blurb:
       '函數的基本語言：定義域與值域、座標與座標軸、差商、取整函數、' +
@@ -85,7 +85,7 @@
         term: 'Function',
         zh: '函數',
         aliases: ['f(x)', 'mapping', '對應'],
-        tags: ['9/8 ch1.1', 'basics'],
+        tags: ['ch1.1', 'basics'],
         def:
           'A rule that assigns to <em>every</em> <span class="mono">x</span> in the ' +
           '<strong>domain</strong> exactly one (a <em>unique</em>) value ' +
@@ -143,7 +143,7 @@
         term: 'Domain',
         zh: '定義域',
         aliases: ['input', '輸入'],
-        tags: ['9/8 ch1.1', 'basics'],
+        tags: ['ch1.1', 'basics'],
         def:
           'The set of all <strong>input</strong> values the function is allowed to take — ' +
           'the x-side of the rule.',
@@ -173,7 +173,7 @@
         term: 'Range',
         zh: '值域',
         aliases: ['output', '輸出', 'image'],
-        tags: ['9/8 ch1.1', 'basics'],
+        tags: ['ch1.1', 'basics'],
         def:
           'The set of all <strong>output</strong> values that the function actually ' +
           'produces as x runs through the whole domain.',
@@ -197,7 +197,7 @@
         zh: '對應域',
         zhAlt: '共域',
         aliases: ['target set'],
-        tags: ['9/8 ch1.1', 'basics'],
+        tags: ['ch1.1', 'basics'],
         added: true,
         def:
           'The set the outputs are declared to live in when we write ' +
@@ -229,7 +229,7 @@
         term: 'Independent / dependent variable',
         zh: '自變數／因變數',
         aliases: ['argument', '應變數', 'independent number'],
-        tags: ['9/9 ch1.1', 'basics'],
+        tags: ['ch1.1', 'basics'],
         def:
           'In <span class="mono">y = f(x)</span>, <span class="mono">x</span> is the ' +
           '<strong>independent</strong> variable (the one you choose) and ' +
@@ -263,7 +263,7 @@
         term: 'Coordinate',
         zh: '座標',
         aliases: ['x-coordinate', 'y-coordinate', 'x座標', 'y座標', 'ordered pair', 'point'],
-        tags: ['9/10 ch1.1', 'the plane'],
+        tags: ['ch1.1', 'the plane'],
         def:
           'A <strong>number</strong> giving a point\'s position along one axis. A point in the ' +
           'plane has two: its <strong>x-coordinate</strong> (how far across) and its ' +
@@ -297,7 +297,7 @@
         zh: '座標軸',
         zhAlt: '軸',
         aliases: ['axes', 'x-axis', 'y-axis', 'x軸', 'y軸'],
-        tags: ['9/10 ch1.1', 'the plane'],
+        tags: ['ch1.1', 'the plane'],
         def:
           'One of the two perpendicular number lines that set up the plane: the horizontal ' +
           '<strong>x-axis</strong> and the vertical <strong>y-axis</strong>, crossing at the ' +
@@ -333,7 +333,7 @@
         zh: 'xy 平面',
         zhAlt: '座標平面／直角座標平面',
         aliases: ['coordinate plane', 'cartesian plane', 'quadrant', '象限', '平面'],
-        tags: ['9/10 ch1.1', 'the plane'],
+        tags: ['ch1.1', 'the plane'],
         def:
           'The plane set up by the x-axis and the y-axis, in which every point is named by an ' +
           'ordered pair <span class="mono">(x, y)</span>. It is where the ' +
@@ -367,7 +367,7 @@
         term: 'Difference quotient',
         zh: '差商',
         aliases: ['secant', 'slope', '割線', '斜率', 'average rate of change', '平均變化率'],
-        tags: ['9/9 ch1.1', 'rates'],
+        tags: ['ch1.1', 'rates'],
         def:
           'The expression <span class="mono">[f(x + h) &minus; f(x)] / h</span> (with ' +
           '<span class="mono">h &ne; 0</span>): the change in the output divided by the change ' +
@@ -433,7 +433,7 @@
         term: 'Graph of a function',
         zh: '函數圖形',
         aliases: ['vertical line test', '垂線檢驗'],
-        tags: ['9/8 ch1.1', 'basics'],
+        tags: ['ch1.1', 'basics'],
         added: true,
         def:
           'The set of points <span class="mono">{ (x, f(x)) : x &isin; D }</span> drawn in the ' +
@@ -474,7 +474,7 @@
         zh: '下取整函數',
         zhAlt: '高斯函數／地板函數',
         aliases: ['greatest integer function', 'floor', '取整', 'gauss'],
-        tags: ['9/8 ch1.1', 'special functions'],
+        tags: ['ch1.1', 'special functions'],
         def:
           '<span class="mono">&lfloor;x&rfloor;</span> is the <strong>greatest integer that is ' +
           'less than or equal to</strong> x — round <em>down</em> to the nearest integer.',
@@ -530,7 +530,7 @@
         zh: '上取整函數',
         zhAlt: '天花板函數',
         aliases: ['least integer function', 'ceiling', '進位'],
-        tags: ['9/8 ch1.1', 'special functions'],
+        tags: ['ch1.1', 'special functions'],
         def:
           '<span class="mono">&lceil;x&rceil;</span> is the <strong>smallest integer that is ' +
           'greater than or equal to</strong> x — round <em>up</em> to the nearest integer.',
@@ -560,7 +560,7 @@
         term: 'Monotonic function',
         zh: '單調函數',
         aliases: ['monotone', '遞增', '遞減'],
-        tags: ['9/8 ch1.1', 'behaviour'],
+        tags: ['ch1.1', 'behaviour'],
         def:
           'A function that moves in one direction only on an interval: always ' +
           'increasing, or always decreasing — it never turns around.',
@@ -604,7 +604,7 @@
         term: 'Symmetry',
         zh: '對稱性',
         aliases: ['symmetric', '對稱', 'y-axis symmetry', 'origin symmetry', 'x-axis symmetry'],
-        tags: ['9/10 ch1.1', 'symmetry'],
+        tags: ['ch1.1', 'symmetry'],
         def:
           'A graph is <strong>symmetric</strong> when some reflection or rotation carries it ' +
           'onto itself. The three kinds that matter here are symmetry about the ' +
@@ -665,7 +665,7 @@
         term: 'Even function',
         zh: '偶函數',
         aliases: ['symmetry', '對稱', 'y軸對稱'],
-        tags: ['9/8 ch1.1', 'symmetry'],
+        tags: ['ch1.1', 'symmetry'],
         def:
           'A function with <span class="mono">f(x) = f(&minus;x)</span> for every ' +
           'x in the domain. Its graph is symmetric about the <strong>y-axis</strong>.',
@@ -713,7 +713,7 @@
         term: 'Odd function',
         zh: '奇函數',
         aliases: ['symmetry', '原點對稱', 'origin'],
-        tags: ['9/8 ch1.1', 'symmetry'],
+        tags: ['ch1.1', 'symmetry'],
         def:
           'A function with <span class="mono">f(x) = &minus;f(&minus;x)</span> — equivalently ' +
           '<span class="mono">f(&minus;x) = &minus;f(x)</span> — for every x in the domain. ' +
@@ -763,7 +763,7 @@
         abbr: '|x|',
         zh: '絕對值',
         aliases: ['abs', 'distance', '距離', 'modulus'],
-        tags: ['9/10 ch1.1', 'special functions'],
+        tags: ['ch1.1', 'special functions'],
         def:
           'The <strong>distance from a number to 0</strong> on the real number line. Because it ' +
           'is a distance, it is <strong>never negative</strong> — always positive or 0.',
@@ -823,7 +823,7 @@
         term: 'Power function',
         zh: '冪函數',
         aliases: ['x^a', 'exponent', '次方'],
-        tags: ['9/8 ch1.1', 'families'],
+        tags: ['ch1.1', 'families'],
         def:
           'A function of the form <span class="mono">f(x) = x<sup>a</sup></span> where the ' +
           'exponent <span class="mono">a</span> is a fixed real constant, ' +
@@ -859,7 +859,7 @@
         term: 'Constant function',
         zh: '常數函數',
         aliases: ['horizontal line', '水平線'],
-        tags: ['9/8 ch1.1', 'families'],
+        tags: ['ch1.1', 'families'],
         def:
           'A function <span class="mono">f(x) = c</span> whose output never changes, ' +
           'no matter the input. Its graph is a horizontal line.',
@@ -886,7 +886,7 @@
         term: 'Linear function',
         zh: '線性函數',
         aliases: ['slope', '斜率', 'mx+b', '一次函數'],
-        tags: ['9/8 ch1.1', 'families'],
+        tags: ['ch1.1', 'families'],
         def:
           'A function of the form <span class="mono">f(x) = mx + b</span>, whose graph is a ' +
           'straight line with slope <span class="mono">m</span> and y-intercept ' +
@@ -917,7 +917,7 @@
         term: 'Parabola',
         zh: '拋物線',
         aliases: ['quadratic', 'vertex', '頂點', '二次函數', 'x^2'],
-        tags: ['9/10 ch1.1', 'families'],
+        tags: ['ch1.1', 'families'],
         def:
           'The U-shaped curve that is the graph of a quadratic function ' +
           '<span class="mono">y = ax² + bx + c</span> (a &ne; 0). The simplest one is ' +
@@ -967,7 +967,7 @@
         term: 'Piecewise-defined function',
         zh: '分段函數',
         aliases: ['piecewise', '分段定義'],
-        tags: ['9/10 ch1.1', 'families'],
+        tags: ['ch1.1', 'families'],
         def:
           'A function defined by <strong>different formulas on different parts of its ' +
           'domain</strong>. It is still one function: each x uses exactly one of the formulas.',
@@ -1024,7 +1024,7 @@
         term: 'Polynomial function',
         zh: '多項式函數',
         aliases: ['degree', '次數', 'polynomial'],
-        tags: ['9/8 ch1.1', 'families'],
+        tags: ['ch1.1', 'families'],
         added: true,
         def:
           'A finite sum of power functions with non-negative whole-number exponents: ' +
@@ -1056,7 +1056,7 @@
         term: 'Rational function',
         zh: '有理函數',
         aliases: ['quotient', '分式'],
-        tags: ['9/8 ch1.1', 'families'],
+        tags: ['ch1.1', 'families'],
         added: true,
         def:
           'A quotient of two polynomials, <span class="mono">f(x) = p(x) / q(x)</span>. ' +
@@ -1076,7 +1076,7 @@
         term: 'Composite function',
         zh: '合成函數',
         aliases: ['composition', 'f of g', '複合函數'],
-        tags: ['9/8 ch1.1', 'operations'],
+        tags: ['ch1.1', 'operations'],
         added: true,
         def:
           '<span class="mono">(f &compfn; g)(x) = f(g(x))</span> — feed x into g, then feed the ' +
