@@ -18,6 +18,7 @@ calculus/                       ← 微積分
   calculus.js                   ← 名詞資料
   微積分9_8.pdf                  ← 原始筆記
   微積分9_10.pdf
+  微積分9_11.pdf
 linear-algebra/                 ← 線性代數
   linear-algebra.html
   linear-algebra.js
@@ -27,6 +28,11 @@ computer-science/               ← 計算機概論
   computer-science.html
   computer-science.js
   計算機概論9_10.pdf
+  計算機概論9_10-2.pdf
+physics/                        ← 普通物理
+  physics.html
+  physics.js
+  普物9_11.pdf
 README.md
 ```
 
@@ -120,35 +126,35 @@ SYS(['x + y = 2', 'x - y = 0'])     // 方程組
 
 ## 2. 新增一個科目
 
-假設要加「物理」：
+假設要加「化學」：
 
-1. **開資料夾** `physics/`，把該科目的筆記 PDF 丟進去。
+1. **開資料夾** `chemistry/`，把該科目的筆記 PDF 丟進去。
 
-2. **複製** `calculus/calculus.js` → `physics/physics.js`，改掉最上面這幾個欄位：
+2. **複製** `calculus/calculus.js` → `chemistry/chemistry.js`，改掉最上面這幾個欄位：
 
    ```js
-   id:         'physics',                  // 唯一
-   name:       'Physics',                  // 英文科目名
-   nameZh:     '物理',                      // 中文科目名
-   page:       'physics/physics.html',     // 相對於 index.html 的路徑
-   hue:        150,                        // 主色色相 0–360（微積分 24、線性代數 232）
-   sources:    [{ file: 'physics9_20.pdf', label: 'physics9_20.pdf（ch1）' }], // 同資料夾裡的 PDF，頁尾會連過去；標籤只寫章節
+   id:         'chemistry',                  // 唯一
+   name:       'Chemistry',                  // 英文科目名
+   nameZh:     '化學',                      // 中文科目名
+   page:       'chemistry/chemistry.html',     // 相對於 index.html 的路徑
+   hue:        150,                        // 主色色相 0–360（已用：微積分 24、物理 190、線代 232、計概 290）
+   sources:    [{ file: 'chemistry9_20.pdf', label: 'chemistry9_20.pdf（ch1）' }], // 同資料夾裡的 PDF，頁尾會連過去；標籤只寫章節
    blurb:      '一句話介紹，顯示在入口網站的卡片上。',
    terms:      [ … ]                       // 換成自己的名詞
    ```
 
-3. **複製** `calculus/calculus.html` → `physics/physics.html`，改裡面兩行
+3. **複製** `calculus/calculus.html` → `chemistry/chemistry.html`，改裡面兩行
    （順便改 `<title>`）。`../assets/…` 那兩行不用動：
 
    ```html
-   <script src="physics.js"></script>
-   <script>GLOSSARY.mountSubject('physics');</script>
+   <script src="chemistry.js"></script>
+   <script>GLOSSARY.mountSubject('chemistry');</script>
    ```
 
 4. **在 `index.html` 加一行**，入口網站就會自動長出這張卡片、並算好名詞數量與章節：
 
    ```html
-   <script src="physics/physics.js"></script>
+   <script src="chemistry/chemistry.js"></script>
    ```
 
 就這樣 — 不用改 `assets/` 裡的任何東西。

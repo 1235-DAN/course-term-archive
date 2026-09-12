@@ -1,6 +1,7 @@
 /* ==========================================================================
    computer-science.js — 計算機概論 term data
-   Source notes: 計算機概論9_10.pdf  (9/10, ch 1.1)
+   Source notes: 計算機概論9_10.pdf   (ch 1.1)
+                 計算機概論9_10-2.pdf (the same page, extended: ALU, I/O, sequential execution)
 
    The card face is ENGLISH ONLY: term / def / notes / example labels /
    figure captions. Everything Chinese — zh, zhAlt, defZh, notesZh — is
@@ -109,8 +110,11 @@
     page: 'computer-science/computer-science.html', // relative to index.html
     hue: 290, // violet
     // every source PDF sits in this same folder; the footer links to each one
-    sources: [{ file: '計算機概論9_10.pdf', label: '計算機概論9_10.pdf（ch1.1）' }],
-    blurb: '電腦的兩種基本模型 — 圖靈模型與馮紐曼模型，以及馮紐曼電腦裡的四個子系統。',
+    sources: [
+      { file: '計算機概論9_10.pdf', label: '計算機概論9_10.pdf（ch1.1）' },
+      { file: '計算機概論9_10-2.pdf', label: '計算機概論9_10-2.pdf（ch1.1，補充版）' }
+    ],
+    blurb: '電腦的兩種基本模型 — 圖靈模型與馮紐曼模型、馮紐曼電腦裡的四個子系統，以及程式如何逐條執行。',
 
     terms: [
       /* ============================================ models */
@@ -177,8 +181,8 @@
             'only means loading a different program: no rewiring, nothing swapped in from ' +
             'outside. That idea has its own name, the ' +
             '<a href="#stored-program-concept">stored-program concept</a>.',
-          'Instructions are fetched from memory and executed one after another (sequential ' +
-            'execution).',
+          'Instructions are fetched from memory and executed one after another — ' +
+            '<a href="#sequential-execution">sequential execution</a>.',
           'Background: proposed by John von Neumann around 1944–45.'
         ],
         defZh:
@@ -188,7 +192,7 @@
         notesZh: [
           '因為程式本身也只是記憶體裡的內容，要換工作只要載入另一個程式：不必重新接線、也不必從外部更換。' +
             '這個想法有自己的名字：<a href="#stored-program-concept">內儲程式概念</a>。',
-          '指令從記憶體取出後一條接一條依序執行（sequential execution）。',
+          '指令從記憶體取出後一條接一條依序執行 &mdash; <a href="#sequential-execution">循序執行</a>。',
           '背景：John von Neumann 約在 1944–45 年提出。'
         ],
         examples: [
@@ -206,6 +210,73 @@
         figure: {
           caption: 'The four subsystems (as in Figure 1.5 of the notes); program and data share the memory',
           svg: vn('all')
+        }
+      },
+
+      {
+        id: 'sequential-execution',
+        term: 'Sequential execution',
+        zh: '循序執行',
+        zhAlt: '依序執行',
+        aliases: ['fetch', 'decode', 'execute', 'instruction cycle', 'machine cycle', '取指', '解碼', '執行', '指令週期'],
+        tags: ['ch1.1', 'models'],
+        def:
+          'How a program runs in the <a href="#von-neumann-model">von Neumann model</a>: its ' +
+          'instructions are carried out <strong>one after another, in order</strong>. For each ' +
+          'one the <a href="#control-unit">control unit</a> <strong>fetches</strong> it from ' +
+          'memory, <strong>decodes</strong> it, then <strong>executes</strong> it.',
+        notes: [
+          'Fetch → decode → execute repeats for every instruction; it is often called the ' +
+            'instruction cycle or machine cycle.',
+          'Fetch: copy the next instruction from <a href="#memory">memory</a>. Decode: work out ' +
+            'which operation it asks for. Execute: carry it out, usually in the ' +
+            '<a href="#alu">ALU</a>.',
+          '"Sequential" is the default order; later chapters add instructions such as jumps that ' +
+            'change which instruction comes next.'
+        ],
+        defZh:
+          '程式在<a href="#von-neumann-model">馮紐曼模型</a>中的執行方式：指令<strong>一條接一條、依序</strong>執行。' +
+          '每一條都由<a href="#control-unit">控制單元</a>從記憶體<strong>取出</strong>、<strong>解碼</strong>，再<strong>執行</strong>。',
+        notesZh: [
+          '取指 → 解碼 → 執行，每條指令都重複一次，常稱為指令週期（machine cycle）。',
+          '取指：從<a href="#memory">記憶體</a>複製下一條指令。解碼：判斷它要做哪種運算。執行：把它做完，通常交給 <a href="#alu">ALU</a>。',
+          '「循序」是預設的順序；之後的章節會加入跳躍（jump）之類改變下一條指令的指令。'
+        ],
+        examples: [
+          {
+            label: 'From the notes',
+            html:
+              '<p>A program in Von Neumann model executing by following the sequential ' +
+              'execution of instructions. The control unit fetches the instruction from ' +
+              'memory, decodes it, then execution it.</p>'
+          },
+          {
+            label: 'One instruction, three steps',
+            html:
+              '<p>fetch &nbsp;&nbsp;&nbsp;"ADD R1, R2" from memory</p>' +
+              '<p>decode &nbsp;&nbsp;it means: add register 2 into register 1</p>' +
+              '<p>execute the ALU does the addition</p>'
+          }
+        ],
+        figure: {
+          caption: 'Every instruction goes round this loop once, in program order',
+          svg:
+            '<svg viewBox="0 0 340 130" role="img" aria-label="the fetch decode execute cycle">' +
+            '<g font-family="sans-serif" font-size="12">' +
+            '<rect x="14" y="44" width="86" height="38" rx="19" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="2"/>' +
+            '<rect x="127" y="44" width="86" height="38" rx="19" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="2"/>' +
+            '<rect x="240" y="44" width="86" height="38" rx="19" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="2"/>' +
+            '<g text-anchor="middle" fill="var(--accent)" font-weight="700">' +
+            '<text x="57" y="68">Fetch</text><text x="170" y="68">Decode</text><text x="283" y="68">Execute</text></g>' +
+            '<g stroke="currentColor" stroke-width="1.6" fill="none">' +
+            '<path d="M100 63 H119"/><path d="M213 63 H232"/>' +
+            '<path d="M283 82 V108 H57 V90"/></g>' +
+            '<g fill="currentColor">' + arrowR(127, 63) + arrowR(240, 63) +
+            '<polygon points="57,82 52.5,90 61.5,90"/></g>' +
+            '<text x="170" y="122" text-anchor="middle" fill="currentColor" font-size="10" opacity=".8">next instruction</text>' +
+            '<text x="57" y="34" text-anchor="middle" fill="currentColor" font-size="9.5" opacity=".8">from memory</text>' +
+            '<text x="283" y="34" text-anchor="middle" fill="currentColor" font-size="9.5" opacity=".8">in the ALU</text>' +
+            '</g></svg>'
         }
       },
 
@@ -264,7 +335,12 @@
           '它和<a href="#control-unit">控制單元</a>合起來就是 <a href="#cpu">CPU</a>。'
         ],
         examples: [
-          { label: 'From the notes', html: '<p>Arithmetic logic unit (ALU): Doing calculate and logic operation</p>' },
+          {
+            label: 'From the notes',
+            html:
+              '<p>Arithmetic logic unit (ALU): Doing calculate and logic operation, including ' +
+              'arithmetic operations and logic operations.</p>'
+          },
           {
             label: 'One of each',
             html:
@@ -287,14 +363,15 @@
           'The subsystem that <strong>controls the operation of the ALU, the memory and the ' +
           'input/output subsystem</strong> — it decides what happens next, and when.',
         notes: [
-          'It does no calculating itself. It fetches each instruction of the program from ' +
-            'memory, works out what it asks for, and directs the other subsystems to carry it out.',
+          'It does no calculating itself. As the notes put it, it <strong>fetches</strong> each ' +
+            'instruction from memory, <strong>decodes</strong> it, then has it ' +
+            '<strong>executed</strong> — the <a href="#sequential-execution">fetch–decode–execute</a> cycle.',
           'Control unit + <a href="#alu">ALU</a> = <a href="#cpu">CPU</a>.'
         ],
         defZh:
           '<strong>控制 ALU、記憶體與輸入／輸出子系統運作</strong>的子系統 &mdash; 由它決定下一步做什麼、什麼時候做。',
         notesZh: [
-          '它本身不做計算。它從記憶體逐條取出程式指令，判斷指令要做什麼，再指揮其他子系統去執行。',
+          '它本身不做計算。照筆記的說法，它從記憶體<strong>取出</strong>每條指令、<strong>解碼</strong>，再讓它被<strong>執行</strong> &mdash; 也就是<a href="#sequential-execution">取指–解碼–執行</a>循環。',
           '控制單元 + <a href="#alu">ALU</a> = <a href="#cpu">CPU</a>。'
         ],
         examples: [
@@ -311,23 +388,33 @@
         aliases: ['input', 'output', 'io', 'i/o', 'peripheral', '周邊', '輸入', '輸出'],
         tags: ['ch1.1', 'subsystems'],
         def:
-          'The subsystem that connects the computer to the outside world: it accepts ' +
-          '<strong>input data</strong> and delivers <strong>output data</strong>.',
+          'The subsystem that connects the computer to the outside world. The ' +
+          '<strong>input</strong> subsystem accepts input data <em>and the program</em> from ' +
+          'outside; the <strong>output</strong> subsystem sends the result of processing back out.',
         notes: [
-          'The notes do not define it separately — it appears as "Input / output" in Figure 1.5 ' +
-            'and as "I/O" in the control-unit definition. The definition is filled in here.',
+          'Note that the program comes in through input too — in a ' +
+            '<a href="#von-neumann-model">von Neumann</a> machine it is loaded into memory just ' +
+            'like data.',
           'Input devices: keyboard, mouse, scanner. Output devices: monitor, printer.',
           'Secondary storage such as disks is usually counted here too: it keeps programs and ' +
             'data when the power is off, unlike <a href="#memory">memory</a>.'
         ],
-        defZh: '讓電腦和外界溝通的子系統：負責接收<strong>輸入資料</strong>、送出<strong>輸出資料</strong>。',
+        defZh:
+          '讓電腦和外界溝通的子系統。<strong>輸入</strong>子系統從外部接收輸入資料<em>和程式</em>；' +
+          '<strong>輸出</strong>子系統把處理結果送回外界。',
         notesZh: [
-          '筆記沒有單獨定義它 &mdash; 它出現在 Figure 1.5 裡的「Input / output」，以及控制單元定義裡的「I/O」。定義是這裡補上的。',
+          '注意程式也是從輸入進來的 &mdash; 在<a href="#von-neumann-model">馮紐曼</a>機器裡，它和資料一樣被載入記憶體。',
           '輸入裝置：鍵盤、滑鼠、掃描器。輸出裝置：螢幕、印表機。',
           '硬碟這類輔助儲存通常也算在這裡：和<a href="#memory">記憶體</a>不同，它斷電後仍保留程式與資料。'
         ],
         examples: [
-          { label: 'From the notes', html: '<p>Figure 1.5: "Input / output"</p><p>Control Unit: … ALU, Memory and I/O</p>' }
+          {
+            label: 'From the notes',
+            html:
+              '<p>Input/Output: The input subsystem accepts input data and the program from ' +
+              'outside the computer, while the output subsystem send the result of processing ' +
+              'to the outside world.</p>'
+          }
         ],
         figure: { caption: 'Input / output sits between the machine and the outside world', svg: vn('io') }
       },

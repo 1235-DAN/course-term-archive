@@ -367,6 +367,17 @@ a:hover{ color:var(--accent-hover); text-decoration:underline; }
 .ex__body{ font-family:var(--mono); font-size:.92rem; overflow-x:auto; }
 .ex__body p{ margin:.35em 0; }
 
+/* small data tables inside an example (unit tables, prefixes, conversions) */
+.ex__body table{ border-collapse:collapse; font-size:.92em; margin:.2em 0; }
+.ex__body th, .ex__body td{
+  padding:3px 12px 3px 0; text-align:left; vertical-align:top;
+  border-bottom:1px solid var(--border);
+}
+.ex__body th{ font-family:var(--ui); font-weight:600; color:var(--text-soft); font-size:.85em; }
+.ex__body tr:last-child td{ border-bottom:0; }
+/* units cancelled in a chain-link conversion */
+.ex__body del{ text-decoration-color:var(--accent); text-decoration-thickness:2px; }
+
 .figure{ margin:14px 0 0; text-align:center; }
 .figure svg{ width:100%; height:auto; max-width:430px; color:var(--text-soft); }
 .figure figcaption{
