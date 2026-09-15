@@ -1,5 +1,5 @@
 /* ==========================================================================
-   data/linear-algebra.js — 線性代數 term data
+   linear-algebra.js — 線性代數 term data
    Source notes: 線性代數9_7-9_8.pdf (ch1.1), 線性代數9_9.pdf (ch1.2),
                  線性代數9_14.pdf (ch1.2: homogeneous systems, vectors in Rⁿ,
                  subspaces)
@@ -214,9 +214,16 @@
         def:
           'A statement that two expressions are equal — the whole line, left side, ' +
           'equals sign and right side together.',
+        notes: [
+          'The notes write the example as 2x + 3y + 5 = 5, dropping the z; it is the same ' +
+            'equation as on the line above, <span class="mono">2x + 3y + 5z = 5</span>.'
+        ],
         defZh: '宣稱兩個式子相等的敘述；左式、等號、右式合起來整條才叫一個方程式。',
+        notesZh: [
+          '筆記的例子寫成 2x + 3y + 5 = 5，漏了 z；它和上一行是同一條式子：2x + 3y + 5z = 5。'
+        ],
         examples: [
-          { label: 'From the notes', html: '<p>equations: 2x + 3y + 5 = 5</p>' }
+          { label: 'From the notes', html: '<p>equations: 2x + 3y + 5 = 5</p><p>&rarr; should read 2x + 3y + 5z = 5</p>' }
         ]
       },
 
@@ -999,8 +1006,10 @@
           'The column a pivot sits in is a <strong>pivot column</strong>; its variable is ' +
             'determined. A column with no pivot belongs to a ' +
             '<a href="#free-variable">free variable</a>.',
-          'The number of pivots is the <strong>rank</strong> of the matrix, and that decides ' +
-            'whether the system has a unique solution or infinitely many.'
+          'The number of pivots is the <strong>rank</strong> of the matrix. For a consistent ' +
+            'system, rank = number of variables means a unique solution; rank &lt; number of ' +
+            'variables means infinitely many. (Whether the system is consistent at all is decided ' +
+            'by the last column: a pivot there means 0 = non-zero, so no solution.)'
         ],
         defZh:
           '消去時每一列所倚靠的那個位置 &mdash; 該列第一個非零元素所在處，也就是階梯的轉折點。' +
@@ -1008,7 +1017,8 @@
         notesZh: [
           '主元所在的那一行叫 <strong>pivot column</strong>（主行），' +
             '它對應的變數是被綁定的；沒有主元的行對應<a href="#free-variable">自由變數</a>。',
-          '主元的個數就是矩陣的 <strong>rank</strong>（秩），它決定方程組是唯一解還是無限多解。'
+          '主元的個數就是矩陣的 <strong>rank</strong>（秩）。方程組有解時，rank = 變數個數 &rArr; 唯一解；' +
+            'rank &lt; 變數個數 &rArr; 無限多解。（有沒有解則看最後一行：那裡出現主元代表 0 = 非零數，無解。）'
         ],
         examples: [
           {

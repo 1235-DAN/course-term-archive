@@ -24,6 +24,7 @@ linear-algebra/                 ← 線性代數
   linear-algebra.js
   線性代數9_7-9_8.pdf
   線性代數9_9.pdf
+  線性代數9_14.pdf
 computer-science/               ← 計算機概論
   computer-science.html
   computer-science.js

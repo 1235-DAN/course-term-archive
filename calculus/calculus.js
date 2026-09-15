@@ -1,5 +1,5 @@
 /* ==========================================================================
-   data/calculus.js — 微積分 term data
+   calculus.js — 微積分 term data
    Source notes: 微積分9_8.pdf  (9/8, ch 1.1 Functions)
                  微積分9_10.pdf (page 1 repeats 9/8; page 2 adds 9/9 and 9/10)
                  微積分9_11.pdf (ch1.2 and the start of ch2.2; re-uploaded with

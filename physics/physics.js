@@ -316,16 +316,21 @@
         notes: [
           'The notes (from the slide) give <strong>1 lb = 0.465 kg</strong>; the correct value is ' +
             '<strong>1 lb = 0.4536 kg</strong>.',
-          '1 in. = 2.54 cm is exact by definition; everything else in the table follows from it.',
-          'Strictly, the pound is a unit of force and the <em>slug</em> the matching unit of mass — ' +
-            'which is why the slug appears in the table.'
+          '1 in. = 2.54 cm is exact by definition, and the other <em>length</em> entries follow ' +
+            'from it (1 ft = 12 in. = 30.48 cm). The mass entries are defined separately: ' +
+            '1 lb = 0.45359237 kg exactly.',
+          'In physics texts the pound is usually a unit of <em>force</em> (1 lb = 4.448 N), and ' +
+            'the <em>slug</em> is the matching unit of mass — which is why the slug appears in the ' +
+            'table. "1 lb = 0.4536 kg" means the mass that weighs one pound on Earth.'
         ],
         defZh:
           '在 SI 單位與美國慣用（英制）單位 &mdash; 英里、英尺、英寸、磅 &mdash; 之間換算，用的是 1 in. = 2.54 cm 這類固定等式。',
         notesZh: [
           '筆記（投影片）寫 <strong>1 lb = 0.465 kg</strong>，正確值是 <strong>1 lb = 0.4536 kg</strong>。',
-          '1 in. = 2.54 cm 是依定義的精確值，表中其他數值都由它推出。',
-          '嚴格說磅是力的單位，對應的質量單位是 slug &mdash; 所以表裡才會有 slug。'
+          '1 in. = 2.54 cm 是依定義的精確值，表中其他<em>長度</em>換算都由它推出（1 ft = 12 in. = 30.48 cm）；' +
+            '質量那幾列是另外定義的：1 lb = 0.45359237 kg（精確值）。',
+          '物理課本裡磅通常是<em>力</em>的單位（1 lb = 4.448 N），對應的質量單位是 slug &mdash; 所以表裡才會有 slug。' +
+            '「1 lb = 0.4536 kg」指的是在地球上重一磅的那個質量。'
         ],
         examples: [
           {
