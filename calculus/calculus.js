@@ -2,7 +2,9 @@
    data/calculus.js — 微積分 term data
    Source notes: 微積分9_8.pdf  (9/8, ch 1.1 Functions)
                  微積分9_10.pdf (page 1 repeats 9/8; page 2 adds 9/9 and 9/10)
-                 微積分9_11.pdf (ch1.2 and the start of ch2.2)
+                 微積分9_11.pdf (ch1.2 and the start of ch2.2; re-uploaded with
+                                 domain restriction, arccos, the inverse-trig
+                                 relations / D&R table and trig graphs added)
 
    The card face is ENGLISH ONLY: term / def / notes / example labels /
    figure captions. Everything Chinese — zh, zhAlt, defZh, notesZh — is
@@ -82,6 +84,63 @@
     '<text x="34" y="68" opacity=".75">x &lt; 0 dropped</text>' +
     '<text x="276" y="88" text-anchor="end">horizontal line</text></g></svg>';
 
+  /* Trace y = fn(x) over [a, b] as SVG path data. X and Y map maths
+     coordinates into the viewBox; a point with |y| > clip lifts the pen,
+     so a curve is never joined across an asymptote. */
+  function plot(fn, a, b, X, Y, clip) {
+    var d = '', pen = false;
+    for (var i = 0; i <= 400; i++) {
+      var x = a + ((b - a) * i) / 400, y = fn(x);
+      if (!isFinite(y) || Math.abs(y) > clip) { pen = false; continue; }
+      d += (pen ? 'L' : 'M') + X(x).toFixed(1) + ' ' + Y(y).toFixed(1);
+      pen = true;
+    }
+    return d;
+  }
+
+  /* One small trig-graph panel centred at (cx, cy): axes, then each curve
+     in o.curves — { fn, on: [a, b] (default: the whole panel), hi: accent,
+     faint: thin and grey }. ticks are [x, label] pairs on the x-axis. */
+  function trigPanel(o) {
+    var X = function (x) { return o.cx + x * o.sx; },
+      Y = function (y) { return o.cy - y * o.sy; },
+      lim = o.w / 2 / o.sx,
+      top = Y(o.clip) - 4,
+      bot = Y(-o.clip) + 4;
+    var s =
+      '<g stroke="currentColor" stroke-width="1" opacity=".45">' +
+      '<path d="M' + (o.cx - o.w / 2) + ' ' + o.cy + ' H' + (o.cx + o.w / 2) + '"/>' +
+      '<path d="M' + o.cx + ' ' + top.toFixed(1) + ' V' + bot.toFixed(1) + '"/></g>';
+    (o.asym || []).forEach(function (a) {
+      s += '<path d="M' + X(a).toFixed(1) + ' ' + top.toFixed(1) + ' V' + bot.toFixed(1) +
+        '" stroke="currentColor" stroke-width="1" stroke-dasharray="2 3" opacity=".5"/>';
+    });
+    o.curves.forEach(function (c) {
+      var r = c.on || [-lim, lim];
+      s += '<path d="' + plot(c.fn, r[0], r[1], X, Y, o.clip) + '" fill="none" ' +
+        (c.hi
+          ? 'stroke="var(--accent)" stroke-width="2.6"'
+          : 'stroke="currentColor" stroke-width="1.4" opacity="' + (c.faint ? '.4' : '.75') + '"') +
+        '/>';
+    });
+    s += '<g font-family="sans-serif" font-size="9" fill="currentColor" text-anchor="middle">';
+    (o.ticks || []).forEach(function (t) {
+      s += '<path d="M' + X(t[0]).toFixed(1) + ' ' + (o.cy - 3) + ' V' + (o.cy + 3) +
+        '" stroke="currentColor" stroke-width="1"/>' +
+        '<text x="' + X(t[0]).toFixed(1) + '" y="' + (o.cy + 13) + '">' + t[1] + '</text>';
+    });
+    return s + '</g><text x="' + o.cx + '" y="' + o.labelY + '" font-family="sans-serif" ' +
+      'font-size="10.5" fill="currentColor" text-anchor="middle">' + o.label + '</text>';
+  }
+
+  var PI = Math.PI,
+    sin = Math.sin,
+    cos = Math.cos,
+    tan = Math.tan;
+  function csc(x) { return 1 / sin(x); }
+  function sec(x) { return 1 / cos(x); }
+  function cot(x) { return 1 / tan(x); }
+
   GLOSSARY.register({
     id: 'calculus',
     name: 'Calculus',
@@ -96,7 +155,8 @@
     ],
     blurb:
       '函數的基本語言：定義域與值域、座標與座標軸、差商、取整函數、' +
-      '奇偶性與對稱、絕對值、三角與反三角函數、指數與對數、反函數，以及常見的函數家族。',
+      '奇偶性與對稱、絕對值、單位圓與三角函數圖形、反三角函數與其關係式、指數與對數、反函數，' +
+      '以及常見的函數家族。',
 
     terms: [
       /* ------------------------------------------------ core definition */
@@ -1214,6 +1274,65 @@
       },
 
       {
+        id: 'unit-circle',
+        term: 'Unit circle',
+        zh: '單位圓',
+        aliases: ['x^2 + y^2 = 1', 'circle', '圓', '(cos, sin)'],
+        tags: ['ch1.2', 'trigonometry'],
+        added: true,
+        def:
+          'The circle of radius 1 centred at the origin, <span class="mono">x² + y² = 1</span>. ' +
+          'Turning an angle θ from the positive x-axis lands on the point ' +
+          '<span class="mono">(cos θ, sin θ)</span>.',
+        notes: [
+          'Why this is here: the notes use it in the <a href="#sin-le-theta">sin θ ≤ θ</a> proof ' +
+            'without saying what it is.',
+          'With h = 1 the <a href="#trigonometric-functions">trig ratios</a> become coordinates: ' +
+            'cos θ = x and sin θ = y. That is how sin and cos are defined for any angle, ' +
+            'including obtuse and <a href="#angle-measure">negative</a> ones.',
+          'The arc from (1, 0) to the point has length θ, with θ in <a href="#radian">radians</a>.'
+        ],
+        defZh:
+          '以原點為圓心、半徑為 1 的圓 x² + y² = 1。從正 x 軸轉一個角 θ，落在的點就是 (cos θ, sin θ)。',
+        notesZh: [
+          '為什麼補這個：筆記在 <a href="#sin-le-theta">sin θ ≤ θ</a> 的證明裡直接用了單位圓，卻沒說它是什麼。',
+          '斜邊 h = 1 時，<a href="#trigonometric-functions">三角比</a>就變成座標：cos θ = x、sin θ = y。' +
+            'sin、cos 就是這樣定義到任意角（包括鈍角與<a href="#angle-measure">負角</a>）。',
+          '從 (1, 0) 走到該點的弧長就是 θ（θ 用<a href="#radian">弧度</a>）。'
+        ],
+        examples: [
+          {
+            label: 'Reading values off the circle',
+            html:
+              '<p>θ = π/2 &rarr; (0, 1): cos = 0, sin = 1</p>' +
+              '<p>θ = π &rarr; (&minus;1, 0): cos = &minus;1, sin = 0</p>' +
+              '<p>θ = π/3 &rarr; (½, &radic;3/2)</p>'
+          }
+        ],
+        figure: {
+          caption: 'The point at angle θ is (cos θ, sin θ); the radius is 1',
+          svg:
+            '<svg viewBox="0 0 300 190" role="img" aria-label="the unit circle">' +
+            '<g stroke="currentColor" stroke-width="1.1" opacity=".45">' +
+            '<path d="M50 100 H250"/><path d="M150 180 V18"/></g>' +
+            '<circle cx="150" cy="100" r="70" fill="none" stroke="currentColor" stroke-width="1.5" opacity=".7"/>' +
+            '<path d="M150 100 L195 46.4" stroke="currentColor" stroke-width="1.8"/>' +
+            '<path d="M150 100 H195" stroke="var(--accent)" stroke-width="2.4" opacity=".6"/>' +
+            '<path d="M195 46.4 V100" stroke="var(--accent)" stroke-width="2.4"/>' +
+            '<path d="M168 100 A18 18 0 0 0 161.6 86.2" fill="none" stroke="currentColor" stroke-width="1.2"/>' +
+            '<circle cx="195" cy="46.4" r="4" fill="var(--accent)"/>' +
+            '<g font-family="sans-serif" font-size="10.5" fill="currentColor">' +
+            '<text x="201" y="40">P (cos θ, sin θ)</text>' +
+            '<text x="172" y="114" text-anchor="middle">cos θ</text>' +
+            '<text x="200" y="78" fill="var(--accent)" font-weight="700">sin θ</text>' +
+            '<text x="166" y="68">1</text>' +
+            '<text x="171" y="95">θ</text>' +
+            '<text x="224" y="114">(1, 0)</text>' +
+            '<text x="142" y="114" text-anchor="end">O</text></g></svg>'
+        }
+      },
+
+      {
         id: 'triangle-sides',
         term: 'Adjacent / opposite / hypotenuse',
         zh: '鄰邊／對邊／斜邊',
@@ -1227,21 +1346,39 @@
         notes: [
           '"Opposite" and "adjacent" depend on which angle you are looking at — swap to the ' +
             'other acute angle and they trade places. The hypotenuse never changes.',
-          'The notes label them as coordinates: adjacent = x, opposite = y, hypotenuse = h — ' +
-            'which is how the <a href="#trigonometric-functions">trig ratios</a> are written.'
+          'The notes define them with coordinates: put θ at the origin and the far corner at ' +
+            'the point (x, y). Then the adjacent side is the <strong>x-coordinate</strong>, the ' +
+            'opposite side is the <strong>y-coordinate</strong>, and the hypotenuse is the ' +
+            '<strong>distance from the point to the origin</strong> — which is how the ' +
+            '<a href="#trigonometric-functions">trig ratios</a> are written.',
+          'By Pythagoras that distance is <span class="mono">h = &radic;(x² + y²)</span> ' +
+            '(filled in here).'
         ],
         defZh:
           '直角三角形的三個邊，依角 θ 命名：<strong>斜邊</strong>最長、正對直角；' +
           '<strong>對邊</strong>正對 θ；<strong>鄰邊</strong>是貼著 θ 的另一邊。',
         notesZh: [
           '「對邊」「鄰邊」取決於你看的是哪個角 &mdash; 換成另一個銳角，兩者就互換；斜邊永遠不變。',
-          '筆記用座標來標：鄰邊 = x、對邊 = y、斜邊 = h，<a href="#trigonometric-functions">三角比</a>就是這樣寫的。'
+          '筆記用座標來定義：把 θ 放在原點、另一端點放在 (x, y)，則鄰邊 = <strong>x 座標</strong>、' +
+            '對邊 = <strong>y 座標</strong>、斜邊 = <strong>該點到原點的距離</strong>，' +
+            '<a href="#trigonometric-functions">三角比</a>就是這樣寫的。',
+          '由畢氏定理，這段距離是 h = &radic;(x² + y²)（這裡補上的）。'
         ],
         examples: [
-          { label: 'From the notes', html: '<p>adjacent &nbsp; opposite &nbsp; hypotenuse</p>' }
+          {
+            label: 'From the notes',
+            html:
+              '<p>adjacent（鄰邊）: x-coordinate</p>' +
+              '<p>opposite（對邊）: y-coordinate</p>' +
+              '<p>hypotenuse（斜邊）: distance of a point to origin</p>'
+          },
+          {
+            label: 'Finding the hypotenuse',
+            html: '<p>point (4, 3) &nbsp;&rarr;&nbsp; x = 4, y = 3, h = &radic;(16 + 9) = 5</p>'
+          }
         ],
         figure: {
-          caption: 'Named from the angle θ: x adjacent, y opposite, h the hypotenuse',
+          caption: 'θ at the origin O, far corner at (x, y): x adjacent, y opposite, h the hypotenuse',
           svg:
             '<svg viewBox="0 0 300 150" role="img" aria-label="sides of a right triangle">' +
             '<path d="M40 125 L240 125 L240 30 Z" fill="var(--accent-soft)" stroke="currentColor" stroke-width="1.6"/>' +
@@ -1249,6 +1386,8 @@
             '<path d="M72 125 A32 32 0 0 0 68.9 111.3" fill="none" stroke="var(--accent)" stroke-width="2"/>' +
             '<g font-family="sans-serif" font-size="11" fill="currentColor">' +
             '<text x="78" y="118" fill="var(--accent)" font-weight="700">θ</text>' +
+            '<text x="34" y="140" text-anchor="end">O</text>' +
+            '<text x="246" y="28">(x, y)</text>' +
             '<text x="140" y="142" text-anchor="middle">adjacent (x)</text>' +
             '<text x="248" y="82">opposite (y)</text>' +
             '<text x="118" y="66" text-anchor="middle">hypotenuse (h)</text></g></svg>'
@@ -1269,26 +1408,29 @@
           '<span class="mono">csc θ = h/y</span>, <span class="mono">sec θ = h/x</span>, ' +
           '<span class="mono">cot θ = x/y</span>.',
         notes: [
-          'The notes give sin, cos and tan, and list csc, sec and cot without values; the three ' +
-            'reciprocals are filled in here.',
-          'Pairing: csc = 1/sin, sec = 1/cos, cot = 1/tan.',
-          'On the unit circle (h = 1) the point at angle θ is (cos θ, sin θ) — which is how the ' +
-            'functions extend past 90° and to negative angles.'
+          'Pairing: csc = 1/sin, sec = 1/cos, cot = 1/tan — each reciprocal is the first ratio ' +
+            'turned upside down.',
+          'A ratio is undefined when its denominator is 0: tan and sec where x = 0 (θ = 90°), ' +
+            'cot and csc where y = 0 (θ = 0°).',
+          'On the <a href="#unit-circle">unit circle</a> (h = 1) the point at angle θ is ' +
+            '(cos θ, sin θ) — which is how the functions extend past 90° and to negative angles.',
+          'How all six look: <a href="#trig-graphs">graphs of the trigonometric functions</a>.'
         ],
         defZh:
           '直角三角形各邊的六個比值，看成角 θ 的函數。鄰邊 x、對邊 y、斜邊 h 時：' +
           'sin θ = y/h、cos θ = x/h、tan θ = y/x，以及它們的倒數 csc θ = h/y、sec θ = h/x、cot θ = x/y。',
         notesZh: [
-          '筆記寫了 sin、cos、tan，csc、sec、cot 只列了名字沒寫值；三個倒數是這裡補上的。',
-          '對應關係：csc = 1/sin、sec = 1/cos、cot = 1/tan。',
-          '在單位圓（h = 1）上，角 θ 對應的點就是 (cos θ, sin θ) &mdash; 三角函數就是這樣推廣到大於 90° 和負角的。'
+          '對應關係：csc = 1/sin、sec = 1/cos、cot = 1/tan &mdash; 倒數就是把原本的比值上下顛倒。',
+          '分母為 0 時比值沒有定義：x = 0（θ = 90°）時 tan、sec 無定義；y = 0（θ = 0°）時 cot、csc 無定義。',
+          '在<a href="#unit-circle">單位圓</a>（h = 1）上，角 θ 對應的點就是 (cos θ, sin θ) &mdash; 三角函數就是這樣推廣到大於 90° 和負角的。',
+          '六個函數的樣子見<a href="#trig-graphs">三角函數圖形</a>。'
         ],
         examples: [
           {
             label: 'From the notes',
             html:
               '<p>sin = y/h &nbsp;&nbsp; cos = x/h &nbsp;&nbsp; tan = y/x</p>' +
-              '<p>csc &nbsp;&nbsp; sec &nbsp;&nbsp; cot &nbsp;&nbsp;(left blank)</p>'
+              '<p>csc = h/y &nbsp;&nbsp; sec = h/x &nbsp;&nbsp; cot = x/y</p>'
           },
           {
             label: 'A 3-4-5 triangle, θ at the side of length 4',
@@ -1296,6 +1438,81 @@
               '<p>x = 4, y = 3, h = 5</p>' +
               '<p>sin θ = 3/5 &nbsp; cos θ = 4/5 &nbsp; tan θ = 3/4</p>' +
               '<p>csc θ = 5/3 &nbsp; sec θ = 5/4 &nbsp; cot θ = 4/3</p>'
+          }
+        ]
+      },
+
+      {
+        id: 'pythagorean-identity',
+        term: 'Pythagorean identity',
+        zh: '畢氏恆等式',
+        zhAlt: '平方關係',
+        aliases: ['sin^2 + cos^2 = 1', 'sin²θ + cos²θ = 1', 'identity', '恆等式', 'pythagoras', '畢氏定理'],
+        tags: ['ch1.2', 'trigonometry'],
+        added: true,
+        def:
+          '<span class="mono">sin²θ + cos²θ = 1</span> for every angle θ. It is Pythagoras\' ' +
+          'theorem on the <a href="#unit-circle">unit circle</a>: the point (cos θ, sin θ) is at ' +
+          'distance 1 from the origin.',
+        notes: [
+          'Why this is here: it is the step that turns the side-calculation in the ' +
+            '<a href="#sin-le-theta">sin θ ≤ θ</a> proof into 2 &minus; 2cos θ.',
+          'Divide through by cos²θ: <span class="mono">1 + tan²θ = sec²θ</span>. ' +
+            'Divide by sin²θ: <span class="mono">1 + cot²θ = csc²θ</span>.',
+          'sin²θ means (sin θ)², not sin(θ²).'
+        ],
+        defZh:
+          '對任何角 θ 都有 sin²θ + cos²θ = 1。它就是<a href="#unit-circle">單位圓</a>上的畢氏定理：' +
+          '點 (cos θ, sin θ) 到原點的距離是 1。',
+        notesZh: [
+          '為什麼補這個：<a href="#sin-le-theta">sin θ ≤ θ</a> 證明旁的手寫展開，要靠這條才化得成 2 &minus; 2cos θ。',
+          '兩邊除以 cos²θ 得 1 + tan²θ = sec²θ；除以 sin²θ 得 1 + cot²θ = csc²θ。',
+          'sin²θ 是 (sin θ)²，不是 sin(θ²)。'
+        ],
+        examples: [
+          {
+            label: 'Finding cos from sin',
+            html: '<p>sin θ = 3/5, θ acute &nbsp;&rarr;&nbsp; cos θ = &radic;(1 &minus; 9/25) = 4/5</p>'
+          },
+          {
+            label: 'The step in the sin θ ≤ θ proof',
+            html:
+              '<p>sin²θ + (1 &minus; cos θ)² = (sin²θ + cos²θ) + 1 &minus; 2cos θ</p>' +
+              '<p>= 2 &minus; 2cos θ</p>'
+          }
+        ]
+      },
+
+      {
+        id: 'periodic-function',
+        term: 'Periodic function',
+        zh: '週期函數',
+        aliases: ['period', '週期', 'repeat', '重複'],
+        tags: ['ch1.2', 'trigonometry'],
+        added: true,
+        def:
+          'A function that repeats itself: there is a positive number p with ' +
+          '<span class="mono">f(x + p) = f(x)</span> for every x. The smallest such p is the ' +
+          '<strong>period</strong>.',
+        notes: [
+          'Why this is here: it is the reason the trig functions need ' +
+            '<a href="#domain-restriction">domain restriction</a>. A function that repeats takes ' +
+            'each value infinitely often, so it cannot be <a href="#one-to-one-function">one-to-one</a>.',
+          'sin, cos, sec and csc have period 2π; tan and cot have period π.'
+        ],
+        defZh:
+          '會自我重複的函數：存在正數 p，使得對所有 x 都有 f(x + p) = f(x)。最小的那個 p 叫<strong>週期</strong>。',
+        notesZh: [
+          '為什麼補這個：它正是三角函數需要<a href="#domain-restriction">限制定義域</a>的原因 &mdash; ' +
+            '會重複的函數，每個值都會取到無限多次，不可能是<a href="#one-to-one-function">一對一</a>。',
+          'sin、cos、sec、csc 的週期是 2π；tan、cot 的週期是 π。'
+        ],
+        examples: [
+          {
+            label: 'Many inputs, one output',
+            html:
+              '<p>sin(x + 2π) = sin x &nbsp;&nbsp; tan(x + π) = tan x</p>' +
+              '<p>sin(π/6) = sin(5π/6) = sin(13π/6) = ½</p>'
           }
         ]
       },
@@ -1311,13 +1528,13 @@
           'unit circle, sin θ is a vertical leg, which is no longer than the chord PA, which is ' +
           'no longer than the arc PA — and that arc has length θ.',
         notes: [
-          'Step 1: on a unit circle the arc cut off by angle θ has length θ (θ in ' +
+          'Step 1: on a <a href="#unit-circle">unit circle</a> the arc cut off by angle θ has length θ (θ in ' +
             '<a href="#radian">radians</a>).',
           'Step 2: a straight chord is never longer than the arc it spans: chord PA ≤ arc PA = θ.',
           'Step 3: by Pythagoras, chord PA = &radic;(sin²θ + (1 &minus; cos θ)²) ≥ &radic;(sin²θ) = sin θ.',
           'The handwritten side-calculation expands the square as 2 &minus; 2 sin θ cos θ; it ' +
-            'should be sin²θ + 1 &minus; 2cos θ + cos²θ = <strong>2 &minus; 2cos θ</strong>. The ' +
-            'conclusion is unaffected.',
+            'should be sin²θ + 1 &minus; 2cos θ + cos²θ = <strong>2 &minus; 2cos θ</strong>, by the ' +
+            '<a href="#pythagorean-identity">Pythagorean identity</a>. The conclusion is unaffected.',
           'On the graph, y = sin θ stays under the line y = θ, touching it only at 0 — the ' +
             'reason sin θ / θ &rarr; 1 as θ &rarr; 0, used later for limits.'
         ],
@@ -1325,10 +1542,10 @@
           '當 0 ≤ θ ≤ π/2 時，sin θ ≤ θ。在單位圓上，sin θ 是一條直的股，它不會比弦 PA 長，' +
           '弦 PA 又不會比弧 PA 長 &mdash; 而那段弧的長度就是 θ。',
         notesZh: [
-          '第 1 步：單位圓上角 θ 所對的弧長就是 θ（θ 用<a href="#radian">弧度</a>）。',
+          '第 1 步：<a href="#unit-circle">單位圓</a>上角 θ 所對的弧長就是 θ（θ 用<a href="#radian">弧度</a>）。',
           '第 2 步：弦不會比它所跨的弧長：弦 PA ≤ 弧 PA = θ。',
           '第 3 步：由畢氏定理，弦 PA = &radic;(sin²θ + (1 &minus; cos θ)²) ≥ &radic;(sin²θ) = sin θ。',
-          '筆記旁邊的手寫展開寫成 2 &minus; 2 sin θ cos θ；正確應為 sin²θ + 1 &minus; 2cos θ + cos²θ = <strong>2 &minus; 2cos θ</strong>。不影響結論。',
+          '筆記旁邊的手寫展開寫成 2 &minus; 2 sin θ cos θ；正確應為 sin²θ + 1 &minus; 2cos θ + cos²θ = <strong>2 &minus; 2cos θ</strong>（用<a href="#pythagorean-identity">畢氏恆等式</a>）。不影響結論。',
           '在圖上 y = sin θ 永遠在直線 y = θ 下方，只在 0 相切 &mdash; 這就是之後極限裡 sin θ / θ &rarr; 1 的原因。'
         ],
         examples: [
@@ -1433,7 +1650,7 @@
           'inverse exists and is written <span class="mono">h<sup>&minus;1</sup></span>, with ' +
           '<span class="mono">h<sup>&minus;1</sup>(h(x)) = x</span>.',
         notes: [
-          'The notes put it as "a function can be reasoned its input by its output" — given the ' +
+          'The notes put it as "a function can be inferenced its input by its output" — given the ' +
             'output, you can work back to the input.',
           '<strong>Inverse graph</strong>: the graphs of g and g<sup>&minus;1</sup> are ' +
             'reflections of each other in the line y = x, because (a, b) on one means (b, a) on the other.',
@@ -1444,7 +1661,7 @@
           '把 f「倒回去」的函數：把 f 的輸出帶回產生它的那個輸入。若 h 是<a href="#one-to-one-function">一對一</a>，' +
           '反函數就存在，記作 h<sup>&minus;1</sup>，滿足 h<sup>&minus;1</sup>(h(x)) = x。',
         notesZh: [
-          '筆記的說法是「a function can be reasoned its input by its output」&mdash; 知道輸出就能反推輸入。',
+          '筆記的說法是「a function can be inferenced its input by its output」&mdash; 知道輸出就能反推輸入。',
           '<strong>反函數圖形</strong>：g 與 g<sup>&minus;1</sup> 的圖形對直線 y = x 互為鏡射，因為一邊有 (a, b)，另一邊就有 (b, a)。',
           '定義域與值域互換：f<sup>&minus;1</sup> 的定義域 = f 的值域。',
           '那個 &minus;1 不是次方：f<sup>&minus;1</sup>(x) 不是 1/f(x)。'
@@ -1453,7 +1670,7 @@
           {
             label: 'From the notes',
             html:
-              '<p>Inverse functions: A function can be reasoned its input by its output.</p>' +
+              '<p>Inverse functions: A function can be inferenced its input by its output.</p>' +
               '<p>Definition. If h(·) is one-to-one, then the inverse of h(·) exists and is defined by h<sup>&minus;1</sup>(·)</p>' +
               '<p>The graphs of g(x) and g<sup>&minus;1</sup>(x) are reflections of each other about the line y = x!</p>'
           },
@@ -1570,32 +1787,86 @@
         id: 'domain-restriction',
         term: 'Domain restriction',
         zh: '定義域限制',
-        aliases: ['restricted domain', 'restrict', '限制定義域'],
+        aliases: ['restricted domain', 'restrict', '限制定義域', 'properly restricted', 'monotonic increase'],
         tags: ['ch1.2', 'operations'],
         def:
-          'Cutting a function\'s domain down to a smaller interval, usually so that it becomes ' +
-          '<a href="#one-to-one-function">one-to-one</a> there and therefore has an ' +
-          '<a href="#inverse-function">inverse</a>.',
+          'Cutting a function\'s domain down to an interval on which it is ' +
+          '<a href="#one-to-one-function">one-to-one</a>, so that it has an ' +
+          '<a href="#inverse-function">inverse</a>. The notes put it as the restriction ' +
+          '"which makes trigonometric functions one to one".',
         notes: [
-          'The notes give only the heading; the definition is filled in here.',
-          'x² is not one-to-one on &#8477;, but restricted to x ≥ 0 it is — and its inverse is &radic;x.',
-          'This is the "properly restricted" in the definition of the ' +
-            '<a href="#inverse-trig">inverse trig functions</a>: sin x is restricted to ' +
-            '[&minus;π/2, π/2] before it is inverted.'
+          'The standard choices: <strong>sin θ</strong> on [&minus;π/2, π/2], ' +
+            '<strong>cos θ</strong> on [0, π], <strong>tan θ</strong> on (&minus;π/2, π/2). On ' +
+            'each piece the function is <a href="#monotonic-function">monotonic</a> and takes every ' +
+            'value of its range exactly once.',
+          'Correction: the notes write cos θ on 0 ≤ θ ≤ π/2, but the graph beside it (rightly) ' +
+            'marks the piece from 0 to <strong>π</strong>. On [0, π/2] cos only reaches [0, 1], so ' +
+            'arccos of a negative number would be left undefined.',
+          'The tan interval should be open, (&minus;π/2, π/2): tan is undefined at &plusmn;π/2.',
+          'The "Domain" written under each graph — [&minus;1, 1], [&minus;1, 1], (&minus;&infin;, &infin;) — ' +
+            'is the range of the restricted function, which becomes the domain of the ' +
+            '<a href="#inverse-trig">inverse</a>.',
+          'Why it is needed at all: trig functions are <a href="#periodic-function">periodic</a>, ' +
+            'so each value comes back again and again.',
+          'The same idea outside trig: x² is not one-to-one on &#8477;, but restricted to ' +
+            'x ≥ 0 it is — and its inverse is &radic;x (see <a href="#one-to-one-function">one-to-one</a>).'
         ],
         defZh:
-          '把函數的定義域縮小到某個區間，通常是為了讓它在那裡變成<a href="#one-to-one-function">一對一</a>，因而有<a href="#inverse-function">反函數</a>。',
+          '把函數的定義域縮小到一個讓它<a href="#one-to-one-function">一對一</a>的區間，使它有<a href="#inverse-function">反函數</a>。' +
+          '筆記的說法是「讓三角函數變成一對一的那個限制」。',
         notesZh: [
-          '筆記只寫了標題，定義是這裡補上的。',
-          'x² 在 &#8477; 上不是一對一，但限制在 x ≥ 0 就是 &mdash; 它的反函數就是 &radic;x。',
-          '<a href="#inverse-trig">反三角函數</a>定義裡的「properly restricted」就是指這個：sin x 先限制在 [&minus;π/2, π/2] 才取反函數。'
+          '標準的限制：<strong>sin θ</strong> 取 [&minus;π/2, π/2]、<strong>cos θ</strong> 取 [0, π]、' +
+            '<strong>tan θ</strong> 取 (&minus;π/2, π/2)。每一段上函數都是<a href="#monotonic-function">單調</a>的，值域裡每個值剛好取到一次。',
+          '修正：筆記把 cos θ 寫成 0 ≤ θ ≤ π/2，但旁邊的圖（正確地）把 0 到 <strong>π</strong> 那段標成單調。' +
+            '只取 [0, π/2] 的話 cos 只到得了 [0, 1]，負數的 arccos 就沒有定義了。',
+          'tan 的區間應該是開區間 (&minus;π/2, π/2)：tan 在 &plusmn;π/2 沒有定義。',
+          '每張圖下面寫的「Domain」&mdash; [&minus;1, 1]、[&minus;1, 1]、(&minus;&infin;, &infin;) &mdash; ' +
+            '是限制後函數的值域，也就是<a href="#inverse-trig">反函數</a>的定義域。',
+          '為什麼非限制不可：三角函數是<a href="#periodic-function">週期函數</a>，同一個值會一再出現。',
+          '三角以外也一樣：x² 在 &#8477; 上不是一對一，限制在 x ≥ 0 就是，反函數是 &radic;x（見<a href="#one-to-one-function">一對一函數</a>）。'
         ],
         examples: [
-          { label: 'From the notes', html: '<p>Domain restriction</p><p>&rarr; (heading only)</p>' }
+          {
+            label: 'From the notes',
+            html:
+              '<p>Domain restriction: One which makes Trigonometric functions one to one</p>' +
+              '<p>sin θ: in &minus;π/2 ≤ θ ≤ π/2 (monotonic increase) &nbsp; Domain: [&minus;1, 1]</p>' +
+              '<p>cos θ: in 0 ≤ θ ≤ π/2 (monotonic) &nbsp; Domain: [&minus;1, 1]</p>' +
+              '<p>tan θ: in &minus;π/2 ≤ θ ≤ π/2 &nbsp; Domain: (&minus;&infin;, &infin;)</p>'
+          },
+          {
+            label: 'Corrected',
+            html:
+              '<table><tr><th>function</th><th>restricted to</th><th>values taken</th></tr>' +
+              '<tr><td>sin θ</td><td>[&minus;π/2, π/2]</td><td>[&minus;1, 1]</td></tr>' +
+              '<tr><td>cos θ</td><td><del>[0, π/2]</del> [0, π]</td><td>[&minus;1, 1]</td></tr>' +
+              '<tr><td>tan θ</td><td><del>[&minus;π/2, π/2]</del> (&minus;π/2, π/2)</td>' +
+              '<td>(&minus;&infin;, &infin;)</td></tr></table>'
+          }
         ],
         figure: {
-          caption: 'Keeping only x ≥ 0 makes x² one-to-one, so it can be inverted',
-          svg: RESTRICTED_PARABOLA
+          caption: 'The accent piece of each graph is the one kept: it is monotonic and takes every value once',
+          svg:
+            '<svg viewBox="0 0 360 140" role="img" aria-label="the restricted pieces of sin, cos and tan">' +
+            trigPanel({
+              cx: 60, cy: 62, sx: 10, sy: 24, w: 108, clip: 1.5, labelY: 132,
+              label: 'sin on [&minus;π/2, π/2]',
+              ticks: [[-PI / 2, '&minus;π/2'], [PI / 2, 'π/2']],
+              curves: [{ fn: sin, faint: true }, { fn: sin, on: [-PI / 2, PI / 2], hi: true }]
+            }) +
+            trigPanel({
+              cx: 180, cy: 62, sx: 10, sy: 24, w: 108, clip: 1.5, labelY: 132,
+              label: 'cos on [0, π]',
+              ticks: [[PI, 'π']],
+              curves: [{ fn: cos, faint: true }, { fn: cos, on: [0, PI], hi: true }]
+            }) +
+            trigPanel({
+              cx: 300, cy: 62, sx: 10, sy: 12, w: 108, clip: 3.4, labelY: 132,
+              label: 'tan on (&minus;π/2, π/2)',
+              asym: [-PI / 2, PI / 2],
+              curves: [{ fn: tan, faint: true }, { fn: tan, on: [-PI / 2, PI / 2], hi: true }]
+            }) +
+            '</svg>'
         }
       },
 
@@ -1604,29 +1875,38 @@
         term: 'Inverse trigonometric functions',
         abbr: 'arcsin',
         zh: '反三角函數',
-        aliases: ['arcsin', 'arccos', 'arctan', 'sin^-1', 'cos^-1', '反正弦', 'relation between inverse'],
+        aliases: ['arcsin', 'arccos', 'arctan', 'sin^-1', 'cos^-1', 'tan^-1', '反正弦', '反餘弦', 'properly restricted'],
         tags: ['ch1.2', 'trigonometry'],
         def:
-          'The inverses of the <em>properly restricted</em> trig functions. The inverse of sin x ' +
-          '(restricted to <span class="mono">[&minus;π/2, π/2]</span>) is written ' +
-          '<span class="mono">sin<sup>&minus;1</sup>x = arcsin x</span>: the angle — the ' +
-          '<em>arc</em> — whose sine is x.',
+          'The inverses of the <em>properly restricted</em> trig functions. sin x restricted to ' +
+          '<span class="mono">[&minus;π/2, π/2]</span> has the inverse ' +
+          '<span class="mono">sin<sup>&minus;1</sup>x = arcsin x</span> — the angle, the ' +
+          '<em>arc</em>, whose sine is x. In the same way cos x restricted to ' +
+          '<span class="mono">[0, π]</span> has the inverse ' +
+          '<span class="mono">cos<sup>&minus;1</sup>x = arccos x</span>.',
         notes: [
           'The restriction is needed because sin repeats itself and is not ' +
             '<a href="#one-to-one-function">one-to-one</a> on its whole domain — see ' +
             '<a href="#domain-restriction">domain restriction</a>.',
-          'arcsin takes values in [&minus;π/2, π/2], arccos in [0, π], arctan in (&minus;π/2, π/2).',
-          '<strong>Relation</strong> from the notes: cos<sup>&minus;1</sup>x + sin<sup>&minus;1</sup>x = π/2. ' +
-            'The notes state it for 0 ≤ x ≤ 1; it in fact holds for every x in [&minus;1, 1].',
+          'arcsin takes values in [&minus;π/2, π/2], arccos in [0, π], arctan in (&minus;π/2, π/2). ' +
+            'All six, with their domains: <a href="#inverse-trig-domain-range">domain and range of the ' +
+            'inverse trig functions</a>.',
+          'The graph of arcsin is the restricted sin reflected in y = x, like any ' +
+            '<a href="#inverse-function">inverse graph</a>.',
+          'Sums such as sin<sup>&minus;1</sup>x + cos<sup>&minus;1</sup>x = π/2 are under ' +
+            '<a href="#inverse-trig-relations">relations between inverse trig functions</a>.',
           'As with any inverse, sin<sup>&minus;1</sup>x is not 1/sin x — that would be csc x.'
         ],
         defZh:
-          '<em>適當限制定義域後</em>的三角函數的反函數。sin x（限制在 [&minus;π/2, π/2]）的反函數寫成 ' +
-          'sin<sup>&minus;1</sup>x = arcsin x：正弦值為 x 的那個角（那段<em>弧</em>）。',
+          '<em>適當限制定義域後</em>的三角函數的反函數。sin x 限制在 [&minus;π/2, π/2] 後的反函數寫成 ' +
+          'sin<sup>&minus;1</sup>x = arcsin x：正弦值為 x 的那個角（那段<em>弧</em>）。' +
+          '同理，cos x 限制在 [0, π] 後的反函數是 cos<sup>&minus;1</sup>x = arccos x。',
         notesZh: [
           '必須先限制，因為 sin 會重複、在整個定義域上不是<a href="#one-to-one-function">一對一</a> &mdash; 見<a href="#domain-restriction">定義域限制</a>。',
-          'arcsin 的值落在 [&minus;π/2, π/2]，arccos 在 [0, π]，arctan 在 (&minus;π/2, π/2)。',
-          '筆記裡的<strong>關係式</strong>：cos<sup>&minus;1</sup>x + sin<sup>&minus;1</sup>x = π/2。筆記寫的條件是 0 ≤ x ≤ 1，其實對 [&minus;1, 1] 內所有 x 都成立。',
+          'arcsin 的值落在 [&minus;π/2, π/2]，arccos 在 [0, π]，arctan 在 (&minus;π/2, π/2)。' +
+            '六個反函數的定義域與值域見<a href="#inverse-trig-domain-range">反三角函數的定義域與值域</a>。',
+          'arcsin 的圖形就是限制後的 sin 對 y = x 鏡射，和所有<a href="#inverse-function">反函數圖形</a>一樣。',
+          'sin<sup>&minus;1</sup>x + cos<sup>&minus;1</sup>x = π/2 這類關係式見<a href="#inverse-trig-relations">反三角函數的關係式</a>。',
           '和所有反函數一樣，sin<sup>&minus;1</sup>x 不是 1/sin x（那是 csc x）。'
         ],
         examples: [
@@ -1635,13 +1915,233 @@
             html:
               '<p>The inverse of (the properly restricted) sin x is defined as sin<sup>&minus;1</sup>x = arcsin x</p>' +
               '<p>arcsin: the arc whose sin x is &radic;3/2 &nbsp;&rarr;&nbsp; sin<sup>&minus;1</sup>(&radic;3/2): θ = π/3</p>' +
-              '<p>cos<sup>&minus;1</sup>x + sin<sup>&minus;1</sup>x = π/2, &nbsp;1 ≥ x ≥ 0</p>'
+              '<p>same thing: The inverse of (the properly restricted) cos x is defined as cos<sup>&minus;1</sup>x = arccos x</p>'
           },
           {
-            label: 'Checking the relation at x = ½',
-            html: '<p>sin<sup>&minus;1</sup>(½) = π/6, &nbsp; cos<sup>&minus;1</sup>(½) = π/3</p><p>π/6 + π/3 = π/2 &#10003;</p>'
+            label: 'Evaluating',
+            html:
+              '<p>arccos(½) = π/3 &nbsp;&nbsp; arccos(&minus;½) = 2π/3</p>' +
+              '<p>arcsin(&minus;1) = &minus;π/2 &nbsp;&nbsp; arctan(1) = π/4</p>'
+          }
+        ],
+        figure: {
+          caption: 'The restricted sin (faded accent) reflected in y = x gives arcsin (solid); (π/2, 1) swaps to (1, π/2)',
+          svg: (function () {
+            var X = function (x) { return 130 + 42 * x; },
+              Y = function (y) { return 95 - 42 * y; },
+              halo = 'stroke="var(--bg-elev)" stroke-width="3" paint-order="stroke"';
+            return (
+              '<svg viewBox="0 0 260 190" role="img" aria-label="sin restricted and its inverse arcsin">' +
+              '<g stroke="currentColor" stroke-width="1.1" opacity=".45"><path d="M10 95 H250"/><path d="M130 185 V5"/></g>' +
+              '<path d="M41.8 183.2 L218.2 6.8" stroke="currentColor" stroke-width="1.2" stroke-dasharray="5 4" opacity=".7"/>' +
+              '<path d="' + plot(sin, -2.8, 2.8, X, Y, 9) + '" fill="none" stroke="currentColor" stroke-width="1.3" opacity=".35"/>' +
+              '<path d="' + plot(sin, -PI / 2, PI / 2, X, Y, 9) + '" fill="none" stroke="var(--accent)" stroke-width="2.4" opacity=".5"/>' +
+              '<path d="' + plot(Math.asin, -1, 1, X, Y, 9) + '" fill="none" stroke="var(--accent)" stroke-width="2.6"/>' +
+              '<path d="M196 53 L172 29" stroke="currentColor" stroke-width="1" stroke-dasharray="2 3"/>' +
+              '<g fill="var(--accent)"><circle cx="196" cy="53" r="3.4"/><circle cx="172" cy="29" r="3.4"/>' +
+              '<circle cx="64" cy="137" r="3.4" opacity=".6"/><circle cx="88" cy="161" r="3.4"/></g>' +
+              '<g font-family="sans-serif" font-size="10.5" fill="currentColor">' +
+              '<text x="168" y="16" text-anchor="end" fill="var(--accent)" font-weight="700" ' + halo + '>arcsin x</text>' +
+              '<text x="204" y="74" fill="var(--accent)" ' + halo + '>sin x</text>' +
+              '<text x="222" y="16">y = x</text></g></svg>'
+            );
+          })()
+        }
+      },
+
+      {
+        id: 'inverse-trig-relations',
+        term: 'Relations between inverse trig functions',
+        zh: '反三角函數的關係式',
+        aliases: ['relation', 'complementary angle', '餘角', 'cofunction', 'arcsin + arccos', 'π/2'],
+        tags: ['ch1.2', 'trigonometry'],
+        def:
+          'Each inverse function and its co-function add up to a right angle: ' +
+          '<span class="mono">sin<sup>&minus;1</sup>x + cos<sup>&minus;1</sup>x = π/2</span>, ' +
+          '<span class="mono">tan<sup>&minus;1</sup>x + cot<sup>&minus;1</sup>x = π/2</span>, ' +
+          '<span class="mono">csc<sup>&minus;1</sup>x + sec<sup>&minus;1</sup>x = π/2</span>.',
+        notes: [
+          'Why it holds (filled in here): in a right triangle with hypotenuse 1 and one side x, the ' +
+            'angle opposite x has sine x and the other acute angle has cosine x. The two acute ' +
+            'angles of a right triangle add to π/2.',
+          'Where each one holds: the first for &minus;1 ≤ x ≤ 1, the second for every real x, the ' +
+            'third for |x| ≥ 1 — exactly the domains in the ' +
+            '<a href="#inverse-trig-domain-range">domain and range table</a>.',
+          'Use it to trade one inverse for another: cos<sup>&minus;1</sup>x = π/2 &minus; sin<sup>&minus;1</sup>x.'
+        ],
+        defZh:
+          '每個反三角函數和它的「餘」函數相加都是直角：sin<sup>&minus;1</sup>x + cos<sup>&minus;1</sup>x = π/2、' +
+          'tan<sup>&minus;1</sup>x + cot<sup>&minus;1</sup>x = π/2、csc<sup>&minus;1</sup>x + sec<sup>&minus;1</sup>x = π/2。',
+        notesZh: [
+          '為什麼成立（這裡補上的）：斜邊為 1、有一邊為 x 的直角三角形裡，x 的對角正弦值是 x，' +
+            '另一個銳角的餘弦值也是 x；而直角三角形的兩個銳角相加正好是 π/2。',
+          '成立範圍：第一條 &minus;1 ≤ x ≤ 1、第二條所有實數 x、第三條 |x| ≥ 1 &mdash; 剛好就是' +
+            '<a href="#inverse-trig-domain-range">定義域與值域表</a>裡的定義域。',
+          '可以用來互換：cos<sup>&minus;1</sup>x = π/2 &minus; sin<sup>&minus;1</sup>x。'
+        ],
+        examples: [
+          {
+            label: 'From the notes',
+            html:
+              '<p>Relation between the inverse of trigonometric functions.</p>' +
+              '<p>cos<sup>&minus;1</sup>x + sin<sup>&minus;1</sup>x = π/2</p>' +
+              '<p>cot<sup>&minus;1</sup>x + tan<sup>&minus;1</sup>x = π/2</p>' +
+              '<p>csc<sup>&minus;1</sup>x + sec<sup>&minus;1</sup>x = π/2</p>'
+          },
+          {
+            label: 'Checking at a value',
+            html:
+              '<p>x = ½: sin<sup>&minus;1</sup>(½) + cos<sup>&minus;1</sup>(½) = π/6 + π/3 = π/2 &#10003;</p>' +
+              '<p>x = 1: tan<sup>&minus;1</sup>(1) + cot<sup>&minus;1</sup>(1) = π/4 + π/4 = π/2 &#10003;</p>' +
+              '<p>x = 2: csc<sup>&minus;1</sup>(2) + sec<sup>&minus;1</sup>(2) = π/6 + π/3 = π/2 &#10003;</p>'
+          }
+        ],
+        figure: {
+          caption: 'With hypotenuse 1 and side x: one acute angle is sin⁻¹x, the other cos⁻¹x, and they add to π/2',
+          svg:
+            '<svg viewBox="0 0 300 150" role="img" aria-label="complementary angles in a right triangle">' +
+            '<path d="M40 125 L240 125 L240 30 Z" fill="var(--accent-soft)" stroke="currentColor" stroke-width="1.6"/>' +
+            '<path d="M228 125 V113 H240" fill="none" stroke="currentColor" stroke-width="1.2"/>' +
+            '<g fill="none" stroke="var(--accent)" stroke-width="2">' +
+            '<path d="M70 125 A30 30 0 0 0 67.1 112.1"/><path d="M240 56 A26 26 0 0 1 216.5 41.2"/></g>' +
+            '<g font-family="sans-serif" font-size="11" fill="currentColor">' +
+            '<text x="76" y="119" fill="var(--accent)" font-weight="700">sin<tspan dy="-4" font-size="8">&minus;1</tspan><tspan dy="4">x</tspan></text>' +
+            '<text x="234" y="66" text-anchor="end" fill="var(--accent)" font-weight="700">cos<tspan dy="-4" font-size="8">&minus;1</tspan><tspan dy="4">x</tspan></text>' +
+            '<text x="130" y="70">1</text>' +
+            '<text x="248" y="82">x</text></g></svg>'
+        }
+      },
+
+      {
+        id: 'inverse-trig-domain-range',
+        term: 'Domain and range of the inverse trig functions',
+        zh: '反三角函數的定義域與值域',
+        aliases: ['D&R', 'D & R', 'arccsc', 'arcsec', 'arccot', 'csc^-1', 'sec^-1', 'cot^-1', '定義域', '值域'],
+        tags: ['ch1.2', 'trigonometry'],
+        def:
+          'Inverting swaps domain and range. The <strong>domain</strong> of an inverse trig function ' +
+          'is the set of values the restricted function takes; its <strong>range</strong> is the ' +
+          'interval the function was restricted to.',
+        notes: [
+          'The notes list csc<sup>&minus;1</sup>, sec<sup>&minus;1</sup> and cot<sup>&minus;1</sup>. ' +
+            'Their "D" column is the interval csc, sec and cot are restricted to — the ' +
+            '<em>range</em> of the inverse — and their "R" column is the <em>domain</em> of the ' +
+            'inverse. For csc<sup>&minus;1</sup> itself the two labels swap, as in the table below.',
+          'Correction: for sec the notes write [0, π/2) &cup; (π/2, <strong>0</strong>]; the second ' +
+            'piece should be (π/2, <strong>π</strong>].',
+          'The sin<sup>&minus;1</sup>, cos<sup>&minus;1</sup> and tan<sup>&minus;1</sup> rows come from the ' +
+            '<a href="#domain-restriction">domain restriction</a> part of the notes (with the cos ' +
+            'interval corrected to [0, π]).',
+          'Textbooks do not all agree on the ranges of sec<sup>&minus;1</sup> and csc<sup>&minus;1</sup>; ' +
+            'the ones here match the notes.'
+        ],
+        defZh:
+          '取反函數會把定義域和值域對調。反三角函數的<strong>定義域</strong>是限制後原函數取到的值；' +
+          '它的<strong>值域</strong>就是原函數被限制到的那個區間。',
+        notesZh: [
+          '筆記列了 csc<sup>&minus;1</sup>、sec<sup>&minus;1</sup>、cot<sup>&minus;1</sup>。它的「D」欄其實是 csc、sec、cot ' +
+            '被限制到的區間 &mdash; 也就是反函數的<em>值域</em>；「R」欄則是反函數的<em>定義域</em>。' +
+            '對 csc<sup>&minus;1</sup> 本身來說兩個標籤要對調，見下表。',
+          '修正：sec 那一列筆記寫 [0, π/2) &cup; (π/2, <strong>0</strong>]，後半段應為 (π/2, <strong>π</strong>]。',
+          'sin<sup>&minus;1</sup>、cos<sup>&minus;1</sup>、tan<sup>&minus;1</sup> 三列來自筆記的<a href="#domain-restriction">定義域限制</a>段（cos 的區間已修正為 [0, π]）。',
+          'sec<sup>&minus;1</sup>、csc<sup>&minus;1</sup> 的值域各課本不完全一致；這裡採用和筆記相同的版本。'
+        ],
+        examples: [
+          {
+            label: 'From the notes',
+            html:
+              '<p>D &amp; R of csc<sup>&minus;1</sup> sec<sup>&minus;1</sup> cot<sup>&minus;1</sup></p>' +
+              '<p>csc<sup>&minus;1</sup>: D: [&minus;π/2, 0) &cup; (0, π/2] &nbsp;/&nbsp; R: (&minus;&infin;, &minus;1] &cup; [1, &infin;)</p>' +
+              '<p>sec<sup>&minus;1</sup>: D: [0, π/2) &cup; (π/2, 0] &nbsp;/&nbsp; R: (&minus;&infin;, &minus;1] &cup; [1, &infin;)</p>' +
+              '<p>cot<sup>&minus;1</sup>: D: (0, π) &nbsp;/&nbsp; R: (&minus;&infin;, &infin;)</p>'
+          },
+          {
+            label: 'All six inverses',
+            html:
+              '<table><tr><th>inverse</th><th>domain</th><th>range</th></tr>' +
+              '<tr><td>sin<sup>&minus;1</sup></td><td>[&minus;1, 1]</td><td>[&minus;π/2, π/2]</td></tr>' +
+              '<tr><td>cos<sup>&minus;1</sup></td><td>[&minus;1, 1]</td><td>[0, π]</td></tr>' +
+              '<tr><td>tan<sup>&minus;1</sup></td><td>(&minus;&infin;, &infin;)</td><td>(&minus;π/2, π/2)</td></tr>' +
+              '<tr><td>csc<sup>&minus;1</sup></td><td>(&minus;&infin;, &minus;1] &cup; [1, &infin;)</td><td>[&minus;π/2, 0) &cup; (0, π/2]</td></tr>' +
+              '<tr><td>sec<sup>&minus;1</sup></td><td>(&minus;&infin;, &minus;1] &cup; [1, &infin;)</td><td>[0, π/2) &cup; (π/2, π]</td></tr>' +
+              '<tr><td>cot<sup>&minus;1</sup></td><td>(&minus;&infin;, &infin;)</td><td>(0, π)</td></tr></table>'
           }
         ]
+      },
+
+      {
+        id: 'trig-graphs',
+        term: 'Graphs of the trigonometric functions',
+        zh: '三角函數圖形',
+        aliases: ['graph', 'sine wave', 'csc graph', 'sec graph', 'cot graph', 'asymptote', '漸近線', '圖形', 'arccot', 'arcsec', 'arccsc'],
+        tags: ['ch1.2', 'trigonometry'],
+        def:
+          'The notes sketch each trig function with its reciprocal and its inverse: sin with csc, ' +
+          'cos with sec, tan with cot. sin and cos are waves between &minus;1 and 1; tan and cot ' +
+          'climb (or fall) between vertical asymptotes; csc and sec are U-shaped branches lying ' +
+          'outside the band &minus;1 &lt; y &lt; 1.',
+        notes: [
+          'csc = 1/sin blows up wherever sin = 0 (x = kπ), so it has vertical asymptotes there; ' +
+            'sec does the same where cos = 0.',
+          'Where sin reaches &plusmn;1, csc touches it — each U-branch of csc sits on a peak or a ' +
+            'trough of sin. The same goes for cos and sec.',
+          'Periods: sin, cos, csc and sec repeat every 2π; tan and cot every π — see ' +
+            '<a href="#periodic-function">periodic function</a>.',
+          'In the notes each inverse (arcsin, arccos, arctan, arccsc, arcsec, arccot) is drawn as ' +
+            'the restricted piece reflected in the dotted line y = x — see the ' +
+            '<a href="#inverse-trig">arcsin figure</a>.'
+        ],
+        defZh:
+          '筆記把每個三角函數和它的倒數、反函數畫在一起：sin 配 csc、cos 配 sec、tan 配 cot。' +
+          'sin、cos 是介於 &minus;1 到 1 的波；tan、cot 在鉛直漸近線之間一路上升（或下降）；' +
+          'csc、sec 是一段段 U 形，落在 &minus;1 &lt; y &lt; 1 這條帶子的外面。',
+        notesZh: [
+          'csc = 1/sin 在 sin = 0（x = kπ）處爆掉，所以那裡有鉛直漸近線；sec 則在 cos = 0 處爆掉。',
+          'sin 到達 &plusmn;1 的地方 csc 剛好碰到它 &mdash; csc 的每個 U 都頂在 sin 的波峰或波谷上；cos 與 sec 也一樣。',
+          '週期：sin、cos、csc、sec 每 2π 重複一次；tan、cot 每 π 重複一次，見<a href="#periodic-function">週期函數</a>。',
+          '筆記裡每個反函數（arcsin、arccos、arctan、arccsc、arcsec、arccot）都畫成限制後那一段對虛線 y = x 的鏡射，見<a href="#inverse-trig">arcsin 的圖</a>。'
+        ],
+        examples: [
+          {
+            label: 'From the notes',
+            html:
+              '<p>Graph of trigonometric function</p>' +
+              '<p>sin/sin<sup>&minus;1</sup> &nbsp; csc/csc<sup>&minus;1</sup> &nbsp; cos/cos<sup>&minus;1</sup> &nbsp; ' +
+              'sec/sec<sup>&minus;1</sup> &nbsp; tan/tan<sup>&minus;1</sup> &nbsp; cot/cot<sup>&minus;1</sup></p>'
+          },
+          {
+            label: 'Key features',
+            html:
+              '<table><tr><th>function</th><th>period</th><th>range</th></tr>' +
+              '<tr><td>sin, cos</td><td>2π</td><td>[&minus;1, 1]</td></tr>' +
+              '<tr><td>tan, cot</td><td>π</td><td>(&minus;&infin;, &infin;)</td></tr>' +
+              '<tr><td>csc, sec</td><td>2π</td><td>(&minus;&infin;, &minus;1] &cup; [1, &infin;)</td></tr></table>'
+          }
+        ],
+        figure: {
+          caption: 'Each function (accent) with its reciprocal (grey)',
+          svg:
+            '<svg viewBox="0 0 360 162" role="img" aria-label="graphs of the six trigonometric functions">' +
+            trigPanel({
+              cx: 60, cy: 72, sx: 8, sy: 18, w: 112, clip: 3.3, labelY: 156,
+              label: '<tspan fill="var(--accent)" font-weight="700">sin</tspan> and csc',
+              ticks: [[-PI, '&minus;π'], [PI, 'π']],
+              curves: [{ fn: csc, faint: true }, { fn: sin, hi: true }]
+            }) +
+            trigPanel({
+              cx: 180, cy: 72, sx: 8, sy: 18, w: 112, clip: 3.3, labelY: 156,
+              label: '<tspan fill="var(--accent)" font-weight="700">cos</tspan> and sec',
+              ticks: [[-PI, '&minus;π'], [PI, 'π']],
+              curves: [{ fn: sec, faint: true }, { fn: cos, hi: true }]
+            }) +
+            trigPanel({
+              cx: 300, cy: 72, sx: 8, sy: 18, w: 112, clip: 3.3, labelY: 156,
+              label: '<tspan fill="var(--accent)" font-weight="700">tan</tspan> and cot',
+              ticks: [[-PI, '&minus;π'], [PI, 'π']],
+              curves: [{ fn: cot, faint: true }, { fn: tan, hi: true }]
+            }) +
+            '</svg>'
+        }
       },
 
       /* ------------------------------------------------ ch2.2 */
