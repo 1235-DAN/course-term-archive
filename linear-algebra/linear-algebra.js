@@ -2,7 +2,8 @@
    linear-algebra.js — 線性代數 term data
    Source notes: 線性代數9_7-9_8.pdf (ch1.1), 線性代數9_9.pdf (ch1.2),
                  線性代數9_14.pdf (ch1.2 homogeneous systems; ch1.3 vectors in Rⁿ;
-                                   ch1.4 subsets and subspaces)
+                                   ch1.4 subsets and subspaces),
+                 線性代數9_15.pdf (ch1.4 span, ch1.5 basis)
 
    The card face is ENGLISH ONLY: term / def / notes / example labels /
    figure captions. Everything Chinese — zh, zhAlt, defZh, notesZh — is
@@ -89,11 +90,12 @@
     sources: [
       { file: '線性代數9_7-9_8.pdf', label: '線性代數9_7-9_8.pdf（ch1.1）' },
       { file: '線性代數9_9.pdf', label: '線性代數9_9.pdf（ch1.2）' },
-      { file: '線性代數9_14.pdf', label: '線性代數9_14.pdf（ch1.2、ch1.3、ch1.4）' }
+      { file: '線性代數9_14.pdf', label: '線性代數9_14.pdf（ch1.2、ch1.3、ch1.4）' },
+      { file: '線性代數9_15.pdf', label: '線性代數9_15.pdf（ch1.4、ch1.5）' }
     ],
     blurb:
       '線性方程組的語言：方程式的零件、矩陣的零件與大小、增廣矩陣與基本列運算、' +
-      '消去法的終點 — 簡化列梯形、齊次方程組，以及向量空間 ℝⁿ 的向量運算、線性組合與子空間。',
+      '消去法的終點 — 簡化列梯形、齊次方程組，向量空間 ℝⁿ 的向量運算、線性組合與子空間，以及基底與線性獨立。',
 
     terms: [
       /* ============================================ 9/7 — equations */
@@ -1803,29 +1805,35 @@
         id: 'span',
         term: 'Span',
         zh: '生成空間',
-        zhAlt: '張成',
-        aliases: ['spanned', 'span{}', '生成', 'plane through the origin'],
+        zhAlt: '張成／展開（筆記用「展開」）',
+        aliases: ['spanned', 'span{}', '生成', '展開', 'spans', 'plane through the origin'],
         tags: ['ch1.4', 'vectors'],
-        added: true,
         def:
           'The set of <strong>all</strong> <a href="#linear-combination">linear combinations</a> of ' +
           'some vectors <strong>u</strong>&#8321;, &hellip;, <strong>u</strong><sub>k</sub>, written ' +
           'span{<strong>u</strong>&#8321;, &hellip;, <strong>u</strong><sub>k</sub>}. It is always a ' +
-          '<a href="#subspace">subspace</a>.',
+          '<a href="#subspace">subspace</a>; if it equals W, the vectors are said to ' +
+          '<strong>span</strong> W.',
         notes: [
-          'Why this is here: the textbook example in the notes ends by saying W "is in fact the ' +
-            'plane determined by the vectors (1, 0, 1) and (0, 1, 1)" — that plane is their span.',
+          'The notes put it as "all linear combination of subspace span W": the set of all ' +
+            'linear combinations is a subspace, and the vectors span it.',
+          'The textbook example from the previous lecture ends by saying W "is in fact the plane ' +
+            'determined by the vectors (1, 0, 1) and (0, 1, 1)" — that plane is their span.',
           'The span of one non-zero vector is a line through the origin; of two vectors not on ' +
-            'the same line, a plane through the origin.'
+            'the same line, a plane through the origin.',
+          'Spanning is the first of the two properties of a <a href="#basis">basis</a>.'
         ],
         defZh:
           '一組向量 <strong>u</strong>&#8321;, …, <strong>u</strong><sub>k</sub> 的<strong>所有</strong><a href="#linear-combination">線性組合</a>所成的集合，' +
-          '記作 span{<strong>u</strong>&#8321;, …, <strong>u</strong><sub>k</sub>}。它一定是<a href="#subspace">子空間</a>。',
+          '記作 span{<strong>u</strong>&#8321;, …, <strong>u</strong><sub>k</sub>}。它一定是<a href="#subspace">子空間</a>；若它等於 W，就說這些向量<strong>生成</strong>（span）W。',
         notesZh: [
-          '為什麼補這個：筆記裡課本例題的結尾說 W「其實就是由 (1, 0, 1) 和 (0, 1, 1) 決定的平面」&mdash; 那個平面就是它們的生成空間。',
-          '一個非零向量生成一條通過原點的直線；兩個不共線的向量生成一個通過原點的平面。'
+          '筆記的寫法是「all linear combination of subspace span W」：所有線性組合構成一個子空間，這些向量就生成它。筆記把 span 譯作「展開」，常見的譯法是「生成」或「張成」。',
+          '上一堂課本例題的結尾說 W「其實就是由 (1, 0, 1) 和 (0, 1, 1) 決定的平面」&mdash; 那個平面就是它們的生成空間。',
+          '一個非零向量生成一條通過原點的直線；兩個不共線的向量生成一個通過原點的平面。',
+          '「生成」是<a href="#basis">基底</a>兩個性質中的第一個。'
         ],
         examples: [
+          { label: 'From the notes', html: '<p>span（展開）: all linear combination of subspace span W.</p>' },
           {
             label: 'The W example from the notes',
             html:
@@ -1965,6 +1973,196 @@
             html:
               '<p>the line y = 2x: (1, 2) + (3, 6) = (4, 8), still on it &rArr; closed under addition</p>' +
               '<p>the line y = 2x + 1: (0, 1) + (1, 3) = (1, 4), not on it &rArr; not closed</p>'
+          }
+        ]
+      },
+
+      /* ============================================ ch1.5 — basis */
+      {
+        id: 'basis',
+        term: 'Basis',
+        zh: '基底',
+        aliases: ['bases', 'basis of R^3', '基', 'two important properties'],
+        tags: ['ch1.5', 'basis'],
+        def:
+          'A set of vectors in a space that has two properties: <strong>&#9312; it spans the ' +
+          'space</strong> — every vector can be written as a <a href="#linear-combination">linear ' +
+          'combination</a> of them — and <strong>&#9313; it is ' +
+          '<a href="#linear-independence">linearly independent</a></strong> — none of them can be ' +
+          'built from the others.',
+        notes: [
+          'The notes state it for &#8477;³: vectors in &#8477;³ form a basis of &#8477;³ when they ' +
+            '<a href="#span">span</a> &#8477;³ and are linearly independent.',
+          'Why both are needed: spanning means every vector can be made <em>at least one way</em>; ' +
+            'independence means <em>at most one way</em>. Together, every vector has exactly one set ' +
+            'of weights.',
+          'Every basis of &#8477;³ has exactly 3 vectors — that count is the ' +
+            '<a href="#dimension">dimension</a>. Too few cannot span; too many cannot be independent.',
+          'The simplest one is the <a href="#standard-basis">standard basis</a>.'
+        ],
+        defZh:
+          '空間裡具備兩個性質的一組向量：<strong>&#9312; 生成整個空間</strong> &mdash; 每個向量都能寫成它們的' +
+          '<a href="#linear-combination">線性組合</a>；<strong>&#9313; <a href="#linear-independence">線性獨立</a></strong> &mdash; 其中沒有一個能由其他幾個組出來。',
+        notesZh: [
+          '筆記以 &#8477;³ 為例：&#8477;³ 中的向量若能<a href="#span">生成</a> &#8477;³ 又線性獨立，就是 &#8477;³ 的基底。',
+          '為什麼兩個都要：「生成」保證每個向量<em>至少有一種</em>組法；「獨立」保證<em>至多一種</em>。合起來，每個向量的權重恰好只有一組。',
+          '&#8477;³ 的每組基底都剛好 3 個向量 &mdash; 這個數就是<a href="#dimension">維度</a>。太少生成不了，太多就不可能獨立。',
+          '最簡單的是<a href="#standard-basis">標準基底</a>。'
+        ],
+        examples: [
+          {
+            label: 'From the notes',
+            html:
+              '<p>Basis: Vectors in &#8477;³ form a basis of &#8477;³ and have two important properties.</p>' +
+              '<p>&#9312; They span &#8477;³. They can be write an arbitrary vector as a linear combination.</p>' +
+              '<p>&#9313; They are linearly independent which can\'t be decompose.</p>'
+          },
+          {
+            label: 'A basis other than the standard one',
+            html:
+              '<p>(1, 1, 0), (0, 1, 1), (1, 0, 1)</p>' +
+              '<p>(2, 3, 1) = 2(1, 1, 0) + 1(0, 1, 1) + 0(1, 0, 1) — and no other weights work</p>'
+          },
+          {
+            label: 'Not a basis of ℝ³',
+            html:
+              '<p>(1, 0, 0), (0, 1, 0): only two vectors, cannot span &#8477;³</p>' +
+              '<p>(1, 0, 0), (0, 1, 0), (1, 1, 0): dependent, the third is the sum of the first two</p>'
+          }
+        ]
+      },
+
+      {
+        id: 'linear-independence',
+        term: 'Linear independence',
+        zh: '線性獨立',
+        zhAlt: '線性無關',
+        aliases: ['linearly independent', 'linearly dependent', 'linear dependence', 'dependent', '線性相依', 'decompose'],
+        tags: ['ch1.5', 'basis'],
+        def:
+          'Vectors <strong>v</strong>&#8321;, &hellip;, <strong>v</strong><sub>k</sub> are ' +
+          '<strong>linearly independent</strong> when the only way to get ' +
+          '<span class="mono">c&#8321;v&#8321; + &hellip; + c<sub>k</sub>v<sub>k</sub> = 0</span> is ' +
+          'c&#8321; = &hellip; = c<sub>k</sub> = 0. Equivalently, none of them is a linear combination ' +
+          'of the others. Otherwise they are <strong>linearly dependent</strong>.',
+        notes: [
+          'The notes say independent vectors "can\'t be decomposed": none of them can be broken down ' +
+            'into the others. The precise definition is filled in here.',
+          'How to test: solve c&#8321;<strong>v</strong>&#8321; + &hellip; + c<sub>k</sub><strong>v</strong><sub>k</sub> = ' +
+            '<strong>0</strong>, a <a href="#homogeneous-system">homogeneous system</a> in the c\'s. Only ' +
+            'the <a href="#trivial-solution">trivial solution</a> &rArr; independent; a nontrivial one ' +
+            '&rArr; dependent.',
+          'Quick checks: two vectors are dependent exactly when one is a multiple of the other; a set ' +
+            'containing the <a href="#zero-vector">zero vector</a> is always dependent; more than n ' +
+            'vectors in &#8477;<sup>n</sup> are always dependent.'
+        ],
+        defZh:
+          '向量 <strong>v</strong>&#8321;, …, <strong>v</strong><sub>k</sub> <strong>線性獨立</strong>，是指要讓 ' +
+          'c&#8321;v&#8321; + … + c<sub>k</sub>v<sub>k</sub> = 0，唯一的方法是 c&#8321; = … = c<sub>k</sub> = 0。' +
+          '等價地說：沒有一個能寫成其他幾個的線性組合。不是這樣就叫<strong>線性相依</strong>。',
+        notesZh: [
+          '筆記的說法是獨立的向量「can\'t be decompose（不能被拆解）」：沒有一個能拆成其他向量的組合。精確定義是這裡補上的。',
+          '檢驗法：解 c&#8321;<strong>v</strong>&#8321; + … + c<sub>k</sub><strong>v</strong><sub>k</sub> = <strong>0</strong>，這是以 c 為未知數的<a href="#homogeneous-system">齊次方程組</a>。' +
+            '只有<a href="#trivial-solution">零解</a> &rArr; 獨立；有非零解 &rArr; 相依。',
+          '快速判斷：兩個向量相依，恰好是其中一個是另一個的倍數；含<a href="#zero-vector">零向量</a>的集合一定相依；&#8477;<sup>n</sup> 裡超過 n 個向量一定相依。'
+        ],
+        examples: [
+          { label: 'From the notes', html: '<p>&#9313; They are linearly independent which can\'t be decompose.</p>' },
+          {
+            label: 'Independent or not',
+            html:
+              '<p>(1, 0, 0), (0, 1, 0), (0, 0, 1) &rarr; independent</p>' +
+              '<p>(1, 2), (2, 4) &rarr; dependent: (2, 4) = 2(1, 2)</p>' +
+              '<p>(1, 0, 0), (0, 1, 0), (1, 1, 0) &rarr; dependent: 1&middot;v&#8321; + 1&middot;v&#8322; &minus; 1&middot;v&#8323; = 0</p>'
+          }
+        ]
+      },
+
+      {
+        id: 'standard-basis',
+        term: 'Standard basis',
+        abbr: 'e&#8321;, e&#8322;, e&#8323;',
+        zh: '標準基底',
+        aliases: ['e1', 'e2', 'e3', 'unit vectors', 'i j k', '單位向量'],
+        tags: ['ch1.5', 'basis'],
+        added: true,
+        def:
+          'The <a href="#basis">basis</a> of &#8477;³ made of the unit vectors along the axes: ' +
+          '<span class="mono">e&#8321; = (1, 0, 0)</span>, <span class="mono">e&#8322; = (0, 1, 0)</span>, ' +
+          '<span class="mono">e&#8323; = (0, 0, 1)</span>. In &#8477;<sup>n</sup> it is ' +
+          'e&#8321;, &hellip;, e<sub>n</sub>, each with a single 1.',
+        notes: [
+          'Why this is here: it is the example that makes the two basis properties obvious. ' +
+            '(a, b, c) = a e&#8321; + b e&#8322; + c e&#8323;, so they span; and the only way to get ' +
+            '(0, 0, 0) is a = b = c = 0, so they are independent.',
+          'With this basis the weights are just the <a href="#component">components</a>.',
+          'Physics writes the same three vectors as i, j, k.'
+        ],
+        defZh:
+          '&#8477;³ 中沿各座標軸的單位向量組成的<a href="#basis">基底</a>：e&#8321; = (1, 0, 0)、e&#8322; = (0, 1, 0)、e&#8323; = (0, 0, 1)。' +
+          '在 &#8477;<sup>n</sup> 中就是 e&#8321;, …, e<sub>n</sub>，每個都只有一個 1。',
+        notesZh: [
+          '為什麼補這個：用它來看基底的兩個性質最清楚。(a, b, c) = a e&#8321; + b e&#8322; + c e&#8323;，所以能生成；要得到 (0, 0, 0) 只能 a = b = c = 0，所以獨立。',
+          '用這組基底時，權重就是向量的<a href="#component">分量</a>。',
+          '物理課把同樣三個向量寫成 i、j、k。'
+        ],
+        examples: [
+          { label: 'Weights = components', html: '<p>(4, &minus;1, 7) = 4e&#8321; &minus; 1e&#8322; + 7e&#8323;</p>' }
+        ],
+        figure: {
+          caption: 'e₁, e₂, e₃ point one unit along the x-, y- and z-axes',
+          svg:
+            '<svg viewBox="0 0 300 170" role="img" aria-label="the standard basis vectors of R3">' +
+            '<g stroke="currentColor" stroke-width="1.1" opacity=".45">' +
+            '<path d="M130 110 L60 166"/><path d="M130 110 H285"/><path d="M130 110 V8"/></g>' +
+            arrow(130, 110, 90, 142, ACC) +
+            arrow(130, 110, 195, 110, ACC) +
+            arrow(130, 110, 130, 45, ACC) +
+            LBL +
+            '<text x="76" y="140" fill="var(--accent)" font-weight="700">e&#8321;</text>' +
+            '<text x="190" y="128" fill="var(--accent)" font-weight="700">e&#8322;</text>' +
+            '<text x="138" y="52" fill="var(--accent)" font-weight="700">e&#8323;</text>' +
+            '<text x="56" y="162" font-style="normal">x</text>' +
+            '<text x="280" y="124" font-style="normal">y</text>' +
+            '<text x="138" y="16" font-style="normal">z</text></g></svg>'
+        }
+      },
+
+      {
+        id: 'dimension',
+        term: 'Dimension',
+        abbr: 'dim',
+        zh: '維度',
+        zhAlt: '維數',
+        aliases: ['dim', 'n-dimensional', 'n維', '維'],
+        tags: ['ch1.5', 'basis'],
+        added: true,
+        def:
+          'The number of vectors in a <a href="#basis">basis</a>. Every basis of the same space has ' +
+          'the same number of vectors, so this is well defined: ' +
+          '<span class="mono">dim &#8477;<sup>n</sup> = n</span>.',
+        notes: [
+          'Why this is here: textbook section 1.5 is usually "basis and dimension", and the notes ' +
+            'already call &#8477;<sup>n</sup> "n 維度" (n dimensions) on the ' +
+            '<a href="#vector-space-rn">vector space</a> card.',
+          'Subspaces of &#8477;³ by dimension: {<strong>0</strong>} has 0, a line through the origin 1, ' +
+            'a plane through the origin 2, &#8477;³ itself 3.',
+          'In a space of dimension n, n independent vectors automatically span, and n spanning vectors ' +
+            'are automatically independent — you only need to check one property.'
+        ],
+        defZh:
+          '<a href="#basis">基底</a>裡向量的個數。同一個空間的每組基底個數都一樣，所以這個數有明確定義：dim &#8477;<sup>n</sup> = n。',
+        notesZh: [
+          '為什麼補這個：課本 1.5 節通常叫「基底與維度」，而且筆記在<a href="#vector-space-rn">向量空間</a>那裡已經寫了 &#8477;<sup>n</sup>「n 維度」。',
+          '&#8477;³ 的子空間依維度分：{<strong>0</strong>} 是 0 維、通過原點的直線 1 維、通過原點的平面 2 維、&#8477;³ 本身 3 維。',
+          '在 n 維空間裡，n 個獨立的向量自動能生成，n 個能生成的向量也自動獨立 &mdash; 只要檢查其中一個性質就好。'
+        ],
+        examples: [
+          {
+            label: 'The W example',
+            html:
+              '<p>W = span{(1, 0, 1), (0, 1, 1)}: the two vectors are independent</p>' +
+              '<p>&rArr; they form a basis of W, and dim W = 2 (a plane)</p>'
           }
         ]
       }
