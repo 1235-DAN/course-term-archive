@@ -5,6 +5,7 @@
                  微積分9_11.pdf (ch1.2 and the start of ch2.2; re-uploaded with
                                  domain restriction, arccos, the inverse-trig
                                  relations / D&R table and trig graphs added)
+                 微積分9_15.pdf (ch2.3 ε–δ definition, ch2.4 one-sided limits)
 
    The card face is ENGLISH ONLY: term / def / notes / example labels /
    figure captions. Everything Chinese — zh, zhAlt, defZh, notesZh — is
@@ -141,6 +142,45 @@
   function sec(x) { return 1 / cos(x); }
   function cot(x) { return 1 / tan(x); }
 
+  /* y = x/|x|: 1 on the right, −1 on the left, undefined at 0. Shared by the
+     right- and left-hand limit cards. */
+  var SIGN_FIG =
+    '<svg viewBox="0 0 300 150" role="img" aria-label="the graph of x over absolute x">' +
+    '<g stroke="currentColor" stroke-width="1.2" opacity=".5"><path d="M15 75 H285"/><path d="M150 140 V10"/></g>' +
+    '<path d="M154 35 H285" stroke="var(--accent)" stroke-width="2.8"/>' +
+    '<path d="M15 115 H146" stroke="var(--accent)" stroke-width="2.8" opacity=".55"/>' +
+    '<g fill="var(--bg-elev)" stroke="var(--accent)" stroke-width="1.8">' +
+    '<circle cx="150" cy="35" r="4"/><circle cx="150" cy="115" r="4"/></g>' +
+    '<g fill="var(--accent)"><polygon points="166,28 176,24 176,32"/><polygon points="134,108 124,104 124,112"/></g>' +
+    '<g font-family="sans-serif" font-size="10.5" fill="currentColor">' +
+    '<text x="142" y="39" text-anchor="end">1</text>' +
+    '<text x="158" y="119">&minus;1</text>' +
+    '<text x="180" y="22" fill="var(--accent)">x &rarr; 0<tspan dy="-4" font-size="8">+</tspan><tspan dy="4">: 1</tspan></text>' +
+    '<text x="120" y="134" text-anchor="end" fill="var(--accent)">x &rarr; 0<tspan dy="-4" font-size="8">&minus;</tspan><tspan dy="4">: &minus;1</tspan></text>' +
+    '<text x="240" y="58">y = x / |x|</text></g></svg>';
+
+  /* y = 4x − 1 near x = 3 with ε = 2: every x in the grey strip 3 ± ε/4 lands
+     inside the accent band 11 ± ε */
+  var EPS_DELTA_FIG =
+    '<svg viewBox="0 0 320 205" role="img" aria-label="epsilon band around 11 and delta strip around 3">' +
+    '<rect x="30" y="70" width="280" height="60" fill="var(--accent-soft)"/>' +
+    '<rect x="140" y="8" width="60" height="177" fill="currentColor" opacity=".07"/>' +
+    '<g stroke="var(--accent)" stroke-width="1.2" stroke-dasharray="4 3"><path d="M30 70 H310"/><path d="M30 130 H310"/></g>' +
+    '<g fill="none" stroke="currentColor" stroke-width="1.1" stroke-dasharray="3 3" opacity=".6"><path d="M140 8 V185"/><path d="M200 8 V185"/>' +
+    '<path d="M30 100 H170 V185"/></g>' +
+    '<g stroke="currentColor" stroke-width="1.2" opacity=".5"><path d="M30 185 H310"/><path d="M30 195 V5"/></g>' +
+    '<path d="M95 175 L245 25" stroke="currentColor" stroke-width="1.6" opacity=".7"/>' +
+    '<path d="M140 130 L200 70" stroke="var(--accent)" stroke-width="3"/>' +
+    '<circle cx="170" cy="100" r="3.6" fill="var(--accent)"/>' +
+    '<g font-family="sans-serif" font-size="10" fill="currentColor">' +
+    '<text x="26" y="104" text-anchor="end">11</text>' +
+    '<text x="306" y="66" text-anchor="end" fill="var(--accent)">11 + ε</text>' +
+    '<text x="306" y="143" text-anchor="end" fill="var(--accent)">11 &minus; ε</text>' +
+    '<text x="140" y="198" text-anchor="middle">3 &minus; δ</text>' +
+    '<text x="170" y="198" text-anchor="middle">3</text>' +
+    '<text x="200" y="198" text-anchor="middle">3 + δ</text>' +
+    '<text x="236" y="22">y = 4x &minus; 1</text></g></svg>';
+
   GLOSSARY.register({
     id: 'calculus',
     name: 'Calculus',
@@ -151,12 +191,13 @@
     sources: [
       { file: '微積分9_8.pdf', label: '微積分9_8.pdf（ch1.1）' },
       { file: '微積分9_10.pdf', label: '微積分9_10.pdf（ch1.1）' },
-      { file: '微積分9_11.pdf', label: '微積分9_11.pdf（ch1.2、ch2.2）' }
+      { file: '微積分9_11.pdf', label: '微積分9_11.pdf（ch1.2、ch2.2）' },
+      { file: '微積分9_15.pdf', label: '微積分9_15.pdf（ch2.3、ch2.4）' }
     ],
     blurb:
       '函數的基本語言：定義域與值域、座標與座標軸、差商、取整函數、' +
       '奇偶性與對稱、絕對值、單位圓與三角函數圖形、反三角函數與其關係式、指數與對數、反函數，' +
-      '以及常見的函數家族。',
+      '常見的函數家族，以及極限：ε–δ 定義與左右極限。',
 
     terms: [
       /* ------------------------------------------------ core definition */
@@ -2186,14 +2227,17 @@
             'otherwise the function would be 1 on both sides and there would be no step.',
           'The value exactly at 0 is a convention: ½ (as in the notes), 1, or left undefined all appear.',
           'Its use in ch2.2: as x &rarr; 0 from the left it approaches 0, from the right 1, so it ' +
-            'has no limit at 0 — the standard example of a jump.'
+            'has no <a href="#limit">limit</a> at 0 — the standard example of a jump. Those two ' +
+            'values are its <a href="#left-hand-limit">left-hand</a> and ' +
+            '<a href="#right-hand-limit">right-hand</a> limits.'
         ],
         defZh:
           'x &lt; 0 時為 <strong>0</strong>、x &gt; 0 時為 <strong>1</strong> 的<a href="#piecewise-function">分段函數</a>，在原點往上跳。筆記的版本把跳躍點的值定為 ½。',
         notesZh: [
           '筆記把第一段寫成 x &lt; 0 時為 1；步階函數這一段必須是 <strong>0</strong>，不然兩邊都是 1，就沒有「階」了。',
           '恰好在 0 的值是約定：½（筆記的寫法）、1、或不定義都有人用。',
-          '在 ch2.2 的用途：x 從左邊趨近 0 時趨近 0，從右邊趨近 1，所以在 0 沒有極限 &mdash; 跳躍不連續的標準例子。'
+          '在 ch2.2 的用途：x 從左邊趨近 0 時趨近 0，從右邊趨近 1，所以在 0 沒有<a href="#limit">極限</a> &mdash; 跳躍不連續的標準例子。' +
+            '這兩個值就是它的<a href="#left-hand-limit">左極限</a>與<a href="#right-hand-limit">右極限</a>。'
         ],
         examples: [
           {
@@ -2223,6 +2267,192 @@
             '<text x="142" y="94" text-anchor="end">½</text>' +
             '<text x="142" y="134" text-anchor="end">0</text></g></svg>'
         }
+      },
+
+      {
+        id: 'limit',
+        term: 'Limit',
+        abbr: 'lim',
+        zh: '極限',
+        aliases: ['lim', 'approach', 'tends to', '趨近', 'limit of a function'],
+        tags: ['ch2.2', 'limits'],
+        added: true,
+        def:
+          '<span class="mono">lim<sub>x&rarr;c</sub> f(x) = L</span> means f(x) can be made as ' +
+          'close to L as we like by taking x close enough to c — but not equal to c. The value ' +
+          'f(c) itself plays no part.',
+        notes: [
+          'Why this is here: the notes go straight to the precise ' +
+            '<a href="#epsilon-delta-limit">ε–δ definition</a> in ch2.3; this is the everyday idea ' +
+            'that definition makes precise.',
+          'A limit can exist where f(c) is undefined, or different from L: (x² &minus; 1)/(x &minus; 1) ' +
+            '&rarr; 2 as x &rarr; 1, although it is undefined at x = 1.',
+          'It fails to exist at a jump such as the <a href="#unit-step-function">unit step</a> at 0, ' +
+            'where the <a href="#left-hand-limit">left-hand</a> and ' +
+            '<a href="#right-hand-limit">right-hand</a> limits differ.'
+        ],
+        defZh:
+          'lim<sub>x&rarr;c</sub> f(x) = L 的意思是：只要讓 x 夠接近 c（但不等於 c），f(x) 就能要多接近 L 就多接近 L。' +
+          'f(c) 本身是多少完全不影響。',
+        notesZh: [
+          '為什麼補這個：筆記在 ch2.3 直接給了精確的 <a href="#epsilon-delta-limit">ε–δ 定義</a>；這張卡是它要精確化的那個直觀想法。',
+          '極限可以在 f(c) 沒定義、或 f(c) ≠ L 時存在：(x² &minus; 1)/(x &minus; 1) 在 x &rarr; 1 時趨近 2，雖然 x = 1 時它沒有定義。',
+          '在跳躍處（例如<a href="#unit-step-function">單位步階函數</a>的 0）極限不存在，因為<a href="#left-hand-limit">左極限</a>和<a href="#right-hand-limit">右極限</a>不相等。'
+        ],
+        examples: [
+          {
+            label: 'Evaluating',
+            html:
+              '<p>lim<sub>x&rarr;2</sub> (3x + 1) = 7</p>' +
+              '<p>lim<sub>x&rarr;1</sub> (x² &minus; 1)/(x &minus; 1) = lim<sub>x&rarr;1</sub> (x + 1) = 2</p>'
+          }
+        ]
+      },
+
+      /* ------------------------------------------------ ch2.3 */
+      {
+        id: 'epsilon-delta-limit',
+        term: 'ε–δ definition of a limit',
+        zh: '極限的 ε–δ 定義',
+        zhAlt: '極限的精確定義',
+        aliases: ['epsilon delta', 'epsilon-delta', 'precise definition of a limit', '精確定義', 'epsilon', 'delta'],
+        tags: ['ch2.3', 'limits'],
+        def:
+          '<span class="mono">lim<sub>x&rarr;c</sub> f(x) = L</span> if and only if for every ' +
+          '<span class="mono">ε &gt; 0</span> we can find a corresponding ' +
+          '<span class="mono">δ &gt; 0</span> such that ' +
+          '<span class="mono">|f(x) &minus; L| &lt; ε</span> whenever ' +
+          '<span class="mono">0 &lt; |x &minus; c| &lt; δ</span>.',
+        notes: [
+          'Read it as a challenge: someone names any tolerance ε around L, however small; you must ' +
+            'answer with a distance δ around c so that every x within δ of c lands f(x) within ε of L.',
+          'The 0 &lt; |x &minus; c| part leaves out x = c itself, so f(c) never matters — the ' +
+            'precise form of "not equal to c" in the informal <a href="#limit">limit</a>.',
+          'The pattern in the notes: <strong>calculate</strong> backwards from |f(x) &minus; L| &lt; ε ' +
+            'until it reads |x &minus; c| &lt; (something) — that something is δ — then write the ' +
+            '<strong>proof</strong> forwards: "given ε &gt; 0, take δ = …".',
+          'For any line f(x) = mx + b (m &ne; 0) the answer is δ = ε / |m|; the notes\' example is m = 4.'
+        ],
+        defZh:
+          'lim<sub>x&rarr;c</sub> f(x) = L 若且唯若：對每一個 ε &gt; 0，都找得到對應的 δ &gt; 0，' +
+          '使得只要 0 &lt; |x &minus; c| &lt; δ，就有 |f(x) &minus; L| &lt; ε。',
+        notesZh: [
+          '把它想成挑戰：對方隨便給一個 L 周圍的誤差 ε（多小都行），你要回一個 c 周圍的距離 δ，讓 c 附近 δ 以內的每個 x，f(x) 都落在 L 的 ε 以內。',
+          '0 &lt; |x &minus; c| 把 x = c 本身排除，所以 f(c) 完全不影響 &mdash; 這就是直觀<a href="#limit">極限</a>裡「不等於 c」的精確寫法。',
+          '筆記的做法：先<strong>計算</strong>，從 |f(x) &minus; L| &lt; ε 往回推到 |x &minus; c| &lt; (某個數)，那個數就是 δ；再順著寫<strong>證明</strong>：「給定 ε &gt; 0，取 δ = …」。',
+          '對任何直線 f(x) = mx + b（m &ne; 0），答案都是 δ = ε / |m|；筆記的例子是 m = 4。'
+        ],
+        examples: [
+          {
+            label: 'From the notes: f(x) = 4x − 1, show lim x→3 f(x) = 11',
+            html:
+              '<p>cal.: given one ε &gt; 0</p>' +
+              '<p>|f(x) &minus; 11| &lt; ε &hArr; |4x &minus; 1 &minus; 11| &lt; ε &hArr; |4x &minus; 12| &lt; ε &hArr; |x &minus; 3| &lt; ε/4</p>' +
+              '<p>proof: given one ε &gt; 0, we can find δ = ε/4 such that |f(x) &minus; 11| &lt; ε ' +
+              'whenever 0 &lt; |x &minus; 3| &lt; δ</p>'
+          },
+          {
+            label: 'With numbers',
+            html:
+              '<p>ε = 0.1 &rarr; δ = 0.025</p>' +
+              '<p>x = 3.02: f(x) = 11.08, and |11.08 &minus; 11| = 0.08 &lt; 0.1 &#10003;</p>'
+          }
+        ],
+        figure: {
+          caption: 'Every x in the grey strip 3 ± δ (δ = ε/4) sends f(x) into the band 11 ± ε',
+          svg: EPS_DELTA_FIG
+        }
+      },
+
+      /* ------------------------------------------------ ch2.4 */
+      {
+        id: 'right-hand-limit',
+        term: 'Right-hand limit',
+        abbr: 'x&rarr;c<sup>+</sup>',
+        zh: '右極限',
+        aliases: ['one-sided limit', 'right limit', '單邊極限', 'c+', 'from the right'],
+        tags: ['ch2.4', 'limits'],
+        def:
+          'f has right-hand limit L at c, written <span class="mono">lim<sub>x&rarr;c<sup>+</sup></sub> ' +
+          'f(x) = L</span>, if for every ε &gt; 0 there is a δ &gt; 0 such that ' +
+          '<span class="mono">|f(x) &minus; L| &lt; ε</span> whenever ' +
+          '<span class="mono">c &lt; x &lt; c + δ</span> — only x to the <strong>right</strong> of c count.',
+        notes: [
+          'It is the <a href="#epsilon-delta-limit">ε–δ definition</a> with 0 &lt; |x &minus; c| &lt; δ ' +
+            'replaced by c &lt; x &lt; c + δ.',
+          'Needed where f lives on one side only: √x &minus; 1 is undefined for x &lt; 0, so at 0 ' +
+            'only the right-hand limit makes sense — the notes\' example.',
+          'A two-sided <a href="#limit">limit</a> exists exactly when the right-hand and ' +
+            '<a href="#left-hand-limit">left-hand</a> limits both exist and are equal (filled in here). ' +
+            'x/|x| has right-hand limit 1 and left-hand limit &minus;1 at 0, so lim<sub>x&rarr;0</sub> does not exist.',
+          'Correction: the slide\'s hint starts with |f(x) &minus; <strong>0</strong>| = |√x &minus; 1 &minus; (&minus;1)|. ' +
+            'Since L = &minus;1, the left side should be |f(x) &minus; (&minus;1)|.'
+        ],
+        defZh:
+          'f 在 c 的右極限為 L，記作 lim<sub>x&rarr;c<sup>+</sup></sub> f(x) = L：對每個 ε &gt; 0 都有 δ &gt; 0，' +
+          '使得只要 c &lt; x &lt; c + δ，就有 |f(x) &minus; L| &lt; ε &mdash; 只看 c <strong>右邊</strong>的 x。',
+        notesZh: [
+          '它就是把 <a href="#epsilon-delta-limit">ε–δ 定義</a>裡的 0 &lt; |x &minus; c| &lt; δ 換成 c &lt; x &lt; c + δ。',
+          '函數只活在一邊時就需要它：√x &minus; 1 在 x &lt; 0 沒有定義，所以在 0 只能談右極限 &mdash; 這正是筆記的例子。',
+          '雙邊<a href="#limit">極限</a>存在，恰好就是右極限與<a href="#left-hand-limit">左極限</a>都存在且相等（這裡補上的）。' +
+            'x/|x| 在 0 的右極限是 1、左極限是 &minus;1，所以 lim<sub>x&rarr;0</sub> 不存在。',
+          '修正：投影片的提示寫 |f(x) &minus; <strong>0</strong>| = |√x &minus; 1 &minus; (&minus;1)|；L = &minus;1，左邊應為 |f(x) &minus; (&minus;1)|。'
+        ],
+        examples: [
+          {
+            label: 'From the notes',
+            html:
+              '<p>Definitions. We say f(x) has a right-hand limit L at c, written lim<sub>x&rarr;c<sup>+</sup></sub> ' +
+              'f(x) = L, if for every number ε &gt; 0, there exists a corresponding δ &gt; 0 such that ' +
+              '|f(x) &minus; L| &lt; ε whenever c &lt; x &lt; c + δ.</p>'
+          },
+          {
+            label: 'Example from the notes: f(x) = √x − 1, lim x→0⁺ f(x) = −1',
+            html:
+              '<p>given one ε &gt; 0: |√x &minus; 1 &minus; (&minus;1)| &lt; ε &hArr; |√x| &lt; ε</p>' +
+              '<p>if 0 &lt; x &lt; ε² then |√x| &lt; ε, leading to |f(x) &minus; (&minus;1)| &lt; ε</p>' +
+              '<p>proof: we can find δ = ε² such that it holds whenever 0 &lt; x &lt; 0 + δ</p>'
+          }
+        ],
+        figure: { caption: 'y = x/|x|: from the right it is 1, from the left −1', svg: SIGN_FIG }
+      },
+
+      {
+        id: 'left-hand-limit',
+        term: 'Left-hand limit',
+        abbr: 'x&rarr;c<sup>&minus;</sup>',
+        zh: '左極限',
+        aliases: ['one-sided limit', 'left limit', '單邊極限', 'c-', 'from the left'],
+        tags: ['ch2.4', 'limits'],
+        def:
+          'f has left-hand limit L at c, written <span class="mono">lim<sub>x&rarr;c<sup>&minus;</sup></sub> ' +
+          'f(x) = L</span>, if for every ε &gt; 0 there is a δ &gt; 0 such that ' +
+          '<span class="mono">|f(x) &minus; L| &lt; ε</span> whenever ' +
+          '<span class="mono">c &minus; δ &lt; x &lt; c</span> — only x to the <strong>left</strong> of c count.',
+        notes: [
+          'The notes pose this as a question — "What\'s the definition of a left-hand limit?" — ' +
+            'after the right-hand one; the answer is filled in here. It is the mirror image of the ' +
+            '<a href="#right-hand-limit">right-hand limit</a>.',
+          'The <a href="#unit-step-function">unit step</a> has left-hand limit 0 and right-hand limit ' +
+            '1 at 0; x/|x| has &minus;1 and 1. Different values, so no two-sided <a href="#limit">limit</a>.'
+        ],
+        defZh:
+          'f 在 c 的左極限為 L，記作 lim<sub>x&rarr;c<sup>&minus;</sup></sub> f(x) = L：對每個 ε &gt; 0 都有 δ &gt; 0，' +
+          '使得只要 c &minus; δ &lt; x &lt; c，就有 |f(x) &minus; L| &lt; ε &mdash; 只看 c <strong>左邊</strong>的 x。',
+        notesZh: [
+          '筆記在右極限後面用問句帶出：「What\'s the definition of a left-hand limit?」；答案是這裡補上的，就是<a href="#right-hand-limit">右極限</a>的鏡像。',
+          '<a href="#unit-step-function">單位步階函數</a>在 0 的左極限是 0、右極限是 1；x/|x| 則是 &minus;1 和 1。兩邊不同，所以雙邊<a href="#limit">極限</a>不存在。'
+        ],
+        examples: [
+          { label: 'From the notes', html: '<p>What\'s the definition of a left-hand limit?</p><p>&rarr; (question only)</p>' },
+          {
+            label: 'y = x/|x| at 0',
+            html:
+              '<p>lim<sub>x&rarr;0<sup>&minus;</sup></sub> x/|x| = &minus;1 &nbsp;&nbsp; lim<sub>x&rarr;0<sup>+</sup></sub> x/|x| = 1</p>' +
+              '<p>&rArr; lim<sub>x&rarr;0</sub> x/|x| does not exist</p>'
+          }
+        ],
+        figure: { caption: 'y = x/|x|: approaching 0 from the left gives −1', svg: SIGN_FIG }
       }
     ]
   });
