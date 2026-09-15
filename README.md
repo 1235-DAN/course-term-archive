@@ -19,17 +19,20 @@ calculus/                       ← 微積分
   微積分9_8.pdf                  ← 原始筆記
   微積分9_10.pdf
   微積分9_11.pdf
+  微積分9_15.pdf
 linear-algebra/                 ← 線性代數
   linear-algebra.html
   linear-algebra.js
   線性代數9_7-9_8.pdf
   線性代數9_9.pdf
   線性代數9_14.pdf
+  線性代數9_15.pdf
 computer-science/               ← 計算機概論
   computer-science.html
   computer-science.js
   計算機概論9_10.pdf
   計算機概論9_10-2.pdf
+  計算機概論9_15.pdf
 physics/                        ← 普通物理
   physics.html
   physics.js
