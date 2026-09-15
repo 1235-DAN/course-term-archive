@@ -1,8 +1,8 @@
 /* ==========================================================================
    linear-algebra.js — 線性代數 term data
    Source notes: 線性代數9_7-9_8.pdf (ch1.1), 線性代數9_9.pdf (ch1.2),
-                 線性代數9_14.pdf (ch1.2 homogeneous systems; ch1.3 vectors in Rⁿ,
-                 subspaces)
+                 線性代數9_14.pdf (ch1.2 homogeneous systems; ch1.3 vectors in Rⁿ;
+                                   ch1.4 subsets and subspaces)
 
    The card face is ENGLISH ONLY: term / def / notes / example labels /
    figure captions. Everything Chinese — zh, zhAlt, defZh, notesZh — is
@@ -89,7 +89,7 @@
     sources: [
       { file: '線性代數9_7-9_8.pdf', label: '線性代數9_7-9_8.pdf（ch1.1）' },
       { file: '線性代數9_9.pdf', label: '線性代數9_9.pdf（ch1.2）' },
-      { file: '線性代數9_14.pdf', label: '線性代數9_14.pdf（ch1.2、ch1.3）' }
+      { file: '線性代數9_14.pdf', label: '線性代數9_14.pdf（ch1.2、ch1.3、ch1.4）' }
     ],
     blurb:
       '線性方程組的語言：方程式的零件、矩陣的零件與大小、增廣矩陣與基本列運算、' +
@@ -1805,7 +1805,7 @@
         zh: '生成空間',
         zhAlt: '張成',
         aliases: ['spanned', 'span{}', '生成', 'plane through the origin'],
-        tags: ['ch1.3', 'vectors'],
+        tags: ['ch1.4', 'vectors'],
         added: true,
         def:
           'The set of <strong>all</strong> <a href="#linear-combination">linear combinations</a> of ' +
@@ -1840,7 +1840,7 @@
         term: 'Subset',
         zh: '子集合',
         aliases: ['set', '集合', '⊆'],
-        tags: ['ch1.3', 'vectors'],
+        tags: ['ch1.4', 'vectors'],
         def:
           'A collection of some of the vectors of a space: W is a subset of &#8477;<sup>n</sup>, written ' +
           '<span class="mono">W &sube; &#8477;<sup>n</sup></span>, when every vector in W is also in &#8477;<sup>n</sup>.',
@@ -1866,7 +1866,7 @@
         term: 'Subspace',
         zh: '子空間',
         aliases: ['subspace of R^n', 'W', '子空間', 'closed under addition', 'closed under scalar multiplication'],
-        tags: ['ch1.3', 'vectors'],
+        tags: ['ch1.4', 'vectors'],
         def:
           'A non-empty <a href="#subset">subset</a> W of &#8477;<sup>n</sup> that is ' +
           '<a href="#closed-under">closed</a> under <a href="#vector-addition">addition</a> and ' +
@@ -1941,7 +1941,7 @@
         zh: '封閉',
         zhAlt: '封閉性',
         aliases: ['closed', 'closure', '封閉性', 'closed under addition'],
-        tags: ['ch1.3', 'vectors'],
+        tags: ['ch1.4', 'vectors'],
         def:
           'A set is <strong>closed</strong> under an operation when doing that operation to members ' +
           'of the set always gives another member — you can never leave the set that way.',
