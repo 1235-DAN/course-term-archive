@@ -1,7 +1,7 @@
 /* ==========================================================================
    linear-algebra.js — 線性代數 term data
    Source notes: 線性代數9_7-9_8.pdf (ch1.1), 線性代數9_9.pdf (ch1.2),
-                 線性代數9_14.pdf (ch1.2: homogeneous systems, vectors in Rⁿ,
+                 線性代數9_14.pdf (ch1.2 homogeneous systems; ch1.3 vectors in Rⁿ,
                  subspaces)
 
    The card face is ENGLISH ONLY: term / def / notes / example labels /
@@ -89,7 +89,7 @@
     sources: [
       { file: '線性代數9_7-9_8.pdf', label: '線性代數9_7-9_8.pdf（ch1.1）' },
       { file: '線性代數9_9.pdf', label: '線性代數9_9.pdf（ch1.2）' },
-      { file: '線性代數9_14.pdf', label: '線性代數9_14.pdf（ch1.2）' }
+      { file: '線性代數9_14.pdf', label: '線性代數9_14.pdf（ch1.2、ch1.3）' }
     ],
     blurb:
       '線性方程組的語言：方程式的零件、矩陣的零件與大小、增廣矩陣與基本列運算、' +
@@ -1382,7 +1382,7 @@
         zh: '向量空間',
         zhAlt: 'n 維空間',
         aliases: ['vector space', 'n-space', 'R^n', 'Rn', 'R2', 'R3', 'dimension', '維度', 'n維'],
-        tags: ['ch1.2', 'vectors'],
+        tags: ['ch1.3', 'vectors'],
         def:
           'The set of all ordered lists <span class="mono">(u&#8321;, u&#8322;, &hellip;, u<sub>n</sub>)</span> ' +
           'of n real numbers, together with <a href="#vector-addition">addition</a> and ' +
@@ -1426,7 +1426,7 @@
         abbr: 'O',
         zh: '原點',
         aliases: ['zero point', '(0,0)', '(0,0,0)'],
-        tags: ['ch1.2', 'vectors'],
+        tags: ['ch1.3', 'vectors'],
         def:
           'The point <span class="mono">O = (0, 0, &hellip;, 0)</span> where all the axes meet. ' +
           '<a href="#position-vector">Position vectors</a> are drawn from it.',
@@ -1448,7 +1448,7 @@
         term: 'Position vector',
         zh: '位置向量',
         aliases: ['OA', 'radius vector', '位置'],
-        tags: ['ch1.2', 'vectors'],
+        tags: ['ch1.3', 'vectors'],
         def:
           'The vector from the <a href="#origin">origin</a> to a point. The position vector of ' +
           'the point <span class="mono">A = (a&#8321;, a&#8322;)</span> is ' +
@@ -1477,7 +1477,7 @@
         term: 'Initial / terminal point',
         zh: '起點／終點',
         aliases: ['initial point', 'terminal point', 'tail', 'head', '起點', '終點', 'PQ'],
-        tags: ['ch1.2', 'vectors'],
+        tags: ['ch1.3', 'vectors'],
         def:
           'A vector drawn as an arrow from P to Q starts at its <strong>initial point</strong> P ' +
           'and ends at its <strong>terminal point</strong> Q. Its components are ' +
@@ -1506,7 +1506,7 @@
         term: 'Component',
         zh: '分量',
         aliases: ['entry', 'first component', 'coordinate', 'n-space'],
-        tags: ['ch1.2', 'vectors'],
+        tags: ['ch1.3', 'vectors'],
         def:
           'Each number in a vector <span class="mono">(u&#8321;, u&#8322;, &hellip;, u<sub>n</sub>)</span>: ' +
           'u&#8321; is the <strong>first component</strong>, u&#8322; the second, and so on. The set of ' +
@@ -1538,7 +1538,7 @@
         term: 'Equal vectors',
         zh: '向量相等',
         aliases: ['equal', 'equality', '相等'],
-        tags: ['ch1.2', 'vectors'],
+        tags: ['ch1.3', 'vectors'],
         def:
           'Two vectors <strong>u</strong> = (u&#8321;, &hellip;, u<sub>n</sub>) and ' +
           '<strong>v</strong> = (v&#8321;, &hellip;, v<sub>n</sub>) in &#8477;<sup>n</sup> are equal when ' +
@@ -1571,7 +1571,7 @@
         term: 'Vector addition',
         zh: '向量加法',
         aliases: ['addition', 'sum', 'parallelogram', '平行四邊形', 'tip to tail', '加法'],
-        tags: ['ch1.2', 'vectors'],
+        tags: ['ch1.3', 'vectors'],
         def:
           'Add two vectors component by component: ' +
           '<span class="mono">u + v = (u&#8321; + v&#8321;, &hellip;, u<sub>n</sub> + v<sub>n</sub>)</span>. ' +
@@ -1618,7 +1618,7 @@
         zh: '純量乘法',
         zhAlt: '係數積',
         aliases: ['scalar multiple', 'multiply', 'scaling', 'ku', '倍數', '伸縮'],
-        tags: ['ch1.2', 'vectors'],
+        tags: ['ch1.3', 'vectors'],
         def:
           'Multiplying a vector by a <a href="#scalar">scalar</a> (a number) multiplies every ' +
           'component: <span class="mono">k u = (k u&#8321;, &hellip;, k u<sub>n</sub>)</span>. The arrow ' +
@@ -1661,7 +1661,7 @@
         abbr: '<strong>0</strong>',
         zh: '零向量',
         aliases: ['zero', '0 vector', 'null vector'],
-        tags: ['ch1.2', 'vectors'],
+        tags: ['ch1.3', 'vectors'],
         def:
           'The vector whose every component is 0: <span class="mono">0 = (0, 0, &hellip;, 0)</span>. ' +
           'Adding it changes nothing: <strong>u</strong> + <strong>0</strong> = <strong>u</strong>.',
@@ -1688,7 +1688,7 @@
         zh: '負向量',
         zhAlt: '反向量',
         aliases: ['negative', 'opposite vector', 'additive inverse', '反方向'],
-        tags: ['ch1.2', 'vectors'],
+        tags: ['ch1.3', 'vectors'],
         def:
           'The vector <span class="mono">&minus;v = (&minus;v&#8321;, &hellip;, &minus;v<sub>n</sub>)</span>: ' +
           'the same length as <strong>v</strong>, pointing the opposite way. It is what cancels ' +
@@ -1715,7 +1715,7 @@
         abbr: '<strong>u</strong> &minus; <strong>v</strong>',
         zh: '向量減法',
         aliases: ['subtraction', 'difference', 'u-v', '減法'],
-        tags: ['ch1.2', 'vectors'],
+        tags: ['ch1.3', 'vectors'],
         def:
           '<span class="mono">u &minus; v = u + (&minus;v)</span>: add the ' +
           '<a href="#negative-vector">negative</a> of <strong>v</strong>. Component by component it is ' +
@@ -1760,7 +1760,7 @@
         term: 'Linear combination',
         zh: '線性組合',
         aliases: ['combination', 'c1u1 + c2u2', 'weights', '組合'],
-        tags: ['ch1.2', 'vectors'],
+        tags: ['ch1.3', 'vectors'],
         def:
           'A sum of scalar multiples of vectors: ' +
           '<span class="mono">c&#8321;u&#8321; + c&#8322;u&#8322; + &hellip; + c<sub>k</sub>u<sub>k</sub></span>. ' +
@@ -1805,7 +1805,7 @@
         zh: '生成空間',
         zhAlt: '張成',
         aliases: ['spanned', 'span{}', '生成', 'plane through the origin'],
-        tags: ['ch1.2', 'vectors'],
+        tags: ['ch1.3', 'vectors'],
         added: true,
         def:
           'The set of <strong>all</strong> <a href="#linear-combination">linear combinations</a> of ' +
@@ -1840,7 +1840,7 @@
         term: 'Subset',
         zh: '子集合',
         aliases: ['set', '集合', '⊆'],
-        tags: ['ch1.2', 'vectors'],
+        tags: ['ch1.3', 'vectors'],
         def:
           'A collection of some of the vectors of a space: W is a subset of &#8477;<sup>n</sup>, written ' +
           '<span class="mono">W &sube; &#8477;<sup>n</sup></span>, when every vector in W is also in &#8477;<sup>n</sup>.',
@@ -1866,7 +1866,7 @@
         term: 'Subspace',
         zh: '子空間',
         aliases: ['subspace of R^n', 'W', '子空間', 'closed under addition', 'closed under scalar multiplication'],
-        tags: ['ch1.2', 'vectors'],
+        tags: ['ch1.3', 'vectors'],
         def:
           'A non-empty <a href="#subset">subset</a> W of &#8477;<sup>n</sup> that is ' +
           '<a href="#closed-under">closed</a> under <a href="#vector-addition">addition</a> and ' +
@@ -1941,7 +1941,7 @@
         zh: '封閉',
         zhAlt: '封閉性',
         aliases: ['closed', 'closure', '封閉性', 'closed under addition'],
-        tags: ['ch1.2', 'vectors'],
+        tags: ['ch1.3', 'vectors'],
         def:
           'A set is <strong>closed</strong> under an operation when doing that operation to members ' +
           'of the set always gives another member — you can never leave the set that way.',
