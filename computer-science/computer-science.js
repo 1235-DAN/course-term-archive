@@ -2,7 +2,7 @@
    computer-science.js — 計算機概論 term data
    Source notes: 計算機概論9_10.pdf   (ch 1.1)
                  計算機概論9_10-2.pdf (the same page, extended: ALU, I/O, sequential execution)
-                 計算機概論9_15.pdf   (ch1.2 program, ch1.3 components, ch2.1 number systems)
+                 計算機概論9_15.pdf   (ch1.2 program, ch1.3 components, ch2.2 number systems)
 
    The card face is ENGLISH ONLY: term / def / notes / example labels /
    figure captions. Everything Chinese — zh, zhAlt, defZh, notesZh — is
@@ -114,7 +114,7 @@
     sources: [
       { file: '計算機概論9_10.pdf', label: '計算機概論9_10.pdf（ch1.1）' },
       { file: '計算機概論9_10-2.pdf', label: '計算機概論9_10-2.pdf（ch1.1，補充版）' },
-      { file: '計算機概論9_15.pdf', label: '計算機概論9_15.pdf（ch1.2、ch1.3、ch2.1）' }
+      { file: '計算機概論9_15.pdf', label: '計算機概論9_15.pdf（ch1.2、ch1.3、ch2.2）' }
     ],
     blurb:
       '電腦的兩種基本模型 — 圖靈模型與馮紐曼模型、馮紐曼電腦裡的四個子系統、程式如何逐條執行、' +
@@ -627,14 +627,14 @@
         ]
       },
 
-      /* ============================================ ch2.1 — number systems */
+      /* ============================================ ch2.2 — number systems */
       {
         id: 'positional-number-system',
         term: 'Positional number system',
         zh: '位值進位制',
         zhAlt: '位置記數系統',
         aliases: ['positional', 'base', 'radix', '基數', '底數', '進位制', 'symbol', 'number system', '記數系統'],
-        tags: ['ch2.1', 'number systems'],
+        tags: ['ch2.2', 'number systems'],
         def:
           'A number system in which a symbol\'s value depends on its <strong>position</strong>. ' +
           'With base b, the number ±(S<sub>k&minus;1</sub> &hellip; S&#8321;S&#8320;.S<sub>&minus;1</sub> &hellip;)<sub>b</sub> ' +
@@ -682,7 +682,7 @@
         zh: '十進位系統',
         zhAlt: '十進制',
         aliases: ['decimal', 'base 10', 'base-10', '十進位', '(522.30)10'],
-        tags: ['ch2.1', 'number systems'],
+        tags: ['ch2.2', 'number systems'],
         def:
           'The <a href="#positional-number-system">positional number system</a> with ' +
           '<strong>base 10</strong>, using the ten symbols 0 to 9.',
@@ -718,7 +718,7 @@
         term: 'Integer',
         zh: '整數',
         aliases: ['integers', 'whole number', 'integral number'],
-        tags: ['ch2.1', 'number systems'],
+        tags: ['ch2.2', 'number systems'],
         def:
           'A whole number with no fractional part. Written in decimal with digits ' +
           'S<sub>k&minus;1</sub> … S&#8321;S&#8320;, its value is ' +
@@ -753,7 +753,7 @@
         term: 'Place value',
         zh: '位值',
         aliases: ['place values', 'weight', 'digit position', '權重', '位數'],
-        tags: ['ch2.1', 'number systems'],
+        tags: ['ch2.2', 'number systems'],
         def:
           'The weight that a position carries in a positional number. For a decimal integer the ' +
           'rightmost digit is worth 10&#8304;, the next 10¹, then 10², and so on. Multiply each digit by ' +
@@ -810,7 +810,7 @@
         term: 'Maximum / minimum value',
         zh: '最大值／最小值',
         aliases: ['maximum value', 'minimum value', 'range of values', 'Nmax', '最大值', '最小值', 'b^k - 1'],
-        tags: ['ch2.1', 'number systems'],
+        tags: ['ch2.2', 'number systems'],
         def:
           'The largest and smallest integers that can be written with a fixed number of digits. ' +
           'With k digits in base b the largest is <span class="mono">b<sup>k</sup> &minus; 1</span>; ' +
