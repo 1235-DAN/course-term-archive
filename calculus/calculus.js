@@ -6,6 +6,7 @@
                                  domain restriction, arccos, the inverse-trig
                                  relations / D&R table and trig graphs added)
                  微積分9_15.pdf (ch2.3 ε–δ definition, ch2.4 one-sided limits)
+                 微積分9_18.pdf (no chapter number: sin θ/θ tagged ch2.4, continuity ch2.5)
 
    The card face is ENGLISH ONLY: term / def / notes / example labels /
    figure captions. Everything Chinese — zh, zhAlt, defZh, notesZh — is
@@ -159,6 +160,46 @@
     '<text x="120" y="134" text-anchor="end" fill="var(--accent)">x &rarr; 0<tspan dy="-4" font-size="8">&minus;</tspan><tspan dy="4">: &minus;1</tspan></text>' +
     '<text x="240" y="58">y = x / |x|</text></g></svg>';
 
+  /* The area argument for sin θ/θ: triangle OTA (accent) contains sector OPA
+     (grey), with θ = 40° on a unit circle drawn at radius 150. */
+  var SIN_AREA_FIG =
+    '<svg viewBox="0 0 300 200" role="img" aria-label="triangle OTA contains sector OPA">' +
+    '<g stroke="currentColor" stroke-width="1.1" opacity=".45"><path d="M40 170 H280"/><path d="M60 190 V10"/></g>' +
+    '<path d="M210 170 A150 150 0 0 0 60 20" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".5"/>' +
+    '<polygon points="60,170 210,44.1 210,170" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="1.8"/>' +
+    '<path d="M60 170 L210 170 A150 150 0 0 0 174.9 73.6 Z" fill="currentColor" fill-opacity=".14" stroke="currentColor" stroke-width="1.4"/>' +
+    '<path d="M174.9 73.6 V170" stroke="currentColor" stroke-width="1.4" stroke-dasharray="4 3"/>' +
+    '<path d="M85 170 A25 25 0 0 0 79.2 153.9" fill="none" stroke="currentColor" stroke-width="1.2"/>' +
+    '<g fill="currentColor"><circle cx="174.9" cy="73.6" r="3.2"/><circle cx="210" cy="44.1" r="3.2"/></g>' +
+    '<g font-family="sans-serif" font-size="10.5" fill="currentColor">' +
+    '<text x="52" y="184" text-anchor="end">O</text>' +
+    '<text x="212" y="184">A (1, 0)</text>' +
+    '<text x="166" y="68" text-anchor="end">P</text>' +
+    '<text x="216" y="44">T</text>' +
+    '<text x="176" y="184" text-anchor="middle">Q</text>' +
+    '<text x="90" y="163">θ</text>' +
+    '<text x="216" y="112" fill="var(--accent)">tan θ</text>' +
+    '<text x="170" y="130" text-anchor="end">sin θ</text></g></svg>';
+
+  /* sinc θ over [−3π, 3π], with the value 1 filled in at θ = 0 */
+  var SINC_FIG = (function () {
+    var X = function (x) { return 150 + 13 * x; },
+      Y = function (y) { return 105 - 70 * y; },
+      f = function (x) { return x === 0 ? 1 : Math.sin(x) / x; };
+    return (
+      '<svg viewBox="0 0 300 150" role="img" aria-label="the sinc function">' +
+      '<g stroke="currentColor" stroke-width="1.1" opacity=".45"><path d="M20 105 H285"/><path d="M150 140 V15"/></g>' +
+      '<path d="' + plot(f, -3 * PI, 3 * PI, X, Y, 5) + '" fill="none" stroke="var(--accent)" stroke-width="2.4"/>' +
+      '<circle cx="150" cy="35" r="3.8" fill="var(--accent)"/>' +
+      '<g stroke="currentColor" stroke-width="1"><path d="M190.8 102 V108"/><path d="M231.7 102 V108"/>' +
+      '<path d="M109.2 102 V108"/><path d="M68.3 102 V108"/></g>' +
+      '<g font-family="sans-serif" font-size="9.5" fill="currentColor" text-anchor="middle">' +
+      '<text x="190.8" y="136">π</text><text x="231.7" y="136">2π</text>' +
+      '<text x="109.2" y="136">&minus;π</text><text x="68.3" y="136">&minus;2π</text>' +
+      '<text x="158" y="30" text-anchor="start" fill="var(--accent)">sinc(0) = 1</text></g></svg>'
+    );
+  })();
+
   /* y = 4x − 1 near x = 3 with ε = 2: every x in the grey strip 3 ± ε/4 lands
      inside the accent band 11 ± ε */
   var EPS_DELTA_FIG =
@@ -192,12 +233,13 @@
       { file: '微積分9_8.pdf', label: '微積分9_8.pdf（ch1.1）' },
       { file: '微積分9_10.pdf', label: '微積分9_10.pdf（ch1.1）' },
       { file: '微積分9_11.pdf', label: '微積分9_11.pdf（ch1.2、ch2.2）' },
-      { file: '微積分9_15.pdf', label: '微積分9_15.pdf（ch2.3、ch2.4）' }
+      { file: '微積分9_15.pdf', label: '微積分9_15.pdf（ch2.3、ch2.4）' },
+      { file: '微積分9_18.pdf', label: '微積分9_18.pdf（ch2.4、ch2.5）' }
     ],
     blurb:
       '函數的基本語言：定義域與值域、座標與座標軸、差商、取整函數、' +
       '奇偶性與對稱、絕對值、單位圓與三角函數圖形、反三角函數與其關係式、指數與對數、反函數，' +
-      '常見的函數家族，以及極限：ε–δ 定義與左右極限。',
+      '常見的函數家族，極限（ε–δ 定義、左右極限、sin θ / θ、夾擠定理），以及連續性。',
 
     terms: [
       /* ------------------------------------------------ core definition */
@@ -1577,7 +1619,7 @@
             'should be sin²θ + 1 &minus; 2cos θ + cos²θ = <strong>2 &minus; 2cos θ</strong>, by the ' +
             '<a href="#pythagorean-identity">Pythagorean identity</a>. The conclusion is unaffected.',
           'On the graph, y = sin θ stays under the line y = θ, touching it only at 0 — the ' +
-            'reason sin θ / θ &rarr; 1 as θ &rarr; 0, used later for limits.'
+            'reason <a href="#sin-theta-over-theta">sin θ / θ &rarr; 1</a> as θ &rarr; 0 (ch2.4).'
         ],
         defZh:
           '當 0 ≤ θ ≤ π/2 時，sin θ ≤ θ。在單位圓上，sin θ 是一條直的股，它不會比弦 PA 長，' +
@@ -1587,7 +1629,7 @@
           '第 2 步：弦不會比它所跨的弧長：弦 PA ≤ 弧 PA = θ。',
           '第 3 步：由畢氏定理，弦 PA = &radic;(sin²θ + (1 &minus; cos θ)²) ≥ &radic;(sin²θ) = sin θ。',
           '筆記旁邊的手寫展開寫成 2 &minus; 2 sin θ cos θ；正確應為 sin²θ + 1 &minus; 2cos θ + cos²θ = <strong>2 &minus; 2cos θ</strong>（用<a href="#pythagorean-identity">畢氏恆等式</a>）。不影響結論。',
-          '在圖上 y = sin θ 永遠在直線 y = θ 下方，只在 0 相切 &mdash; 這就是之後極限裡 sin θ / θ &rarr; 1 的原因。'
+          '在圖上 y = sin θ 永遠在直線 y = θ 下方，只在 0 相切 &mdash; 這就是之後極限裡 <a href="#sin-theta-over-theta">sin θ / θ &rarr; 1</a> 的原因（ch2.4）。'
         ],
         examples: [
           {
@@ -2453,6 +2495,222 @@
           }
         ],
         figure: { caption: 'y = x/|x|: approaching 0 from the left gives −1', svg: SIGN_FIG }
+      },
+
+      {
+        id: 'sin-theta-over-theta',
+        term: 'Limit of sin θ / θ',
+        abbr: 'lim sin θ/θ = 1',
+        zh: 'sin θ / θ 的極限',
+        aliases: ['sin theta over theta', 'sinx/x', 'sin x / x', 'fundamental trig limit', 'sector area', '扇形面積'],
+        tags: ['ch2.4', 'limits'],
+        def:
+          '<span class="mono">lim<sub>θ&rarr;0</sub> (sin θ) / θ = 1</span>, with θ in ' +
+          '<a href="#radian">radians</a>. It is proved by trapping sin θ / θ between cos θ and 1.',
+        notes: [
+          'Step 1 — areas (0 &lt; θ &lt; π/2): on the <a href="#unit-circle">unit circle</a>, triangle OTA ' +
+            'has area ½ tan θ and sector OPA has area θ/2. The triangle contains the sector, so ' +
+            '½ tan θ ≥ θ/2, i.e. <strong>tan θ ≥ θ</strong>.',
+          'Step 2 — with <a href="#sin-le-theta">sin θ ≤ θ</a>: sin θ ≤ θ ≤ tan θ. Divide by sin θ (&gt; 0): ' +
+            '1 ≤ θ / sin θ ≤ 1 / cos θ, so <strong>cos θ ≤ sin θ / θ ≤ 1</strong>.',
+          'Step 3 — cos θ &rarr; 1 as θ &rarr; 0<sup>+</sup>, so by the ' +
+            '<a href="#sandwich-theorem">sandwich theorem</a> the <a href="#right-hand-limit">right-hand limit</a> is 1.',
+          'The notes ask what happens as θ &rarr; 0<sup>&minus;</sup> (answer filled in): sin θ / θ is ' +
+            '<a href="#even-function">even</a>, since sin(&minus;θ)/(&minus;θ) = sin θ / θ, so the ' +
+            '<a href="#left-hand-limit">left-hand limit</a> is also 1 and the two-sided limit is 1.',
+          'Radians matter: measured in degrees, the same ratio tends to π/180 instead.'
+        ],
+        defZh:
+          'lim<sub>θ&rarr;0</sub> (sin θ) / θ = 1（θ 用<a href="#radian">弧度</a>）。證法是把 sin θ / θ 夾在 cos θ 和 1 之間。',
+        notesZh: [
+          '第 1 步 &mdash; 面積（0 &lt; θ &lt; π/2）：在<a href="#unit-circle">單位圓</a>上，三角形 OTA 面積 ½ tan θ，扇形 OPA 面積 θ/2。三角形包住扇形，所以 ½ tan θ ≥ θ/2，即 <strong>tan θ ≥ θ</strong>。',
+          '第 2 步 &mdash; 配合 <a href="#sin-le-theta">sin θ ≤ θ</a>：sin θ ≤ θ ≤ tan θ。同除以 sin θ（&gt; 0）：1 ≤ θ / sin θ ≤ 1 / cos θ，所以 <strong>cos θ ≤ sin θ / θ ≤ 1</strong>。',
+          '第 3 步 &mdash; θ &rarr; 0<sup>+</sup> 時 cos θ &rarr; 1，由<a href="#sandwich-theorem">夾擠定理</a>，<a href="#right-hand-limit">右極限</a>是 1。',
+          '筆記問 θ &rarr; 0<sup>&minus;</sup> 時呢（答案是這裡補上的）：sin θ / θ 是<a href="#even-function">偶函數</a>，因為 sin(&minus;θ)/(&minus;θ) = sin θ / θ，所以<a href="#left-hand-limit">左極限</a>也是 1，雙邊極限就是 1。',
+          '一定要用弧度：用度來量，同一個比值會趨近 π/180。'
+        ],
+        examples: [
+          {
+            label: 'From the notes',
+            html:
+              '<p>area of the sector: π·1² × θ/2π = θ/2 &nbsp;&nbsp; area of triangle OTA: ½ tan θ</p>' +
+              '<p>area(△OTA) ≥ area(sector OPA) &rArr; ½ tan θ ≥ θ/2 &rArr; tan θ ≥ θ</p>' +
+              '<p>sin θ / cos θ ≥ θ &rArr; sin θ ≥ θ cos θ &rArr; θ ≥ sin θ ≥ θ cos θ &rArr; 1 ≥ sin θ / θ ≥ cos θ</p>' +
+              '<p>sandwich theorem: lim<sub>θ&rarr;0<sup>+</sup></sub> sin θ / θ = 1 &nbsp;&nbsp; lim<sub>θ&rarr;0<sup>&minus;</sup></sub> sin θ / θ = ?</p>'
+          },
+          {
+            label: 'Numerically',
+            html: '<p>θ = 0.1: sin(0.1)/0.1 ≈ 0.99833 &nbsp;&nbsp; θ = 0.01: ≈ 0.99998</p>'
+          }
+        ],
+        figure: {
+          caption: 'Triangle OTA (accent, area ½ tan θ) contains sector OPA (grey, area θ/2)',
+          svg: SIN_AREA_FIG
+        }
+      },
+
+      {
+        id: 'sandwich-theorem',
+        term: 'Sandwich theorem',
+        zh: '夾擠定理',
+        zhAlt: '三明治定理',
+        aliases: ['squeeze theorem', 'squeeze', 'pinching theorem', '夾擠'],
+        tags: ['ch2.4', 'limits'],
+        def:
+          'If <span class="mono">g(x) ≤ f(x) ≤ h(x)</span> for all x near c (except possibly at c), ' +
+          'and <span class="mono">lim<sub>x&rarr;c</sub> g(x) = lim<sub>x&rarr;c</sub> h(x) = L</span>, ' +
+          'then <span class="mono">lim<sub>x&rarr;c</sub> f(x) = L</span> too.',
+        notes: [
+          'The notes use it by name for <a href="#sin-theta-over-theta">sin θ / θ</a> without stating ' +
+            'it; the statement is filled in here.',
+          'It works the same way for one-sided limits — the notes apply it as θ &rarr; 0<sup>+</sup>.',
+          'Also called the squeeze theorem. The trick is finding two simpler functions with the same ' +
+            'limit that trap the hard one.'
+        ],
+        defZh:
+          '若在 c 附近（c 本身可除外）都有 g(x) ≤ f(x) ≤ h(x)，且 lim<sub>x&rarr;c</sub> g(x) = lim<sub>x&rarr;c</sub> h(x) = L，' +
+          '則 lim<sub>x&rarr;c</sub> f(x) = L。',
+        notesZh: [
+          '筆記在 <a href="#sin-theta-over-theta">sin θ / θ</a> 那裡直接用了這個定理的名字，但沒寫內容；敘述是這裡補上的。',
+          '單邊極限也一樣適用 &mdash; 筆記就是在 θ &rarr; 0<sup>+</sup> 時用它。',
+          '又叫擠壓定理（squeeze theorem）。訣竅是找兩個極限相同、比較簡單的函數把難的那個夾住。'
+        ],
+        examples: [
+          {
+            label: 'From the notes',
+            html:
+              '<p>Using the sandwich theorem, we have</p>' +
+              '<p>lim<sub>θ&rarr;0<sup>+</sup></sub> 1 ≥ lim<sub>θ&rarr;0<sup>+</sup></sub> sin θ / θ ≥ lim<sub>θ&rarr;0<sup>+</sup></sub> cos θ</p>'
+          },
+          {
+            label: 'Another squeeze',
+            html:
+              '<p>&minus;x² ≤ x² sin(1/x) ≤ x², and both ends &rarr; 0 as x &rarr; 0</p>' +
+              '<p>&rArr; lim<sub>x&rarr;0</sub> x² sin(1/x) = 0</p>'
+          }
+        ]
+      },
+
+      /* ------------------------------------------------ ch2.5 */
+      {
+        id: 'continuity',
+        term: 'Continuity',
+        zh: '連續性',
+        zhAlt: '連續',
+        aliases: ['continuous', 'continuous at c', 'discontinuous', 'discontinuity', '連續', '不連續'],
+        tags: ['ch2.5', 'continuity'],
+        def:
+          'f is <strong>continuous at c</strong> when f(c) is defined, ' +
+          '<span class="mono">lim<sub>x&rarr;c</sub> f(x)</span> exists, and the two are equal: ' +
+          '<span class="mono">lim<sub>x&rarr;c</sub> f(x) = f(c)</span>. Informally, the graph has no ' +
+          'break at c.',
+        notes: [
+          'The notes give the heading "Continuity" and test the <a href="#sinc-function">sinc function</a> ' +
+            'against it; the three-part definition is filled in here.',
+          'Ways to fail: a jump (the <a href="#unit-step-function">unit step</a> at 0 — no limit), a ' +
+            'hole (f(c) undefined or different from the limit), or a vertical asymptote.',
+          'Continuous on an interval means continuous at every point of it. Polynomials, sin, cos ' +
+            'and exponentials are continuous everywhere; see also ' +
+            '<a href="#continuous-function-properties">properties of continuous functions</a>.'
+        ],
+        defZh:
+          'f 在 c <strong>連續</strong>，是指 f(c) 有定義、lim<sub>x&rarr;c</sub> f(x) 存在，而且兩者相等：lim<sub>x&rarr;c</sub> f(x) = f(c)。直觀地說，圖形在 c 沒有斷開。',
+        notesZh: [
+          '筆記寫了標題「Continuity」，並拿 <a href="#sinc-function">sinc 函數</a>來檢驗；三個條件的定義是這裡補上的。',
+          '不連續的情形：跳躍（<a href="#unit-step-function">單位步階函數</a>在 0，極限不存在）、洞（f(c) 沒定義或不等於極限）、鉛直漸近線。',
+          '在區間上連續 = 在區間每一點都連續。多項式、sin、cos、指數函數處處連續；另見<a href="#continuous-function-properties">連續函數的性質</a>。'
+        ],
+        examples: [
+          { label: 'From the notes', html: '<p>Continuity</p><p>&rarr; (heading; tested on sinc below)</p>' },
+          {
+            label: 'Continuous or not at 0',
+            html:
+              '<p>sinc: lim<sub>θ&rarr;0</sub> sin θ / θ = 1 = sinc(0) &nbsp;&rarr;&nbsp; continuous &#10003;</p>' +
+              '<p>unit step: left limit 0, right limit 1 &nbsp;&rarr;&nbsp; no limit, not continuous &#10007;</p>'
+          }
+        ]
+      },
+
+      {
+        id: 'sinc-function',
+        term: 'Sinc function',
+        abbr: 'sinc θ',
+        zh: 'sinc 函數',
+        zhAlt: '辛克函數',
+        aliases: ['sinc', 'sin x / x', 'cardinal sine', 'extend the domain'],
+        tags: ['ch2.5', 'continuity'],
+        def:
+          '<span class="mono">sinc(θ) = sin θ / θ</span> for θ &ne; 0, and ' +
+          '<span class="mono">sinc(0) = 1</span>. It extends sin θ / θ, which is undefined at 0, to ' +
+          'every real number.',
+        notes: [
+          'The value 1 at 0 is not arbitrary: it is <a href="#sin-theta-over-theta">lim<sub>θ&rarr;0</sub> ' +
+            'sin θ / θ</a>, which makes sinc <a href="#continuity">continuous</a> at 0 — the notes answer ' +
+            '"Is sinc(θ) continuous at 0?" with yes.',
+          'It is even, and its zeros are θ = &plusmn;π, &plusmn;2π, …; the waves shrink like 1/θ.',
+          'Some fields (signal processing) use the normalised version sin(πx) / (πx).'
+        ],
+        defZh:
+          'θ &ne; 0 時 sinc(θ) = sin θ / θ，並定義 sinc(0) = 1。它把在 0 沒有定義的 sin θ / θ 延伸到所有實數。',
+        notesZh: [
+          '在 0 取 1 不是隨便定的：它就是 <a href="#sin-theta-over-theta">lim<sub>θ&rarr;0</sub> sin θ / θ</a>，所以 sinc 在 0 <a href="#continuity">連續</a> &mdash; 筆記對「sinc 在 0 連續嗎？」的回答是 yes。',
+          '它是偶函數，零點在 θ = &plusmn;π、&plusmn;2π…；波的高度像 1/θ 一樣縮小。',
+          '有些領域（訊號處理）用正規化版本 sin(πx) / (πx)。'
+        ],
+        examples: [
+          {
+            label: 'From the notes',
+            html:
+              '<p>We can extend the domain to include θ = 0. We define a new function, called the sinc function, as</p>' +
+              '<p>sinc(θ) ≜ ' + GLOSSARY.SYS(['sin θ / θ, &nbsp;if θ &ne; 0', '1, &nbsp;else if θ = 0']) + '</p>' +
+              '<p>Is sinc(θ) continuous at 0? yes: lim<sub>θ&rarr;0</sub> sin θ / θ = 1 = sinc(0)</p>'
+          }
+        ],
+        figure: { caption: 'sinc θ: the hole at θ = 0 is filled with the limit value 1', svg: SINC_FIG }
+      },
+
+      {
+        id: 'continuous-function-properties',
+        term: 'Properties of continuous functions',
+        zh: '連續函數的性質',
+        aliases: ['sums', 'differences', 'products', 'quotients', 'powers', 'roots', 'algebraic combinations', '四則運算'],
+        tags: ['ch2.5', 'continuity'],
+        def:
+          'If f and g are both continuous at c, then so are f + g, f &minus; g, k·f (k a constant), ' +
+          'f·g, f / g (provided g(c) &ne; 0), f<sup>n</sup> (n a positive integer) and ' +
+          'f<sup>1/n</sup> (provided it is defined near c).',
+        notes: [
+          'Correction: the notes list the quotient f(x)/g(x) with no condition. It holds only where ' +
+            '<strong>g(c) &ne; 0</strong> — otherwise f/g is not even defined at c.',
+          'For roots with an even n, f must stay ≥ 0 near c.',
+          'Why it matters: continuity of complicated functions follows from simple ones. Every ' +
+            'polynomial is continuous everywhere, and every rational function wherever its ' +
+            'denominator is non-zero.',
+          'Each rule comes straight from the matching limit law, applied to the definition of ' +
+            '<a href="#continuity">continuity</a>.'
+        ],
+        defZh:
+          '若 f、g 都在 c 連續，則 f + g、f &minus; g、k·f（k 為常數）、f·g、f / g（需 g(c) &ne; 0）、f<sup>n</sup>（n 為正整數）、f<sup>1/n</sup>（需在 c 附近有定義）也都在 c 連續。',
+        notesZh: [
+          '修正：筆記的商 f(x)/g(x) 沒寫條件。只有在 <strong>g(c) &ne; 0</strong> 時才成立 &mdash; 否則 f/g 在 c 根本沒有定義。',
+          '開偶數次方根時，f 在 c 附近必須 ≥ 0。',
+          '為什麼重要：複雜函數的連續性可以由簡單函數推出。多項式處處連續，有理函數在分母不為 0 的地方都連續。',
+          '每一條都直接來自對應的極限律，套進<a href="#continuity">連續</a>的定義就得到。'
+        ],
+        examples: [
+          {
+            label: 'From the notes',
+            html:
+              '<p>Given two functions f and g which are both continuous at c. Then normal algebraic ' +
+              'combinations as below are also continuous at c.</p>' +
+              '<p>Sums: f(x) + g(x) &nbsp; Differences: f(x) &minus; g(x) &nbsp; Constant multiples: f(x)·a</p>' +
+              '<p>Products: f(x)·g(x) &nbsp; Quotients: f(x)/g(x) &nbsp; Powers: f<sup>n</sup>(x) &nbsp; Roots: f<sup>1/n</sup>(x)</p>'
+          },
+          {
+            label: 'Using them',
+            html: '<p>h(x) = (x² + 1)/(x &minus; 2) is continuous everywhere except x = 2</p>'
+          }
+        ]
       }
     ]
   });
