@@ -4,6 +4,7 @@
                  線性代數9_14.pdf (ch1.2 homogeneous systems; ch1.3 vectors in Rⁿ;
                                    ch1.4 subsets and subspaces),
                  線性代數9_15.pdf (ch1.4 span, ch1.5 basis)
+                 線性代數9_21.pdf (repeats 9_15; adds standard basis, dimension, ch1.6 dot product)
 
    The card face is ENGLISH ONLY: term / def / notes / example labels /
    figure captions. Everything Chinese — zh, zhAlt, defZh, notesZh — is
@@ -91,11 +92,12 @@
       { file: '線性代數9_7-9_8.pdf', label: '線性代數9_7-9_8.pdf（ch1.1）' },
       { file: '線性代數9_9.pdf', label: '線性代數9_9.pdf（ch1.2）' },
       { file: '線性代數9_14.pdf', label: '線性代數9_14.pdf（ch1.2、ch1.3、ch1.4）' },
-      { file: '線性代數9_15.pdf', label: '線性代數9_15.pdf（ch1.4、ch1.5）' }
+      { file: '線性代數9_15.pdf', label: '線性代數9_15.pdf（ch1.4、ch1.5）' },
+      { file: '線性代數9_21.pdf', label: '線性代數9_21.pdf（ch1.4–ch1.6）' }
     ],
     blurb:
       '線性方程組的語言：方程式的零件、矩陣的零件與大小、增廣矩陣與基本列運算、' +
-      '消去法的終點 — 簡化列梯形、齊次方程組，向量空間 ℝⁿ 的向量運算、線性組合與子空間，以及基底與線性獨立。',
+      '消去法的終點 — 簡化列梯形、齊次方程組，向量空間 ℝⁿ 的向量運算、線性組合與子空間，基底、線性獨立與維度，以及內積。',
 
     terms: [
       /* ============================================ 9/7 — equations */
@@ -2047,7 +2049,8 @@
           'of the others. Otherwise they are <strong>linearly dependent</strong>.',
         notes: [
           'The notes say independent vectors "can\'t be decomposed": none of them can be broken down ' +
-            'into the others. The precise definition is filled in here.',
+            'into the others. The 9/21 notes add the test in grey: if a[1,0,0] + b[0,1,0] + c[0,0,1] = ' +
+            '[0,0,0] has only the solution a = 0, b = 0, c = 0, the vectors are linearly independent.',
           'How to test: solve c&#8321;<strong>v</strong>&#8321; + &hellip; + c<sub>k</sub><strong>v</strong><sub>k</sub> = ' +
             '<strong>0</strong>, a <a href="#homogeneous-system">homogeneous system</a> in the c\'s. Only ' +
             'the <a href="#trivial-solution">trivial solution</a> &rArr; independent; a nontrivial one ' +
@@ -2061,13 +2064,20 @@
           'c&#8321;v&#8321; + … + c<sub>k</sub>v<sub>k</sub> = 0，唯一的方法是 c&#8321; = … = c<sub>k</sub> = 0。' +
           '等價地說：沒有一個能寫成其他幾個的線性組合。不是這樣就叫<strong>線性相依</strong>。',
         notesZh: [
-          '筆記的說法是獨立的向量「can\'t be decompose（不能被拆解）」：沒有一個能拆成其他向量的組合。精確定義是這裡補上的。',
+          '筆記的說法是獨立的向量「can\'t be decompose（不能被拆解）」：沒有一個能拆成其他向量的組合。' +
+            '9/21 的筆記用灰字補了檢驗法：若 a[1,0,0] + b[0,1,0] + c[0,0,1] = [0,0,0] 只有 a = 0、b = 0、c = 0 這組解，這些向量就線性獨立。',
           '檢驗法：解 c&#8321;<strong>v</strong>&#8321; + … + c<sub>k</sub><strong>v</strong><sub>k</sub> = <strong>0</strong>，這是以 c 為未知數的<a href="#homogeneous-system">齊次方程組</a>。' +
             '只有<a href="#trivial-solution">零解</a> &rArr; 獨立；有非零解 &rArr; 相依。',
           '快速判斷：兩個向量相依，恰好是其中一個是另一個的倍數；含<a href="#zero-vector">零向量</a>的集合一定相依；&#8477;<sup>n</sup> 裡超過 n 個向量一定相依。'
         ],
         examples: [
-          { label: 'From the notes', html: '<p>&#9313; They are linearly independent which can\'t be decompose.</p>' },
+          {
+            label: 'From the notes',
+            html:
+              '<p>&#9313; They are linearly independent which can\'t be decompose.</p>' +
+              '<p>e.g. a[1,0,0] + b[0,1,0] + c[0,0,1] = [0,0,0]</p>' +
+              '<p>if only a = 0, b = 0, c = 0 solution, the vectors linearly independent.</p>'
+          },
           {
             label: 'Independent or not',
             html:
@@ -2085,16 +2095,16 @@
         zh: '標準基底',
         aliases: ['e1', 'e2', 'e3', 'unit vectors', 'i j k', '單位向量'],
         tags: ['ch1.5', 'basis'],
-        added: true,
         def:
           'The <a href="#basis">basis</a> of &#8477;³ made of the unit vectors along the axes: ' +
           '<span class="mono">e&#8321; = (1, 0, 0)</span>, <span class="mono">e&#8322; = (0, 1, 0)</span>, ' +
           '<span class="mono">e&#8323; = (0, 0, 1)</span>. In &#8477;<sup>n</sup> it is ' +
           'e&#8321;, &hellip;, e<sub>n</sub>, each with a single 1.',
         notes: [
-          'Why this is here: it is the example that makes the two basis properties obvious. ' +
-            '(a, b, c) = a e&#8321; + b e&#8322; + c e&#8323;, so they span; and the only way to get ' +
-            '(0, 0, 0) is a = b = c = 0, so they are independent.',
+          'The 9/21 notes paste the textbook\'s "Standard Basis of &#8477;<sup>n</sup>": the two ' +
+            'basis properties can be checked directly. (x, y, z) = x e&#8321; + y e&#8322; + z e&#8323;, so ' +
+            'they <a href="#span">span</a>; and p e&#8321; + q e&#8322; + r e&#8323; = (0, 0, 0) only for ' +
+            'p = q = r = 0, so they are <a href="#linear-independence">independent</a>.',
           'With this basis the weights are just the <a href="#component">components</a>.',
           'Physics writes the same three vectors as i, j, k.'
         ],
@@ -2102,11 +2112,20 @@
           '&#8477;³ 中沿各座標軸的單位向量組成的<a href="#basis">基底</a>：e&#8321; = (1, 0, 0)、e&#8322; = (0, 1, 0)、e&#8323; = (0, 0, 1)。' +
           '在 &#8477;<sup>n</sup> 中就是 e&#8321;, …, e<sub>n</sub>，每個都只有一個 1。',
         notesZh: [
-          '為什麼補這個：用它來看基底的兩個性質最清楚。(a, b, c) = a e&#8321; + b e&#8322; + c e&#8323;，所以能生成；要得到 (0, 0, 0) 只能 a = b = c = 0，所以獨立。',
+          '9/21 的筆記貼了課本的「Standard Basis of &#8477;<sup>n</sup>」：基底的兩個性質可以直接驗證。' +
+            '(x, y, z) = x e&#8321; + y e&#8322; + z e&#8323;，所以能<a href="#span">生成</a>；p e&#8321; + q e&#8322; + r e&#8323; = (0, 0, 0) 只有 p = q = r = 0，所以<a href="#linear-independence">線性獨立</a>。',
           '用這組基底時，權重就是向量的<a href="#component">分量</a>。',
           '物理課把同樣三個向量寫成 i、j、k。'
         ],
         examples: [
+          {
+            label: 'From the notes (textbook slide)',
+            html:
+              '<p>Consider the vectors (1, 0, 0), (0, 1, 0), (0, 0, 1) in &#8477;³.</p>' +
+              '<p>(i) They span &#8477;³: (x, y, z) = x(1, 0, 0) + y(0, 1, 0) + z(0, 0, 1)</p>' +
+              '<p>(ii) They are linearly independent: p(1, 0, 0) + q(0, 1, 0) + r(0, 0, 1) = (0, 0, 0) ' +
+              'has the unique solution p = 0, q = 0, r = 0</p>'
+          },
           { label: 'Weights = components', html: '<p>(4, &minus;1, 7) = 4e&#8321; &minus; 1e&#8322; + 7e&#8323;</p>' }
         ],
         figure: {
@@ -2136,15 +2155,14 @@
         zhAlt: '維數',
         aliases: ['dim', 'n-dimensional', 'n維', '維'],
         tags: ['ch1.5', 'basis'],
-        added: true,
         def:
           'The number of vectors in a <a href="#basis">basis</a>. Every basis of the same space has ' +
           'the same number of vectors, so this is well defined: ' +
           '<span class="mono">dim &#8477;<sup>n</sup> = n</span>.',
         notes: [
-          'Why this is here: textbook section 1.5 is usually "basis and dimension", and the notes ' +
-            'already call &#8477;<sup>n</sup> "n 維度" (n dimensions) on the ' +
-            '<a href="#vector-space-rn">vector space</a> card.',
+          'The notes: the <a href="#standard-basis">standard basis</a> {[1,0,…,0], [0,1,…,0], …, ' +
+            '[0,…,0,1]} has n vectors, so the dimension of &#8477;<sup>n</sup> is n — matching the ' +
+            '"n 維度" (n dimensions) on the <a href="#vector-space-rn">vector space</a> card.',
           'Subspaces of &#8477;³ by dimension: {<strong>0</strong>} has 0, a line through the origin 1, ' +
             'a plane through the origin 2, &#8477;³ itself 3.',
           'In a space of dimension n, n independent vectors automatically span, and n spanning vectors ' +
@@ -2153,16 +2171,106 @@
         defZh:
           '<a href="#basis">基底</a>裡向量的個數。同一個空間的每組基底個數都一樣，所以這個數有明確定義：dim &#8477;<sup>n</sup> = n。',
         notesZh: [
-          '為什麼補這個：課本 1.5 節通常叫「基底與維度」，而且筆記在<a href="#vector-space-rn">向量空間</a>那裡已經寫了 &#8477;<sup>n</sup>「n 維度」。',
+          '筆記：<a href="#standard-basis">標準基底</a> {[1,0,…,0], [0,1,…,0], …, [0,…,0,1]} 有 n 個向量，所以 &#8477;<sup>n</sup> 的維度是 n &mdash; 和<a href="#vector-space-rn">向量空間</a>卡上的「n 維度」一致。',
           '&#8477;³ 的子空間依維度分：{<strong>0</strong>} 是 0 維、通過原點的直線 1 維、通過原點的平面 2 維、&#8477;³ 本身 3 維。',
           '在 n 維空間裡，n 個獨立的向量自動能生成，n 個能生成的向量也自動獨立 &mdash; 只要檢查其中一個性質就好。'
         ],
         examples: [
           {
+            label: 'From the notes',
+            html:
+              '<p>Dimension (&#8477;<sup>n</sup>): The standard basis {[1,0,…,0], [0,1,…,0], …, [0,…,1]} ' +
+              'of n vectors. The dimension of &#8477;<sup>n</sup> is n</p>'
+          },
+          {
             label: 'The W example',
             html:
               '<p>W = span{(1, 0, 1), (0, 1, 1)}: the two vectors are independent</p>' +
               '<p>&rArr; they form a basis of W, and dim W = 2 (a plane)</p>'
+          }
+        ]
+      },
+
+      /* ============================================ ch1.6 — dot product */
+      {
+        id: 'dot-product',
+        term: 'Dot product',
+        abbr: 'u · v',
+        zh: '內積',
+        zhAlt: '點積',
+        aliases: ['inner product', 'scalar product', 'dot', '點積', '純量積'],
+        tags: ['ch1.6', 'dot product'],
+        def:
+          'For <strong>u</strong> = (a&#8321;, &hellip;, a<sub>n</sub>) and <strong>v</strong> = ' +
+          '(b&#8321;, &hellip;, b<sub>n</sub>) in &#8477;<sup>n</sup>, ' +
+          '<span class="mono">u · v = a&#8321;b&#8321; + a&#8322;b&#8322; + &hellip; + a<sub>n</sub>b<sub>n</sub></span>: ' +
+          'multiply matching components and add. The answer is a <strong>real number</strong>, not a vector.',
+        notes: [
+          'Properties (from the notes, for <strong>u</strong>, <strong>v</strong>, <strong>w</strong> in ' +
+            '&#8477;<sup>n</sup> and a scalar c): &#9312; u · v = v · u; &#9313; (u + v) · w = u · w + v · w; ' +
+            '&#9314; cu · v = c(u · v) = u · cv; &#9315; u · u ≥ 0, and u · u = 0 only when u = <strong>0</strong>.',
+          'Property &#9315; is what lets u · u serve as a squared length — see ' +
+            '<a href="#norm">norm</a>.',
+          'u · v = 0 means the vectors are perpendicular (orthogonal), e.g. (1, 2) · (2, &minus;1) = 0 ' +
+            '(filled in here).',
+          'Both vectors must be in the same &#8477;<sup>n</sup>; the dot product of a vector in &#8477;² ' +
+            'with one in &#8477;³ is undefined.'
+        ],
+        defZh:
+          '&#8477;<sup>n</sup> 中 <strong>u</strong> = (a&#8321;, …, a<sub>n</sub>)、<strong>v</strong> = (b&#8321;, …, b<sub>n</sub>) 的內積是 ' +
+          'u · v = a&#8321;b&#8321; + a&#8322;b&#8322; + … + a<sub>n</sub>b<sub>n</sub>：對應分量相乘再相加。結果是一個<strong>實數</strong>，不是向量。',
+        notesZh: [
+          '性質（筆記）：&#9312; u · v = v · u；&#9313; (u + v) · w = u · w + v · w；&#9314; cu · v = c(u · v) = u · cv；&#9315; u · u ≥ 0，且 u · u = 0 若且唯若 u = <strong>0</strong>。',
+          '性質 &#9315; 讓 u · u 可以當作「長度的平方」，見<a href="#norm">範數</a>。',
+          'u · v = 0 代表兩向量互相垂直（正交），例如 (1, 2) · (2, &minus;1) = 0（這裡補上的）。',
+          '兩個向量必須在同一個 &#8477;<sup>n</sup>；&#8477;² 和 &#8477;³ 的向量不能做內積。'
+        ],
+        examples: [
+          {
+            label: 'From the notes',
+            html:
+              '<p>Dot product（內積）: u = [a&#8321;, a&#8322;, …, a<sub>n</sub>], v = [b&#8321;, b&#8322;, …, b<sub>n</sub>]</p>' +
+              '<p>u · v = a&#8321;b&#8321; + a&#8322;b&#8322; + … + a<sub>n</sub>b<sub>n</sub> &rarr; real number</p>'
+          },
+          {
+            label: 'Computing one',
+            html: '<p>(1, &minus;2, 3) · (4, 0, &minus;1) = 4 + 0 &minus; 3 = 1</p>'
+          }
+        ]
+      },
+
+      {
+        id: 'norm',
+        term: 'Norm (length of a vector)',
+        abbr: '‖u‖',
+        zh: '範數',
+        zhAlt: '向量長度／大小',
+        aliases: ['norm', 'length', 'magnitude', 'unit vector', '長度', '大小', '單位向量'],
+        tags: ['ch1.6', 'dot product'],
+        added: true,
+        def:
+          'The length of a vector: <span class="mono">‖u‖ = &radic;(u · u) = &radic;(a&#8321;² + &hellip; + a<sub>n</sub>²)</span>. ' +
+          'It is Pythagoras\' theorem extended to n components.',
+        notes: [
+          'Why this is here: the notes begin a new heading with just "N" and stop; in textbook ' +
+            'section 1.6 the topic after the <a href="#dot-product">dot product</a> is the norm.',
+          'Dividing a non-zero vector by its norm gives a <strong>unit vector</strong> (length 1) in the ' +
+            'same direction: u / ‖u‖.',
+          'Property &#9315; of the dot product guarantees the square root is of a non-negative number.'
+        ],
+        defZh:
+          '向量的長度：‖u‖ = &radic;(u · u) = &radic;(a&#8321;² + … + a<sub>n</sub>²)。就是把畢氏定理推廣到 n 個分量。',
+        notesZh: [
+          '為什麼補這個：筆記在新標題只寫了一個「N」就停了；課本 1.6 節在<a href="#dot-product">內積</a>之後講的正是範數。',
+          '非零向量除以自己的範數，得到同方向、長度為 1 的<strong>單位向量</strong>：u / ‖u‖。',
+          '內積的性質 &#9315; 保證根號裡面不會是負數。'
+        ],
+        examples: [
+          {
+            label: 'Computing one',
+            html:
+              '<p>‖(3, 4)‖ = &radic;(9 + 16) = 5</p>' +
+              '<p>unit vector: (3, 4) / 5 = (0.6, 0.8)</p>'
           }
         ]
       }
