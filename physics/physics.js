@@ -1,6 +1,8 @@
 /* ==========================================================================
    physics.js — 普通物理 term data
-   Source notes: 普物9_11.pdf  (units and measurement)
+   Source notes: 普物9_11.pdf        (units and measurement)
+                 普物9_18-9_21.pdf  (ch2 kinematics: 9/18 is headed only "ch2"; its
+                                    terms follow the textbook sections 2.1 and 2.2)
 
    The card face is ENGLISH ONLY: term / def / notes / example labels /
    figure captions. Everything Chinese — zh, zhAlt, defZh, notesZh — is
@@ -9,11 +11,63 @@
    Terms flagged `added: true` were NOT in the handwritten notes; they fill
    gaps so each entry stands on its own.
 
-   The notes carry no chapter heading. Units and measurement are chapter 1 of
+   普物9_11 carries no chapter heading. Units and measurement are chapter 1 of
    every general-physics text, so these terms are tagged ch1.
    ========================================================================== */
 
 (function () {
+  /* An arrow from (x1, y1) to (x2, y2) with a polygon head, so a figure can
+     repeat on several cards without SVG marker ids clashing. */
+  function arrow(x1, y1, x2, y2, color) {
+    var a = Math.atan2(y2 - y1, x2 - x1),
+      bx = x2 - 9 * Math.cos(a),
+      by = y2 - 9 * Math.sin(a),
+      nx = 4 * Math.sin(a),
+      ny = 4 * Math.cos(a);
+    var p = function (x, y) { return x.toFixed(1) + ',' + y.toFixed(1); };
+    return (
+      '<path d="M' + x1 + ' ' + y1 + ' L' + bx.toFixed(1) + ' ' + by.toFixed(1) + '" stroke="' +
+      color + '" stroke-width="2.2"/>' +
+      '<polygon points="' + p(x2, y2) + ' ' + p(bx + nx, by - ny) + ' ' + p(bx - nx, by + ny) +
+      '" fill="' + color + '"/>'
+    );
+  }
+
+  /* a winding path (distance) against the straight arrow from start to end
+     (displacement) */
+  var DISP_FIG =
+    '<svg viewBox="0 0 300 130" role="img" aria-label="distance along a path versus displacement">' +
+    '<path d="M40 95 C80 10 140 130 180 40 S240 20 250 70" fill="none" stroke="currentColor" ' +
+    'stroke-width="1.8" stroke-dasharray="5 4" opacity=".7"/>' +
+    arrow(40, 95, 250, 70, 'var(--accent)') +
+    '<g fill="currentColor"><circle cx="40" cy="95" r="3.6"/></g>' +
+    '<g font-family="sans-serif" font-size="10.5" fill="currentColor">' +
+    '<text x="34" y="112" text-anchor="middle">start</text>' +
+    '<text x="256" y="90" text-anchor="middle">end</text>' +
+    '<text x="96" y="30">distance = length of the path</text>' +
+    '<text x="150" y="104" text-anchor="middle" fill="var(--accent)">displacement Δx</text></g></svg>';
+
+  /* x against t: the secant through A and B has slope v_avg; the tangent at A
+     has slope v, the instantaneous velocity */
+  var XT_FIG = (function () {
+    var Y = function (u) { return 160 - (1.1 * u - 0.0033 * u * u); },
+      pts = [];
+    for (var u = 0; u <= 240; u += 10) pts.push((35 + u) + ',' + Y(u).toFixed(1));
+    return (
+      '<svg viewBox="0 0 300 180" role="img" aria-label="position against time with a secant and a tangent">' +
+      '<g stroke="currentColor" stroke-width="1.2" opacity=".5"><path d="M35 160 H290"/><path d="M35 170 V8"/></g>' +
+      '<polyline points="' + pts.join(' ') + '" fill="none" stroke="currentColor" stroke-width="2" opacity=".8"/>' +
+      '<path d="M35 157.1 L165 39.8" stroke="var(--accent)" stroke-width="2.2"/>' +
+      '<path d="M45 140.1 L215 54.1" stroke="currentColor" stroke-width="1.6" stroke-dasharray="5 4"/>' +
+      '<g fill="currentColor"><circle cx="65" cy="130" r="3.6"/><circle cx="185" cy="69.3" r="3.6"/></g>' +
+      '<g font-family="sans-serif" font-size="10.5" fill="currentColor">' +
+      '<text x="72" y="146">A</text><text x="190" y="86">B</text>' +
+      '<text x="288" y="174" text-anchor="end">t</text><text x="26" y="16">x</text>' +
+      '<text x="296" y="106" text-anchor="end">secant: slope = v<tspan dy="3" font-size="8">avg</tspan></text>' +
+      '<text x="44" y="40" fill="var(--accent)">tangent at A: slope = v</text></g></svg>'
+    );
+  })();
+
   GLOSSARY.register({
     id: 'physics',
     name: 'General Physics',
@@ -21,8 +75,13 @@
     page: 'physics/physics.html', // relative to index.html
     hue: 190, // teal
     // every source PDF sits in this same folder; the footer links to each one
-    sources: [{ file: '普物9_11.pdf', label: '普物9_11.pdf（ch1）' }],
-    blurb: '物理的量測語言：SI 單位與詞頭、科學記號、單位換算，以及公尺的定義與有效數字。',
+    sources: [
+      { file: '普物9_11.pdf', label: '普物9_11.pdf（ch1）' },
+      { file: '普物9_18-9_21.pdf', label: '普物9_18-9_21.pdf（ch2.1–ch2.3）' }
+    ],
+    blurb:
+      '物理的量測語言：SI 單位與詞頭、科學記號、單位換算、公尺的定義與有效數字；' +
+      '以及直線運動學：位移、速度、速率與加速度。',
 
     terms: [
       /* ============================================ units */
@@ -425,6 +484,394 @@
               '<p>left: [x] = L</p>' +
               '<p>right: [a][t²] = (L/T²)(T²) = L &nbsp;&#10003;</p>'
           }
+        ]
+      },
+
+      /* ============================================ ch2 — motion along a line */
+      {
+        id: 'kinematics',
+        term: 'Kinematics',
+        zh: '運動學',
+        aliases: ['motion', 'mechanics', '力學', '運動'],
+        tags: ['ch2.1', 'kinematics'],
+        def:
+          'The part of mechanics that <strong>describes</strong> motion — position, ' +
+          '<a href="#displacement">displacement</a>, <a href="#average-velocity">velocity</a> and ' +
+          '<a href="#average-acceleration">acceleration</a> — without asking what causes it.',
+        notes: [
+          'The notes give only the name (9/21, ch2.1); the definition is filled in here.',
+          'The causes of motion — forces — come later, under <em>dynamics</em>.',
+          'This chapter is motion along a straight line, so every direction is just a + or &minus; sign.'
+        ],
+        defZh:
+          '力學中<strong>描述</strong>運動的部分 &mdash; 位置、<a href="#displacement">位移</a>、<a href="#average-velocity">速度</a>、<a href="#average-acceleration">加速度</a> &mdash; 不追問運動的原因。',
+        notesZh: [
+          '筆記只寫了名稱（9/21，ch2.1）；定義是這裡補上的。',
+          '運動的原因 &mdash; 力 &mdash; 之後在<em>動力學</em>（dynamics）才講。',
+          '這一章講直線運動，所以方向只用 + 或 &minus; 號表示。'
+        ],
+        examples: [{ label: 'From the notes', html: '<p>Kinematics 運動學</p>' }]
+      },
+
+      {
+        id: 'distance',
+        term: 'Distance',
+        abbr: 'd',
+        zh: '距離',
+        zhAlt: '路程',
+        aliases: ['path length', 'total distance', '路徑長', '路程'],
+        tags: ['ch2.1', 'kinematics'],
+        def:
+          'The <strong>total length of the path travelled</strong>. It is a ' +
+          '<a href="#vector-scalar-quantity">scalar</a>, measured in meters.',
+        notes: [
+          'It only ever adds up, so it is never negative and never decreases.',
+          'Compare <a href="#displacement">displacement</a>, which only looks at where you started ' +
+            'and ended.'
+        ],
+        defZh: '<strong>走過路徑的總長度</strong>。它是<a href="#vector-scalar-quantity">純量</a>，單位是公尺。',
+        notesZh: [
+          '它只會一直累加，所以不會是負的，也不會變小。',
+          '對照<a href="#displacement">位移</a>：位移只看起點和終點。'
+        ],
+        examples: [
+          {
+            label: 'From the notes',
+            html: '<p>Distance (d): total length of the path travelled; measured in meters; scalar</p>'
+          },
+          {
+            label: 'Out and back',
+            html: '<p>3 m east, then 3 m west: distance = 6 m, displacement = 0</p>'
+          }
+        ],
+        figure: { caption: 'Distance follows the path; displacement is the straight arrow from start to end', svg: DISP_FIG }
+      },
+
+      {
+        id: 'displacement',
+        term: 'Displacement',
+        abbr: 'Δx',
+        zh: '位移',
+        aliases: ['change in position', 'delta x', 'Δx', 'xf - xi', '位置變化'],
+        tags: ['ch2.1', 'kinematics'],
+        def:
+          'The <strong>change in position</strong>, regardless of the path: ' +
+          '<span class="mono">Δx = x<sub>f</sub> &minus; x<sub>i</sub></span> (final minus initial). ' +
+          'It is a <a href="#vector-scalar-quantity">vector</a>, measured in meters.',
+        notes: [
+          'Along a line its sign is its direction: Δx &gt; 0 means it moved in the + direction.',
+          'The size of the displacement is never more than the <a href="#distance">distance</a>, and ' +
+            'equals it only for one-way straight-line motion.'
+        ],
+        defZh:
+          '<strong>位置的改變</strong>，與路徑無關：Δx = x<sub>f</sub> &minus; x<sub>i</sub>（末減初）。它是<a href="#vector-scalar-quantity">向量</a>，單位是公尺。',
+        notesZh: [
+          '在直線上，它的正負號就是方向：Δx &gt; 0 表示往 + 方向移動。',
+          '位移的大小不會超過<a href="#distance">距離</a>，只有單向直線運動時兩者相等。'
+        ],
+        examples: [
+          {
+            label: 'From the notes',
+            html: '<p>Displacement (d&#8407;): change in position (Δx) regardless of path; Δx = x<sub>f</sub> &minus; x<sub>i</sub>; measured in meters; vector</p>'
+          },
+          { label: 'Sign gives direction', html: '<p>x<sub>i</sub> = 5 m, x<sub>f</sub> = 2 m &nbsp;&rarr;&nbsp; Δx = &minus;3 m (moved 3 m in the &minus; direction)</p>' }
+        ],
+        figure: { caption: 'Only the start and the end matter for displacement', svg: DISP_FIG }
+      },
+
+      {
+        id: 'vector-scalar-quantity',
+        term: 'Vector and scalar quantities',
+        zh: '向量與純量',
+        aliases: ['vector', 'scalar', 'magnitude', 'direction', '向量', '純量', '大小', '方向'],
+        tags: ['ch2.1', 'kinematics'],
+        def:
+          'A <strong>vector</strong> quantity needs both <strong>magnitude</strong> (size or numerical ' +
+          'value) and <strong>direction</strong> to describe it completely. A <strong>scalar</strong> ' +
+          'quantity is completely described by magnitude only.',
+        notes: [
+          'In one dimension we use <strong>+ and &minus; signs</strong> to indicate a vector\'s direction.',
+          'Vectors so far: <a href="#displacement">displacement</a>, velocity, acceleration. Scalars: ' +
+            '<a href="#distance">distance</a>, speed, time, mass.'
+        ],
+        defZh:
+          '<strong>向量</strong>要同時有<strong>大小</strong>（數值）和<strong>方向</strong>才能完整描述；<strong>純量</strong>只要大小就能完整描述。',
+        notesZh: [
+          '一維時用<strong>正負號</strong>表示向量的方向。',
+          '目前的向量：<a href="#displacement">位移</a>、速度、加速度。純量：<a href="#distance">距離</a>、速率、時間、質量。'
+        ],
+        examples: [
+          {
+            label: 'From the notes',
+            html:
+              '<p>Vector quantities need both magnitude (size or numerical value) and direction to completely describe them</p>' +
+              '<p>Will use + and &minus; signs to indicate vector directions</p>' +
+              '<p>Scalar quantities are completely described by magnitude only</p>'
+          }
+        ]
+      },
+
+      {
+        id: 'average-velocity',
+        term: 'Average velocity',
+        abbr: 'v<sub>avg</sub>',
+        zh: '平均速度',
+        aliases: ['average velocity', 'vavg', 'slope of secant', '割線斜率'],
+        tags: ['ch2.1', 'kinematics'],
+        def:
+          '<span class="mono">v<sub>avg</sub> = displacement / elapsed time = (x&#8322; &minus; x&#8321;) / (t&#8322; &minus; t&#8321;) = Δx / Δt</span>. ' +
+          'SI unit: m/s.',
+        notes: [
+          'On an x&ndash;t graph it is the <strong>slope</strong> of the straight line joining the two ' +
+            'points (x&#8321;, t&#8321;) and (x&#8322;, t&#8322;): up to the right means positive, down means negative.',
+          'It is a vector with the same sign as Δx, because Δt is always positive.',
+          'Do not confuse it with <a href="#average-speed">average speed</a>.'
+        ],
+        defZh:
+          'v<sub>avg</sub> = 位移 / 經過時間 = (x&#8322; &minus; x&#8321;) / (t&#8322; &minus; t&#8321;) = Δx / Δt。SI 單位 m/s。',
+        notesZh: [
+          '在 x&ndash;t 圖上，它是連接兩點的直線的<strong>斜率</strong>：往右上為正、往右下為負。',
+          '它是向量，正負號和 Δx 相同，因為 Δt 永遠是正的。',
+          '別和<a href="#average-speed">平均速率</a>搞混。'
+        ],
+        examples: [
+          {
+            label: 'From the notes',
+            html:
+              '<p>Average velocity = Displacement / Elapsed time = (x&#8322; &minus; x&#8321;) / (t&#8322; &minus; t&#8321;), SI unit: m/s</p>' +
+              '<p>On a graph of x versus t, v<sub>avg</sub> is the slope of the straight line that connects two particular points on the x(t) curve</p>'
+          },
+          { label: 'Computing one', html: '<p>x: 2 m &rarr; 14 m while t: 1 s &rarr; 5 s &nbsp;&rArr;&nbsp; v<sub>avg</sub> = 12 / 4 = 3 m/s</p>' }
+        ],
+        figure: { caption: 'v_avg is the slope of the secant through A and B', svg: XT_FIG }
+      },
+
+      {
+        id: 'average-speed',
+        term: 'Average speed',
+        abbr: 's<sub>avg</sub>',
+        zh: '平均速率',
+        aliases: ['average speed', 'savg', 'speed'],
+        tags: ['ch2.1', 'kinematics'],
+        def:
+          '<span class="mono">s<sub>avg</sub> = total distance / elapsed time</span>. SI unit: m/s. ' +
+          'A scalar — no direction.',
+        notes: [
+          'It is <strong>not</strong> the magnitude of the <a href="#average-velocity">average ' +
+            'velocity</a> (the notes stress this too): it uses the whole <a href="#distance">distance</a>, ' +
+            'not the displacement.',
+          'For one-way straight-line motion the two agree in size.'
+        ],
+        defZh: 's<sub>avg</sub> = 總距離 / 經過時間。SI 單位 m/s。它是純量，沒有方向。',
+        notesZh: [
+          '它<strong>不是</strong><a href="#average-velocity">平均速度</a>的大小（筆記也特別強調）：它用的是整段<a href="#distance">距離</a>，不是位移。',
+          '單向直線運動時，兩者大小才相同。'
+        ],
+        examples: [
+          { label: 'From the notes', html: '<p>Average speed: Distance / elapsed time = l / Δt, unit: m/s</p>' },
+          { label: 'Round trip', html: '<p>6 m out and back in 3 s: average speed 2 m/s, average velocity 0</p>' }
+        ]
+      },
+
+      {
+        id: 'instantaneous-velocity',
+        term: 'Instantaneous velocity',
+        abbr: 'v = dx/dt',
+        zh: '瞬時速度',
+        aliases: ['velocity', 'dx/dt', 'slope of tangent', '切線斜率', '速度'],
+        tags: ['ch2.2', 'kinematics'],
+        def:
+          'How fast something moves and in which direction <strong>at one instant</strong>: ' +
+          '<span class="mono">v = lim<sub>Δt&rarr;0</sub> Δx / Δt = dx / dt</span>.',
+        notes: [
+          'On an x&ndash;t graph it is the <strong>slope of the tangent</strong> line at that moment. As ' +
+            'Δt shrinks, the secant lines (whose slopes are <a href="#average-velocity">average velocities</a>) ' +
+            'close in on the tangent — the notes\' blue lines approaching the green one.',
+          'This is the derivative of position with respect to time — the same limit as in calculus.',
+          'Its magnitude is the <a href="#speed">speed</a>.'
+        ],
+        defZh:
+          '<strong>某一瞬間</strong>移動有多快、往哪個方向：v = lim<sub>Δt&rarr;0</sub> Δx / Δt = dx / dt。',
+        notesZh: [
+          '在 x&ndash;t 圖上，它是該時刻<strong>切線的斜率</strong>。Δt 越小，割線（斜率是<a href="#average-velocity">平均速度</a>）就越貼近切線 &mdash; 就是筆記裡藍線逼近綠線的圖。',
+          '它就是位置對時間的導數 &mdash; 和微積分裡的極限是同一件事。',
+          '它的大小就是<a href="#speed">速率</a>。'
+        ],
+        examples: [
+          {
+            label: 'From the notes',
+            html:
+              '<p>The instantaneous velocity indicates how fast the car moves and the direction of motion at each instant of time.</p>' +
+              '<p>v = lim<sub>Δt&rarr;0</sub> Δx/Δt = dx/dt</p>' +
+              '<p>The instantaneous velocity is the slope of the line tangent to the x vs. t curve</p>'
+          },
+          { label: 'From a formula', html: '<p>x(t) = 3t² m &nbsp;&rArr;&nbsp; v = dx/dt = 6t; at t = 2 s, v = 12 m/s</p>' }
+        ],
+        figure: { caption: 'v is the slope of the tangent at A; the secants approach it as Δt → 0', svg: XT_FIG }
+      },
+
+      {
+        id: 'speed',
+        term: 'Speed (instantaneous)',
+        abbr: '|v|',
+        zh: '速率',
+        zhAlt: '瞬時速率',
+        aliases: ['instantaneous speed', 'speed', '瞬時速率'],
+        tags: ['ch2.2', 'kinematics'],
+        def:
+          'The <strong>magnitude</strong> of the <a href="#instantaneous-velocity">instantaneous ' +
+          'velocity</a> — how fast, with the direction dropped. A scalar, never negative.',
+        notes: [
+          'v = &minus;5 m/s and v = +5 m/s both have speed 5 m/s.',
+          'Instantaneous speed is the size of instantaneous velocity, but <a href="#average-speed">average ' +
+            'speed</a> is not the size of average velocity — the notes flag this difference.'
+        ],
+        defZh: '<a href="#instantaneous-velocity">瞬時速度</a>的<strong>大小</strong> &mdash; 只看多快、不管方向。是純量，不會是負的。',
+        notesZh: [
+          'v = &minus;5 m/s 和 v = +5 m/s 的速率都是 5 m/s。',
+          '瞬時速率是瞬時速度的大小，但<a href="#average-speed">平均速率</a>不是平均速度的大小 &mdash; 筆記特別標出這個差別。'
+        ],
+        examples: [
+          {
+            label: 'From the notes',
+            html:
+              '<p>The speed is the magnitude of the instantaneous velocity</p>' +
+              '<p>Remember that the average speed is <u>not</u> the magnitude of the average velocity.</p>'
+          }
+        ]
+      },
+
+      {
+        id: 'average-acceleration',
+        term: 'Average acceleration',
+        abbr: 'a<sub>avg</sub>',
+        zh: '平均加速度',
+        aliases: ['acceleration', 'aavg', 'Δv/Δt', '加速度'],
+        tags: ['ch2.3', 'kinematics'],
+        def:
+          'The change in velocity divided by the time it took: ' +
+          '<span class="mono">a<sub>avg</sub> = (v&#8322; &minus; v&#8321;) / (t&#8322; &minus; t&#8321;) = Δv / Δt</span>. ' +
+          'SI unit: m/s².',
+        notes: [
+          'A particle whose velocity changes is said to <strong>accelerate</strong>.',
+          'm/s² reads as "meters per second, per second": how many m/s the velocity gains each second.',
+          'It is a vector: along a line, its sign is its direction.'
+        ],
+        defZh: '速度的變化量除以經過的時間：a<sub>avg</sub> = (v&#8322; &minus; v&#8321;) / (t&#8322; &minus; t&#8321;) = Δv / Δt。SI 單位 m/s²。',
+        notesZh: [
+          '速度有改變的質點，就說它在<strong>加速</strong>。',
+          'm/s² 讀作「每秒每秒幾公尺」：每過一秒，速度增加幾 m/s。',
+          '它是向量；在直線上，正負號就是方向。'
+        ],
+        examples: [
+          {
+            label: 'From the notes (textbook, Eq. 2-7)',
+            html: '<p>a<sub>avg</sub> = (v&#8322; &minus; v&#8321;) / (t&#8322; &minus; t&#8321;) = Δv / Δt</p>'
+          },
+          { label: 'Computing one', html: '<p>0 &rarr; 27 m/s in 9 s &nbsp;&rArr;&nbsp; a<sub>avg</sub> = 3 m/s²</p>' }
+        ]
+      },
+
+      {
+        id: 'instantaneous-acceleration',
+        term: 'Instantaneous acceleration',
+        abbr: 'a = dv/dt',
+        zh: '瞬時加速度',
+        aliases: ['acceleration', 'dv/dt', 'second derivative', 'd2x/dt2', '二階導數'],
+        tags: ['ch2.3', 'kinematics'],
+        def:
+          'The rate at which velocity is changing at one instant: ' +
+          '<span class="mono">a = dv / dt = d²x / dt²</span>. Usually just called "acceleration".',
+        notes: [
+          'Graphically it is the slope of the v&ndash;t curve at that point.',
+          'Since v = dx/dt, acceleration is the <strong>second derivative</strong> of position.'
+        ],
+        defZh: '某一瞬間速度改變的快慢：a = dv / dt = d²x / dt²。通常直接叫「加速度」。',
+        notesZh: [
+          '在圖上，它是 v&ndash;t 曲線在該點的斜率。',
+          '因為 v = dx/dt，加速度就是位置的<strong>二階導數</strong>。'
+        ],
+        examples: [
+          {
+            label: 'From the notes (textbook, Eq. 2-8, 2-9)',
+            html:
+              '<p>a = dv/dt</p>' +
+              '<p>a = dv/dt = d/dt (dx/dt) = d²x/dt² — the second derivative of its position x(t)</p>'
+          },
+          { label: 'From a formula', html: '<p>x(t) = 3t² &nbsp;&rArr;&nbsp; v = 6t &nbsp;&rArr;&nbsp; a = 6 m/s² (constant)</p>' }
+        ]
+      },
+
+      {
+        id: 'speeding-up-slowing-down',
+        term: 'Speeding up or slowing down',
+        zh: '加速或減速的判斷',
+        aliases: ['deceleration', 'slowing down', 'speeding up', 'sign of acceleration', '減速', '正負號'],
+        tags: ['ch2.3', 'kinematics'],
+        def:
+          'Compare the signs of velocity and acceleration: if they are the <strong>same</strong>, the ' +
+          'speed increases; if they are <strong>opposite</strong>, the speed decreases.',
+        notes: [
+          'A negative acceleration alone does not mean slowing down: v = &minus;4 m/s with ' +
+            'a = &minus;2 m/s² is speeding up (in the &minus; direction).',
+          '"Deceleration" in everyday speech means slowing down, i.e. a opposite to v.'
+        ],
+        defZh: '比較速度與加速度的正負號：<strong>同號</strong>，速率增加；<strong>異號</strong>，速率減少。',
+        notesZh: [
+          '加速度是負的不代表在減速：v = &minus;4 m/s、a = &minus;2 m/s² 其實是在（往 &minus; 方向）加快。',
+          '日常說的「減速」（deceleration）指的是 a 和 v 方向相反。'
+        ],
+        examples: [
+          {
+            label: 'From the notes (textbook tip)',
+            html:
+              '<p>If the signs of the velocity and acceleration of a particle are the same, the speed of ' +
+              'the particle increases. If the signs are opposite, the speed decreases.</p>'
+          },
+          {
+            label: 'Four cases',
+            html:
+              '<table><tr><th>v</th><th>a</th><th>speed</th></tr>' +
+              '<tr><td>+</td><td>+</td><td>increases</td></tr><tr><td>&minus;</td><td>&minus;</td><td>increases</td></tr>' +
+              '<tr><td>+</td><td>&minus;</td><td>decreases</td></tr><tr><td>&minus;</td><td>+</td><td>decreases</td></tr></table>'
+          }
+        ]
+      },
+
+      {
+        id: 'g-unit',
+        term: 'g unit (and the sensation of acceleration)',
+        abbr: 'g',
+        zh: 'g 單位（加速度的感覺）',
+        zhAlt: 'G 力',
+        aliases: ['g', 'G force', 'g-force', '9.8', 'gravity', 'sensation', '重力加速度', '感覺'],
+        tags: ['ch2.3', 'kinematics'],
+        def:
+          'A unit that measures acceleration relative to Earth\'s gravity: ' +
+          '<span class="mono">1g = 9.8 m/s²</span>. "Pulling 3g" means an acceleration of about 29 m/s².',
+        notes: [
+          'Sensation: your body reacts to acceleration — it is an accelerometer, not a speedometer. ' +
+            'The notes say it reacts "when acceleration changes"; more precisely it reacts to the ' +
+            'acceleration itself, whenever there is one, and feels nothing at constant velocity ' +
+            '(a smooth airliner cruising at 250 m/s).',
+          'That felt push is what is called the <strong>G force</strong>.',
+          '9.8 m/s² is the free-fall acceleration g near Earth\'s surface.'
+        ],
+        defZh: '以地球重力加速度為基準來量加速度的單位：1g = 9.8 m/s²。「承受 3g」就是約 29 m/s² 的加速度。',
+        notesZh: [
+          '感覺：身體會對加速度起反應 &mdash; 它是加速度計，不是速度計。筆記寫「加速度改變時」身體才有反應；' +
+            '更精確地說，只要有加速度就會感覺到，等速時完全沒感覺（例如平穩巡航、時速九百公里的客機）。',
+          '這種感覺到的推力就叫 <strong>G 力</strong>。',
+          '9.8 m/s² 就是地表附近的自由落體加速度 g。'
+        ],
+        examples: [
+          {
+            label: 'From the notes',
+            html:
+              '<p>Sensation: Body reacts when acceleration changes &rArr; resulting in G force</p>' +
+              '<p>G unit: Measures acceleration relative to Earth\'s gravity. 1g = 9.8 m/s²</p>'
+          },
+          { label: 'Converting', html: '<p>49 m/s² &divide; 9.8 m/s² = 5g</p>' }
         ]
       }
     ]
