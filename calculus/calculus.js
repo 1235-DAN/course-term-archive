@@ -7,6 +7,7 @@
                                  relations / D&R table and trig graphs added)
                  微積分9_15.pdf (ch2.3 ε–δ definition, ch2.4 one-sided limits)
                  微積分9_18.pdf (no chapter number: sin θ/θ tagged ch2.4, continuity ch2.5)
+                 微積分9_22.pdf (ch2.1 instantaneous rate of change)
 
    The card face is ENGLISH ONLY: term / def / notes / example labels /
    figure captions. Everything Chinese — zh, zhAlt, defZh, notesZh — is
@@ -234,12 +235,13 @@
       { file: '微積分9_10.pdf', label: '微積分9_10.pdf（ch1.1）' },
       { file: '微積分9_11.pdf', label: '微積分9_11.pdf（ch1.2、ch2.2）' },
       { file: '微積分9_15.pdf', label: '微積分9_15.pdf（ch2.3、ch2.4）' },
-      { file: '微積分9_18.pdf', label: '微積分9_18.pdf（ch2.4、ch2.5）' }
+      { file: '微積分9_18.pdf', label: '微積分9_18.pdf（ch2.4、ch2.5）' },
+      { file: '微積分9_22.pdf', label: '微積分9_22.pdf（ch2.1）' }
     ],
     blurb:
       '函數的基本語言：定義域與值域、座標與座標軸、差商、取整函數、' +
       '奇偶性與對稱、絕對值、單位圓與三角函數圖形、反三角函數與其關係式、指數與對數、反函數，' +
-      '常見的函數家族，極限（ε–δ 定義、左右極限、sin θ / θ、夾擠定理），以及連續性。',
+      '常見的函數家族，瞬時變化率、極限（ε–δ 定義、左右極限、sin θ / θ、夾擠定理），以及連續性。',
 
     terms: [
       /* ------------------------------------------------ core definition */
@@ -2309,6 +2311,50 @@
             '<text x="142" y="94" text-anchor="end">½</text>' +
             '<text x="142" y="134" text-anchor="end">0</text></g></svg>'
         }
+      },
+
+      /* ------------------------------------------------ ch2.1 */
+      {
+        id: 'instantaneous-rate-of-change',
+        term: 'Instantaneous rate of change',
+        zh: '瞬時變化率',
+        aliases: ['rate of change', 'instantaneous rate', 'tangent slope', '變化率', '切線斜率', 'derivative'],
+        tags: ['ch2.1', 'rates'],
+        def:
+          'The instantaneous rate of change of f(t) at c is ' +
+          '<span class="mono">lim<sub>Δt&rarr;0</sub> [f(c + Δt) &minus; f(c)] / Δt</span> — the ' +
+          '<a href="#difference-quotient">difference quotient</a> (the average rate of change over ' +
+          'a step Δt) as the step shrinks to 0.',
+        notes: [
+          'Geometrically it is the slope of the <strong>tangent line</strong> to the graph at c, the ' +
+            'limit of the secant slopes.',
+          'In physics it is the <em>instantaneous velocity</em> when f is position and t is time.',
+          'This limit is what the course will soon call the <strong>derivative</strong> f&prime;(c) ' +
+            '(filled in here). It is a <a href="#limit">limit</a> of the 0/0 kind: both top and ' +
+            'bottom go to 0.'
+        ],
+        defZh:
+          'f(t) 在 c 的瞬時變化率是 lim<sub>Δt&rarr;0</sub> [f(c + Δt) &minus; f(c)] / Δt &mdash; 就是' +
+          '<a href="#difference-quotient">差商</a>（Δt 這段的平均變化率）在 Δt 縮到 0 時的極限。',
+        notesZh: [
+          '幾何上，它是圖形在 c 的<strong>切線</strong>斜率，也就是割線斜率的極限。',
+          '在物理裡，f 是位置、t 是時間時，它就是<em>瞬時速度</em>。',
+          '這個極限就是之後要講的<strong>導數</strong> f&prime;(c)（這裡補上的）。它是 0/0 型的<a href="#limit">極限</a>：分子分母都趨近 0。'
+        ],
+        examples: [
+          {
+            label: 'From the notes',
+            html:
+              '<p>Definition. The instantaneous rate of change of f(t) at c is defined as ' +
+              'lim<sub>Δt&rarr;0</sub> [f(Δt + c) &minus; f(c)] / Δt</p>'
+          },
+          {
+            label: 'f(t) = t² at c = 3',
+            html:
+              '<p>[(3 + Δt)² &minus; 9] / Δt = (6Δt + Δt²) / Δt = 6 + Δt</p>' +
+              '<p>&rarr; 6 as Δt &rarr; 0</p>'
+          }
+        ]
       },
 
       {
