@@ -5,6 +5,7 @@
                                    ch1.4 subsets and subspaces),
                  線性代數9_15.pdf (ch1.4 span, ch1.5 basis)
                  線性代數9_21.pdf (repeats 9_15; adds standard basis, dimension, ch1.6 dot product)
+                 線性代數9_22.pdf (ch1.6 Cauchy–Schwarz, orthogonality, distance)
 
    The card face is ENGLISH ONLY: term / def / notes / example labels /
    figure captions. Everything Chinese — zh, zhAlt, defZh, notesZh — is
@@ -93,11 +94,12 @@
       { file: '線性代數9_9.pdf', label: '線性代數9_9.pdf（ch1.2）' },
       { file: '線性代數9_14.pdf', label: '線性代數9_14.pdf（ch1.2、ch1.3、ch1.4）' },
       { file: '線性代數9_15.pdf', label: '線性代數9_15.pdf（ch1.4、ch1.5）' },
-      { file: '線性代數9_21.pdf', label: '線性代數9_21.pdf（ch1.4–ch1.6）' }
+      { file: '線性代數9_21.pdf', label: '線性代數9_21.pdf（ch1.4–ch1.6）' },
+      { file: '線性代數9_22.pdf', label: '線性代數9_22.pdf（ch1.6）' }
     ],
     blurb:
       '線性方程組的語言：方程式的零件、矩陣的零件與大小、增廣矩陣與基本列運算、' +
-      '消去法的終點 — 簡化列梯形、齊次方程組，向量空間 ℝⁿ 的向量運算、線性組合與子空間，基底、線性獨立與維度，以及內積。',
+      '消去法的終點 — 簡化列梯形、齊次方程組，向量空間 ℝⁿ 的向量運算、線性組合與子空間，基底、線性獨立與維度，內積、正交與柯西–施瓦茨不等式。',
 
     terms: [
       /* ============================================ 9/7 — equations */
@@ -2211,8 +2213,8 @@
             '&#9314; cu · v = c(u · v) = u · cv; &#9315; u · u ≥ 0, and u · u = 0 only when u = <strong>0</strong>.',
           'Property &#9315; is what lets u · u serve as a squared length — see ' +
             '<a href="#norm">norm</a>.',
-          'u · v = 0 means the vectors are perpendicular (orthogonal), e.g. (1, 2) · (2, &minus;1) = 0 ' +
-            '(filled in here).',
+          'u · v = 0 means the vectors are perpendicular — <a href="#orthogonal">orthogonal</a>, e.g. (1, 2) · (2, &minus;1) = 0 ' +
+            '(the 9/22 notes name it).',
           'Both vectors must be in the same &#8477;<sup>n</sup>; the dot product of a vector in &#8477;² ' +
             'with one in &#8477;³ is undefined.'
         ],
@@ -2222,7 +2224,7 @@
         notesZh: [
           '性質（筆記）：&#9312; u · v = v · u；&#9313; (u + v) · w = u · w + v · w；&#9314; cu · v = c(u · v) = u · cv；&#9315; u · u ≥ 0，且 u · u = 0 若且唯若 u = <strong>0</strong>。',
           '性質 &#9315; 讓 u · u 可以當作「長度的平方」，見<a href="#norm">範數</a>。',
-          'u · v = 0 代表兩向量互相垂直（正交），例如 (1, 2) · (2, &minus;1) = 0（這裡補上的）。',
+          'u · v = 0 代表兩向量互相垂直，即<a href="#orthogonal">正交</a>，例如 (1, 2) · (2, &minus;1) = 0。',
           '兩個向量必須在同一個 &#8477;<sup>n</sup>；&#8477;² 和 &#8477;³ 的向量不能做內積。'
         ],
         examples: [
@@ -2272,6 +2274,203 @@
               '<p>‖(3, 4)‖ = &radic;(9 + 16) = 5</p>' +
               '<p>unit vector: (3, 4) / 5 = (0.6, 0.8)</p>'
           }
+        ]
+      },
+
+      {
+        id: 'cauchy-schwarz',
+        term: 'Cauchy–Schwarz inequality',
+        zh: '柯西–施瓦茨不等式',
+        zhAlt: '柯西不等式',
+        aliases: ['cauchy schwarz', 'cauchy-schwartz', 'schwarz', 'cauchy', '柯西', '不等式'],
+        tags: ['ch1.6', 'dot product'],
+        def:
+          'For any vectors <strong>u</strong>, <strong>v</strong> in &#8477;<sup>n</sup>: ' +
+          '<span class="mono">|u · v| ≤ ‖u‖ ‖v‖</span>. The <a href="#dot-product">dot product</a> is ' +
+          'never bigger in size than the product of the lengths.',
+        notes: [
+          'The notes write it as |u||v| ≥ |u · v|, using |u| for the <a href="#norm">norm</a>, and ' +
+            'rearrange it as |u · v| / (|u||v|) ≤ 1.',
+          'That ratio is why the angle between vectors can be defined (filled in here): ' +
+            '<span class="mono">cos θ = u · v / (‖u‖ ‖v‖)</span> always lands between &minus;1 and 1.',
+          'Equality holds exactly when one vector is a multiple of the other (they lie on one line).'
+        ],
+        defZh:
+          '&#8477;<sup>n</sup> 中任意向量 <strong>u</strong>、<strong>v</strong> 都有 |u · v| ≤ ‖u‖ ‖v‖：<a href="#dot-product">內積</a>的大小永遠不會超過兩個長度的乘積。',
+        notesZh: [
+          '筆記寫成 |u||v| ≥ |u · v|（用 |u| 表示<a href="#norm">範數</a>），並改寫成 |u · v| / (|u||v|) ≤ 1。',
+          '這個比值讓我們能定義兩向量的夾角（這裡補上的）：cos θ = u · v / (‖u‖ ‖v‖) 一定落在 &minus;1 到 1 之間。',
+          '等號成立，恰好是其中一個向量是另一個的倍數（兩者共線）時。'
+        ],
+        examples: [
+          {
+            label: 'From the notes',
+            html: '<p>Cauchy Schwarz Inequality: |u||v| ≥ |u · v| &nbsp;&rarr;&nbsp; |u · v| / (|u||v|) ≤ 1</p>'
+          },
+          {
+            label: 'Checking it',
+            html:
+              '<p>u = (1, 2), v = (3, 1): |u · v| = 5</p>' +
+              '<p>‖u‖ ‖v‖ = &radic;5 · &radic;10 = &radic;50 ≈ 7.07 ≥ 5 &#10003;</p>'
+          }
+        ]
+      },
+
+      {
+        id: 'orthogonal',
+        term: 'Orthogonal vectors',
+        zh: '正交',
+        zhAlt: '互相垂直',
+        aliases: ['orthogonal', 'perpendicular', 'u·v = 0', '垂直', '正交'],
+        tags: ['ch1.6', 'dot product'],
+        def:
+          'Two vectors are <strong>orthogonal</strong> — perpendicular — when their ' +
+          '<a href="#dot-product">dot product</a> is zero: <span class="mono">u · v = 0</span>.',
+        notes: [
+          'The notes give only the Chinese: 互相垂直、正交. The dot-product test is filled in here.',
+          'The <a href="#zero-vector">zero vector</a> counts as orthogonal to every vector.',
+          'For orthogonal vectors the <a href="#vector-pythagorean-theorem">Pythagorean theorem</a> holds: ' +
+            '‖u + v‖² = ‖u‖² + ‖v‖².'
+        ],
+        defZh: '兩向量的<a href="#dot-product">內積</a>為 0（u · v = 0）時，稱為<strong>正交</strong>，也就是互相垂直。',
+        notesZh: [
+          '筆記只寫了中文「互相垂直、正交」；用內積判斷的方法是這裡補上的。',
+          '<a href="#zero-vector">零向量</a>和任何向量都算正交。',
+          '正交的向量滿足<a href="#vector-pythagorean-theorem">畢氏定理</a>：‖u + v‖² = ‖u‖² + ‖v‖²。'
+        ],
+        examples: [
+          { label: 'From the notes', html: '<p>Orthogonal: 互相垂直、正交</p>' },
+          { label: 'Testing', html: '<p>(2, &minus;1, 3) · (1, 5, 1) = 2 &minus; 5 + 3 = 0 &nbsp;&rarr;&nbsp; orthogonal</p>' }
+        ]
+      },
+
+      {
+        id: 'orthonormal',
+        term: 'Orthonormal vectors',
+        zh: '標準正交',
+        zhAlt: '單範正交／正規正交',
+        aliases: ['orthonormal', 'orthonormal basis', 'unit', '標準正交', '單位正交'],
+        tags: ['ch1.6', 'dot product'],
+        def:
+          'Vectors that are <a href="#orthogonal">orthogonal</a> to each other <strong>and</strong> each ' +
+          'have length 1: u · v = 0 and ‖u‖ = ‖v‖ = 1.',
+        notes: [
+          'The notes: two vectors that are perpendicular and whose lengths are 1 (互相垂直且長度為 1).',
+          'The <a href="#standard-basis">standard basis</a> is orthonormal. Any orthogonal set of ' +
+            'non-zero vectors becomes orthonormal after dividing each by its <a href="#norm">norm</a>.'
+        ],
+        defZh: '彼此<a href="#orthogonal">正交</a>、<strong>而且</strong>每個長度都是 1 的向量：u · v = 0 且 ‖u‖ = ‖v‖ = 1。',
+        notesZh: [
+          '筆記：兩個向量互相垂直且長度為 1。',
+          '<a href="#standard-basis">標準基底</a>就是標準正交的。任何一組非零的正交向量，各自除以<a href="#norm">範數</a>後就變成標準正交。'
+        ],
+        examples: [
+          { label: 'From the notes', html: '<p>Orthonormal: two vectors 互相垂直且長度為 1</p>' },
+          {
+            label: 'Making a pair orthonormal',
+            html: '<p>(3, 4) and (&minus;4, 3) are orthogonal, both length 5 &nbsp;&rarr;&nbsp; (0.6, 0.8), (&minus;0.8, 0.6)</p>'
+          }
+        ]
+      },
+
+      {
+        id: 'distance-between-points',
+        term: 'Distance between points',
+        abbr: 'd(x, y)',
+        zh: '兩點間的距離',
+        aliases: ['distance', 'd(x,y)', 'euclidean distance', '距離', '歐氏距離'],
+        tags: ['ch1.6', 'dot product'],
+        def:
+          'For points <strong>x</strong> = (x&#8321;, …, x<sub>n</sub>) and <strong>y</strong> = (y&#8321;, …, y<sub>n</sub>) ' +
+          'in &#8477;<sup>n</sup>: <span class="mono">d(x, y) = &radic;((x&#8321; &minus; y&#8321;)² + … + (x<sub>n</sub> &minus; y<sub>n</sub>)²) = ‖x &minus; y‖</span>.',
+        notes: [
+          'It is the <a href="#norm">norm</a> of the difference vector — the length of the arrow from one ' +
+            'point to the other.',
+          'In &#8477;² and &#8477;³ it is the familiar distance formula from Pythagoras.'
+        ],
+        defZh:
+          '&#8477;<sup>n</sup> 中兩點 <strong>x</strong>、<strong>y</strong> 的距離：d(x, y) = &radic;((x&#8321; &minus; y&#8321;)² + … + (x<sub>n</sub> &minus; y<sub>n</sub>)²) = ‖x &minus; y‖。',
+        notesZh: [
+          '它就是差向量的<a href="#norm">範數</a> &mdash; 從一點指到另一點的箭頭長度。',
+          '在 &#8477;²、&#8477;³ 裡，就是熟悉的畢氏距離公式。'
+        ],
+        examples: [
+          {
+            label: 'From the notes (textbook definition)',
+            html:
+              '<p>Let x = (x&#8321;, …, x<sub>n</sub>) and y = (y&#8321;, …, y<sub>n</sub>) be two points in &#8477;<sup>n</sup>. ' +
+              'The distance between x and y is d(x, y) = &radic;((x&#8321; &minus; y&#8321;)² + … + (x<sub>n</sub> &minus; y<sub>n</sub>)²)</p>' +
+              '<p>Note: d(x, y) = ‖x &minus; y‖</p>'
+          },
+          { label: 'Computing one', html: '<p>d((1, 2), (4, 6)) = &radic;(9 + 16) = 5</p>' }
+        ]
+      },
+
+      {
+        id: 'triangle-inequality',
+        term: 'Triangle inequality',
+        zh: '三角不等式',
+        aliases: ['triangle', '三角形', 'u + v'],
+        tags: ['ch1.6', 'dot product'],
+        def:
+          'For vectors <strong>u</strong>, <strong>v</strong> in &#8477;<sup>n</sup>: ' +
+          '<span class="mono">‖u + v‖ ≤ ‖u‖ + ‖v‖</span>. One side of a triangle can never be longer ' +
+          'than the other two sides together.',
+        notes: [
+          'It follows from the <a href="#cauchy-schwarz">Cauchy–Schwarz inequality</a>: ' +
+            '‖u + v‖² = ‖u‖² + 2u · v + ‖v‖² ≤ ‖u‖² + 2‖u‖‖v‖ + ‖v‖² = (‖u‖ + ‖v‖)².',
+          'Equality only when u and v point the same way.'
+        ],
+        defZh:
+          '&#8477;<sup>n</sup> 中向量 <strong>u</strong>、<strong>v</strong> 滿足 ‖u + v‖ ≤ ‖u‖ + ‖v‖：三角形的一邊永遠不會比另外兩邊加起來長。',
+        notesZh: [
+          '它可由<a href="#cauchy-schwarz">柯西–施瓦茨不等式</a>推出：‖u + v‖² = ‖u‖² + 2u · v + ‖v‖² ≤ ‖u‖² + 2‖u‖‖v‖ + ‖v‖² = (‖u‖ + ‖v‖)²。',
+          '只有 u、v 同方向時等號成立。'
+        ],
+        examples: [
+          {
+            label: 'From the notes (textbook)',
+            html:
+              '<p>(a) Triangle inequality: ‖u + v‖ ≤ ‖u‖ + ‖v‖</p>' +
+              '<p>This inequality tells us that the length of one side of a triangle cannot exceed the sum of the lengths of the other two sides.</p>'
+          },
+          { label: 'Checking it', html: '<p>u = (3, 0), v = (0, 4): ‖u + v‖ = 5 ≤ 3 + 4 = 7 &#10003;</p>' }
+        ],
+        figure: {
+          caption: 'The side u + v is never longer than u and v laid end to end',
+          svg:
+            '<svg viewBox="0 0 300 150" role="img" aria-label="triangle made by u, v and u plus v">' +
+            arrow(40, 125, 170, 125, INK) +
+            arrow(170, 125, 250, 35, INK) +
+            arrow(40, 125, 250, 35, ACC) +
+            LBL +
+            '<text x="105" y="142" font-weight="700">u</text>' +
+            '<text x="220" y="92" font-weight="700">v</text>' +
+            '<text x="120" y="70" fill="var(--accent)" font-weight="700" font-style="normal">u + v</text></g></svg>'
+        }
+      },
+
+      {
+        id: 'vector-pythagorean-theorem',
+        term: 'Pythagorean theorem (vectors)',
+        zh: '畢氏定理（向量形式）',
+        aliases: ['pythagoras', 'pythagorean', '畢氏定理', '勾股定理'],
+        tags: ['ch1.6', 'dot product'],
+        def:
+          'If <strong>u</strong> · <strong>v</strong> = 0 (the vectors are <a href="#orthogonal">orthogonal</a>), ' +
+          'then <span class="mono">‖u + v‖² = ‖u‖² + ‖v‖²</span>.',
+        notes: [
+          'Why: ‖u + v‖² = (u + v) · (u + v) = ‖u‖² + 2u · v + ‖v‖², and the middle term is 0.',
+          'It is the familiar a² + b² = c² for a right triangle, now valid in any &#8477;<sup>n</sup>.'
+        ],
+        defZh: '若 <strong>u</strong> · <strong>v</strong> = 0（兩向量<a href="#orthogonal">正交</a>），則 ‖u + v‖² = ‖u‖² + ‖v‖²。',
+        notesZh: [
+          '原因：‖u + v‖² = (u + v) · (u + v) = ‖u‖² + 2u · v + ‖v‖²，而中間那項是 0。',
+          '就是直角三角形的 a² + b² = c²，現在在任何 &#8477;<sup>n</sup> 都成立。'
+        ],
+        examples: [
+          { label: 'From the notes (textbook)', html: '<p>(b) Pythagorean Theorem: If u · v = 0, then ‖u + v‖² = ‖u‖² + ‖v‖²</p>' },
+          { label: 'Checking it', html: '<p>u = (3, 0), v = (0, 4): u · v = 0, ‖u + v‖² = 25 = 9 + 16 &#10003;</p>' }
         ]
       }
     ]
