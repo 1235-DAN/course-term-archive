@@ -3,6 +3,8 @@
    Source notes: 計算機概論9_10.pdf   (ch 1.1)
                  計算機概論9_10-2.pdf (the same page, extended: ALU, I/O, sequential execution)
                  計算機概論9_15.pdf   (ch1.2 program, ch1.3 components, ch2.2 number systems)
+                 計算機概論9_17.pdf   (ch2.2 reals, max/min, binary)
+                 計算機概論9_22.pdf   (no chapter number: hex, octal, conversion, number of digits — ch2.2)
 
    The card face is ENGLISH ONLY: term / def / notes / example labels /
    figure captions. Everything Chinese — zh, zhAlt, defZh, notesZh — is
@@ -104,6 +106,27 @@
     'the program is supplied from outside — only data passes through</text>' +
     '</g></svg>';
 
+  /* The two comparison tables asked for: k digits → largest value (b^k − 1),
+     and a value N → digits needed (⌊log_b N⌋ + 1), in the four bases. */
+  var DIGITS_MAX_TABLE =
+    '<table><tr><th>digits k</th><th>binary 2<sup>k</sup>&minus;1</th><th>octal 8<sup>k</sup>&minus;1</th>' +
+    '<th>decimal 10<sup>k</sup>&minus;1</th><th>hex 16<sup>k</sup>&minus;1</th></tr>' +
+    '<tr><td>1</td><td>1</td><td>7</td><td>9</td><td>15</td></tr>' +
+    '<tr><td>2</td><td>3</td><td>63</td><td>99</td><td>255</td></tr>' +
+    '<tr><td>3</td><td>7</td><td>511</td><td>999</td><td>4 095</td></tr>' +
+    '<tr><td>4</td><td>15</td><td>4 095</td><td>9 999</td><td>65 535</td></tr>' +
+    '<tr><td>5</td><td>31</td><td>32 767</td><td>99 999</td><td>1 048 575</td></tr></table>' +
+    '<p>signed: N<sub>min</sub> = &minus;N<sub>max</sub>, e.g. 3 decimal digits &rarr; &minus;999 … +999</p>';
+
+  var NUM_DIGITS_TABLE =
+    '<table><tr><th>value N</th><th>binary</th><th>octal</th><th>decimal</th><th>hex</th></tr>' +
+    '<tr><td>7</td><td>3 (111)</td><td>1 (7)</td><td>1</td><td>1 (7)</td></tr>' +
+    '<tr><td>8</td><td>4 (1000)</td><td>2 (10)</td><td>1</td><td>1 (8)</td></tr>' +
+    '<tr><td>100</td><td>7 (1100100)</td><td>3 (144)</td><td>3</td><td>2 (64)</td></tr>' +
+    '<tr><td>234</td><td>8 (11101010)</td><td>3 (352)</td><td>3</td><td>2 (EA)</td></tr>' +
+    '<tr><td>255</td><td>8 (11111111)</td><td>3 (377)</td><td>3</td><td>2 (FF)</td></tr>' +
+    '<tr><td>256</td><td>9 (100000000)</td><td>3 (400)</td><td>3</td><td>3 (100)</td></tr></table>';
+
   GLOSSARY.register({
     id: 'computer-science',
     name: 'Introduction to Computer Science',
@@ -114,11 +137,13 @@
     sources: [
       { file: '計算機概論9_10.pdf', label: '計算機概論9_10.pdf（ch1.1）' },
       { file: '計算機概論9_10-2.pdf', label: '計算機概論9_10-2.pdf（ch1.1，補充版）' },
-      { file: '計算機概論9_15.pdf', label: '計算機概論9_15.pdf（ch1.2、ch1.3、ch2.2）' }
+      { file: '計算機概論9_15.pdf', label: '計算機概論9_15.pdf（ch1.2、ch1.3、ch2.2）' },
+      { file: '計算機概論9_17.pdf', label: '計算機概論9_17.pdf（ch2.2）' },
+      { file: '計算機概論9_22.pdf', label: '計算機概論9_22.pdf（ch2.2）' }
     ],
     blurb:
       '電腦的兩種基本模型 — 圖靈模型與馮紐曼模型、馮紐曼電腦裡的四個子系統、程式如何逐條執行、' +
-      '電腦的組成（硬體與資料），以及位值進位制與十進位。',
+      '電腦的組成（硬體與資料），位值進位制（十、二、八、十六進位）、進位轉換與位數。',
 
     terms: [
       /* ============================================ models */
@@ -600,7 +625,7 @@
         notes: [
           'The notes\' sentence stops at "We have to change our numbering system from"; the ' +
             'textbook finishes it "from decimal (base 10) to binary (base 2)" — filled in here.',
-          'One binary digit is a <strong>bit</strong>; 8 bits make a <strong>byte</strong>.',
+          'One binary digit is a <a href="#bit">bit</a>; 8 bits make a <strong>byte</strong>. More on the system itself: <a href="#binary-system">binary system</a>.',
           'Binary is a <a href="#positional-number-system">positional number system</a> with base 2, ' +
             'just as <a href="#decimal-system">decimal</a> is one with base 10.'
         ],
@@ -727,6 +752,8 @@
         notes: [
           'The notes: "an integral number without fractions".',
           'Only non-negative powers of 10 appear — there are no digits after the point.',
+          'The 9/17 notes write integers in <a href="#binary-system">binary</a> the same way, with ' +
+            'place values 2<sup>k&minus;1</sup> … 2&#8304;: 0111 = 0&times;2³ + 1&times;2² + 1&times;2¹ + 1&times;2&#8304; = 7.',
           'How many digits you allow limits how big it can be — see ' +
             '<a href="#max-min-value">maximum / minimum value</a>.'
         ],
@@ -736,6 +763,7 @@
         notesZh: [
           '筆記的說法：沒有分數（小數）部分的整數。',
           '只會出現 10 的非負次方 &mdash; 小數點後面沒有數字。',
+          '9/17 的筆記用同樣方式寫<a href="#binary-system">二進位</a>整數，位值是 2<sup>k&minus;1</sup> … 2&#8304;：0111 = 0×2³ + 1×2² + 1×2¹ + 1×2&#8304; = 7。',
           '允許幾位數，就決定它能多大，見<a href="#max-min-value">最大值／最小值</a>。'
         ],
         examples: [
@@ -744,6 +772,10 @@
             html:
               '<p>Integers: An integral numbers without fractions, written as:</p>' +
               '<p>N = &plusmn; S<sub>k&minus;1</sub>&times;10<sup>k&minus;1</sup> &hellip; S&#8320;&times;10&#8304;</p>'
+          },
+          {
+            label: 'From the notes (9/17, binary)',
+            html: '<p>0111 = 0&times;2³ + 1&times;2² + 1&times;2¹ + 1&times;2&#8304; = 0 + 4 + 2 + 1 = 7</p>'
           }
         ]
       },
@@ -809,34 +841,495 @@
         id: 'max-min-value',
         term: 'Maximum / minimum value',
         zh: '最大值／最小值',
-        aliases: ['maximum value', 'minimum value', 'range of values', 'Nmax', '最大值', '最小值', 'b^k - 1'],
+        aliases: ['maximum value', 'minimum value', 'range of values', 'Nmax', 'Nmin', '最大值', '最小值', 'b^k - 1'],
         tags: ['ch2.2', 'number systems'],
         def:
           'The largest and smallest integers that can be written with a fixed number of digits. ' +
-          'With k digits in base b the largest is <span class="mono">b<sup>k</sup> &minus; 1</span>; ' +
-          'allowing a sign, the values run from &minus;(b<sup>k</sup> &minus; 1) to +(b<sup>k</sup> &minus; 1).',
+          'With k digits in base b the largest is <span class="mono">N<sub>max</sub> = b<sup>k</sup> &minus; 1</span>; ' +
+          'allowing a sign, the smallest is <span class="mono">N<sub>min</sub> = &minus;(b<sup>k</sup> &minus; 1)</span>.',
         notes: [
-          'The notes give only the heading; the formula is filled in here.',
+          'The 9/17 notes give the decimal case: N<sub>max</sub> = 10<sup>k</sup> &minus; 1. They write ' +
+            'N<sub>min</sub> as &minus;10<sup>k</sup> &minus; 1; it should be <strong>&minus;(10<sup>k</sup> &minus; 1)</strong> ' +
+            '= &minus;10<sup>k</sup> + 1. With 3 digits the smallest is &minus;999, not &minus;1001.',
+          'The 9/22 notes give the same rule in the other bases: <a href="#hexadecimal-system">hexadecimal</a> ' +
+            '16<sup>k</sup> &minus; 1 (k = 5 &rarr; 1 048 575) and <a href="#octal-system">octal</a> 8<sup>k</sup> &minus; 1 ' +
+            '(k = 5 &rarr; 32 767).',
           'Why b<sup>k</sup> &minus; 1: the largest k-digit number has every digit equal to b &minus; 1, ' +
             'and one more would need a (k + 1)-th digit — 999 + 1 = 1000 = 10³.',
-          'It matters because a computer keeps numbers in a fixed number of bits: 8 bits hold ' +
-            '0 to 2<sup>8</sup> &minus; 1 = 255.'
+          'The reverse question — how many digits a given value needs — is ' +
+            '<a href="#number-of-digits">number of digits</a>; the two are set side by side in ' +
+            '<a href="#digits-vs-max-min">number of digits vs. maximum / minimum</a>.'
         ],
         defZh:
-          '固定位數下能寫出的最大、最小整數。底數 b、k 位數時，最大是 b<sup>k</sup> &minus; 1；加上正負號，範圍是 &minus;(b<sup>k</sup> &minus; 1) 到 +(b<sup>k</sup> &minus; 1)。',
+          '固定位數下能寫出的最大、最小整數。底數 b、k 位數時，最大是 N<sub>max</sub> = b<sup>k</sup> &minus; 1；加上正負號，最小是 N<sub>min</sub> = &minus;(b<sup>k</sup> &minus; 1)。',
         notesZh: [
-          '筆記只寫了標題；公式是這裡補上的。',
+          '9/17 的筆記給了十進位的情形：N<sub>max</sub> = 10<sup>k</sup> &minus; 1。N<sub>min</sub> 筆記寫成 &minus;10<sup>k</sup> &minus; 1，' +
+            '應為 <strong>&minus;(10<sup>k</sup> &minus; 1)</strong> = &minus;10<sup>k</sup> + 1。3 位數時最小是 &minus;999，不是 &minus;1001。',
+          '9/22 的筆記給了其他進位的同一規則：<a href="#hexadecimal-system">十六進位</a> 16<sup>k</sup> &minus; 1（k = 5 &rarr; 1 048 575）、<a href="#octal-system">八進位</a> 8<sup>k</sup> &minus; 1（k = 5 &rarr; 32 767）。',
           '為什麼是 b<sup>k</sup> &minus; 1：k 位數最大的數每一位都是 b &minus; 1，再加 1 就要第 k + 1 位了 &mdash; 999 + 1 = 1000 = 10³。',
-          '這很重要，因為電腦用固定位元數存數字：8 個位元能存 0 到 2<sup>8</sup> &minus; 1 = 255。'
+          '反過來問「一個數要幾位數」就是<a href="#number-of-digits">位數</a>；兩者的對照見<a href="#digits-vs-max-min">位數與最大／最小值的比較</a>。'
         ],
         examples: [
-          { label: 'From the notes', html: '<p>Maximum Value / Minimum Value</p><p>&rarr; (heading only)</p>' },
+          {
+            label: 'From the notes',
+            html:
+              '<p>Maximum / Minimum Value: N<sub>max</sub> = 10<sup>k</sup> &minus; 1 / N<sub>min</sub> = &minus;10<sup>k</sup> &minus; 1 ' +
+              '&nbsp;&rarr;&nbsp; should read &minus;(10<sup>k</sup> &minus; 1)</p>' +
+              '<p>hexadecimal: N<sub>max</sub> = 16<sup>k</sup> &minus; 1; k = 5 &rarr; 16<sup>5</sup> &minus; 1 = 1 048 575</p>' +
+              '<p>octal: N<sub>max</sub> = 8<sup>k</sup> &minus; 1; k = 5 &rarr; 8<sup>5</sup> &minus; 1 = 32 767</p>'
+          },
+          { label: 'k digits → largest value, in each base', html: DIGITS_MAX_TABLE }
+        ]
+      },
+
+      {
+        id: 'real-number',
+        term: 'Real number (reals)',
+        zh: '實數',
+        aliases: ['reals', 'real', 'fraction', 'fractional part', 'integral part', '小數', '整數部分', '小數部分'],
+        tags: ['ch2.2', 'number systems'],
+        def:
+          'A number with an <strong>integral part</strong> and a <strong>fractional part</strong>, ' +
+          'separated by the point. In base b: <span class="mono">R = &plusmn;(S<sub>k&minus;1</sub>&times;b<sup>k&minus;1</sup> + … + ' +
+          'S&#8320;&times;b&#8304; . S<sub>&minus;1</sub>&times;b<sup>&minus;1</sup> + … + S<sub>&minus;ℓ</sub>&times;b<sup>&minus;ℓ</sup>)</span>.',
+        notes: [
+          'Digits right of the point carry negative powers of the base: 10<sup>&minus;1</sup> = 0.1, ' +
+            '2<sup>&minus;1</sup> = 0.5.',
+          'In the worked example the notes write 2 &times; 10&#8304; as <strong>20</strong>; it is 2. The ' +
+            'total is still right: 30 + 2 + 0.4 + 0.07 = 32.47.',
+          'The textbook figure for binary reals joins the integral-part terms with &times;; they should be ' +
+            'added: S<sub>k&minus;1</sub>&times;2<sup>k&minus;1</sup> <strong>+</strong> … <strong>+</strong> S&#8320;&times;2&#8304;.'
+        ],
+        defZh:
+          '有<strong>整數部分</strong>和<strong>小數部分</strong>、中間以小數點分開的數。底數 b 時：R = ±(S<sub>k&minus;1</sub>×b<sup>k&minus;1</sup> + … + S&#8320;×b&#8304; . S<sub>&minus;1</sub>×b<sup>&minus;1</sup> + … + S<sub>&minus;ℓ</sub>×b<sup>&minus;ℓ</sup>)。',
+        notesZh: [
+          '小數點右邊的位數用底數的負次方：10<sup>&minus;1</sup> = 0.1、2<sup>&minus;1</sup> = 0.5。',
+          '例題裡筆記把 2 × 10&#8304; 寫成 <strong>20</strong>，應該是 2。總和還是對的：30 + 2 + 0.4 + 0.07 = 32.47。',
+          '課本二進位實數的圖把整數部分各項用 × 連起來；應該用 + 相加：S<sub>k&minus;1</sub>×2<sup>k&minus;1</sup> <strong>+</strong> … <strong>+</strong> S&#8320;×2&#8304;。'
+        ],
+        examples: [
+          {
+            label: 'From the notes (9/17)',
+            html:
+              '<p>Reals: A number with whole part including fractional part</p>' +
+              '<p>S<sub>k&minus;1</sub>&times;b<sup>k&minus;1</sup> + … + S&#8320;&times;b&#8304; (integral part) . ' +
+              'S<sub>&minus;1</sub>&times;b<sup>&minus;1</sup> + … + S<sub>&minus;ℓ</sub>&times;b<sup>&minus;ℓ</sup> (fractional part)</p>' +
+              '<p>32.47 = 3&times;10¹ + 2&times;10&#8304; + 4&times;10<sup>&minus;1</sup> + 7&times;10<sup>&minus;2</sup> = 30 + <del>20</del> 2 + 0.4 + 0.07</p>'
+          },
+          { label: 'A binary real', html: '<p>(101.11)&#8322; = 4 + 0 + 1 + 0.5 + 0.25 = 5.75</p>' }
+        ]
+      },
+
+      {
+        id: 'binary-system',
+        term: 'Binary system',
+        zh: '二進位系統',
+        zhAlt: '二進制',
+        aliases: ['binary', 'base 2', 'base-2', '二進位', '0 and 1'],
+        tags: ['ch2.2', 'number systems'],
+        def:
+          'The <a href="#positional-number-system">positional number system</a> with <strong>base 2</strong>, ' +
+          'using only two symbols, 0 and 1. Place values are powers of two: 2&#8304;, 2¹, 2², ….',
+        notes: [
+          'It is the system computers use, because a signal with two states is the most reliable — see ' +
+            '<a href="#storing-data">storing data</a>. Each symbol is a <a href="#bit">bit</a>.',
+          'With k bits the largest value is 2<sup>k</sup> &minus; 1 (<a href="#max-min-value">maximum value</a>).',
+          'Binary numbers get long quickly, which is why <a href="#octal-system">octal</a> and ' +
+            '<a href="#hexadecimal-system">hexadecimal</a> are used as shorthand.'
+        ],
+        defZh:
+          '底數為 <strong>2</strong>、只用 0 和 1 兩個符號的<a href="#positional-number-system">位值進位制</a>。位值是 2 的次方：2&#8304;、2¹、2²…。',
+        notesZh: [
+          '電腦用的就是它，因為兩種狀態的訊號最可靠，見<a href="#storing-data">資料的儲存</a>。每個符號是一個<a href="#bit">位元</a>。',
+          'k 個位元能表示的最大值是 2<sup>k</sup> &minus; 1（<a href="#max-min-value">最大值</a>）。',
+          '二進位數字很快就變很長，所以會用<a href="#octal-system">八進位</a>和<a href="#hexadecimal-system">十六進位</a>來簡寫。'
+        ],
+        examples: [
+          { label: 'From the notes (9/17)', html: '<p>Binary system (Base 2): use only two symbols: 0, 1</p>' },
+          { label: 'Reading one', html: '<p>(0111)&#8322; = 0 + 4 + 2 + 1 = 7 &nbsp;&nbsp; (11101010)&#8322; = 128 + 64 + 32 + 8 + 2 = 234</p>' }
+        ]
+      },
+
+      {
+        id: 'bit',
+        term: 'Bit (binary digit)',
+        zh: '位元',
+        zhAlt: '二進位數字',
+        aliases: ['bits', 'binary digit', 'byte', '位元組'],
+        tags: ['ch2.2', 'number systems'],
+        def:
+          'A single symbol of the <a href="#binary-system">binary system</a>: 0 or 1. The name is short ' +
+          'for <strong>b</strong>inary dig<strong>it</strong>.',
+        notes: [
+          'Eight bits make a <strong>byte</strong>.',
+          'A group of k bits can hold 2<sup>k</sup> different patterns — 8 bits give 256.'
+        ],
+        defZh: '<a href="#binary-system">二進位系統</a>的單一符號：0 或 1。名稱是 <strong>b</strong>inary dig<strong>it</strong> 的縮寫。',
+        notesZh: ['8 個位元是一個<strong>位元組</strong>（byte）。', 'k 個位元一共有 2<sup>k</sup> 種排列 &mdash; 8 個位元有 256 種。'],
+        examples: [{ label: 'From the notes (9/17)', html: '<p>Binary digits / bits: symbols of binary system.</p>' }]
+      },
+
+      {
+        id: 'octal-system',
+        term: 'Octal system',
+        zh: '八進位系統',
+        zhAlt: '八進制',
+        aliases: ['octal', 'base 8', 'base-8', '八進位'],
+        tags: ['ch2.2', 'number systems'],
+        def:
+          'The positional number system with <strong>base 8</strong>, using the symbols ' +
+          '{0, 1, 2, 3, 4, 5, 6, 7}. An integer ±S<sub>k&minus;1</sub>…S&#8321;S&#8320; has the value ' +
+          '<span class="mono">N = &plusmn;(S<sub>k&minus;1</sub>&times;8<sup>k&minus;1</sup> + … + S&#8321;&times;8¹ + S&#8320;&times;8&#8304;)</span>.',
+        notes: [
+          'Largest k-digit value: 8<sup>k</sup> &minus; 1; with k = 5 that is 32 767.',
+          'Because 8 = 2³, one octal digit is exactly three bits — see ' +
+            '<a href="#binary-octal-hex-conversion">binary–octal–hexadecimal conversion</a>.'
+        ],
+        defZh:
+          '底數為 <strong>8</strong>、符號是 {0, 1, 2, 3, 4, 5, 6, 7} 的位值進位制。整數的值是 N = ±(S<sub>k&minus;1</sub>×8<sup>k&minus;1</sup> + … + S&#8321;×8¹ + S&#8320;×8&#8304;)。',
+        notesZh: [
+          'k 位數最大值：8<sup>k</sup> &minus; 1；k = 5 時是 32 767。',
+          '因為 8 = 2³，一個八進位數字剛好是三個位元，見<a href="#binary-octal-hex-conversion">二、八、十六進位互換</a>。'
+        ],
+        examples: [
+          {
+            label: 'From the notes (textbook)',
+            html:
+              '<p>Octal system: base 8, set of symbols is S = {0, 1, 2, 3, 4, 5, 6, 7}</p>' +
+              '<p>N = &plusmn; S<sub>k&minus;1</sub>&times;8<sup>k&minus;1</sup> + … + S&#8321;&times;8¹ + S&#8320;&times;8&#8304;</p>' +
+              '<p>maximum value with k digits: 8<sup>k</sup> &minus; 1; k = 5 &rarr; 32 767</p>'
+          },
+          { label: 'Reading one', html: '<p>(352)&#8328; = 3&times;64 + 5&times;8 + 2 = 234</p>' }
+        ]
+      },
+
+      {
+        id: 'hexadecimal-system',
+        term: 'Hexadecimal system',
+        zh: '十六進位系統',
+        zhAlt: '十六進制',
+        aliases: ['hexadecimal', 'hex', 'base 16', 'base-16', 'A B C D E F', '十六進位'],
+        tags: ['ch2.2', 'number systems'],
+        def:
+          'The positional number system with <strong>base 16</strong>. It needs sixteen symbols, so after ' +
+          '0–9 it uses letters: A = 10, B = 11, C = 12, D = 13, E = 14, F = 15. An integer has the value ' +
+          '<span class="mono">N = &plusmn;(S<sub>k&minus;1</sub>&times;16<sup>k&minus;1</sup> + … + S&#8321;&times;16¹ + S&#8320;&times;16&#8304;)</span>.',
+        notes: [
+          'Largest k-digit value: 16<sup>k</sup> &minus; 1; with k = 5 that is 1 048 575.',
+          'Because 16 = 2&#8308;, one hex digit is exactly four bits, so a byte is two hex digits (00 to FF).',
+          'The 9/17 notes give only the heading; the 9/22 notes fill it in.'
+        ],
+        defZh:
+          '底數為 <strong>16</strong> 的位值進位制。需要十六個符號，所以 0–9 之後用字母：A = 10、B = 11、C = 12、D = 13、E = 14、F = 15。' +
+          '整數的值是 N = ±(S<sub>k&minus;1</sub>×16<sup>k&minus;1</sup> + … + S&#8321;×16¹ + S&#8320;×16&#8304;)。',
+        notesZh: [
+          'k 位數最大值：16<sup>k</sup> &minus; 1；k = 5 時是 1 048 575。',
+          '因為 16 = 2&#8308;，一個十六進位數字剛好是四個位元，所以一個位元組是兩個十六進位數字（00 到 FF）。',
+          '9/17 的筆記只有標題，9/22 的筆記才補上內容。'
+        ],
+        examples: [
+          {
+            label: 'From the notes (9/22)',
+            html:
+              '<p>Hexadecimal system: base 16</p>' +
+              '<p>0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 &rarr; 0 1 2 3 4 5 6 7 8 9 A B C D E F</p>' +
+              '<p>maximum value with k digits: 16<sup>k</sup> &minus; 1; k = 5 &rarr; 1 048 575</p>'
+          },
+          { label: 'Reading one', html: '<p>(EA)&#8321;&#8326; = 14&times;16 + 10 = 234 &nbsp;&nbsp; (FF)&#8321;&#8326; = 255</p>' }
+        ]
+      },
+
+      {
+        id: 'number-system-comparison',
+        term: 'Comparison of the four number systems',
+        zh: '四種進位制的比較',
+        aliases: ['comparison', 'table 2.2', 'decimal binary octal hexadecimal', '對照表'],
+        tags: ['ch2.2', 'number systems'],
+        def:
+          'The same values written in <a href="#decimal-system">decimal</a>, <a href="#binary-system">binary</a>, ' +
+          '<a href="#octal-system">octal</a> and <a href="#hexadecimal-system">hexadecimal</a> side by side ' +
+          '(textbook Table 2.2).',
+        notes: [
+          'The pattern to notice: binary gains a digit at every power of two (2, 4, 8), octal rolls over ' +
+            'at 8 (written 10), hex only at 16.',
+          'Knowing 0–15 in all four by heart makes the <a href="#binary-octal-hex-conversion">grouping ' +
+            'conversions</a> quick.'
+        ],
+        defZh: '同一組數值分別用<a href="#decimal-system">十進位</a>、<a href="#binary-system">二進位</a>、<a href="#octal-system">八進位</a>、<a href="#hexadecimal-system">十六進位</a>並排寫出（課本表 2.2）。',
+        notesZh: [
+          '要注意的規律：二進位每到 2 的次方（2、4、8）就多一位；八進位到 8 進位（寫成 10）；十六進位要到 16 才進位。',
+          '把 0–15 的四種寫法記熟，<a href="#binary-octal-hex-conversion">分組換算</a>就會很快。'
+        ],
+        examples: [
+          {
+            label: 'From the notes (Table 2.2)',
+            html:
+              '<table><tr><th>Decimal</th><th>Binary</th><th>Octal</th><th>Hex</th><th></th>' +
+              '<th>Decimal</th><th>Binary</th><th>Octal</th><th>Hex</th></tr>' +
+              '<tr><td>0</td><td>0</td><td>0</td><td>0</td><td></td><td>8</td><td>1000</td><td>10</td><td>8</td></tr>' +
+              '<tr><td>1</td><td>1</td><td>1</td><td>1</td><td></td><td>9</td><td>1001</td><td>11</td><td>9</td></tr>' +
+              '<tr><td>2</td><td>10</td><td>2</td><td>2</td><td></td><td>10</td><td>1010</td><td>12</td><td>A</td></tr>' +
+              '<tr><td>3</td><td>11</td><td>3</td><td>3</td><td></td><td>11</td><td>1011</td><td>13</td><td>B</td></tr>' +
+              '<tr><td>4</td><td>100</td><td>4</td><td>4</td><td></td><td>12</td><td>1100</td><td>14</td><td>C</td></tr>' +
+              '<tr><td>5</td><td>101</td><td>5</td><td>5</td><td></td><td>13</td><td>1101</td><td>15</td><td>D</td></tr>' +
+              '<tr><td>6</td><td>110</td><td>6</td><td>6</td><td></td><td>14</td><td>1110</td><td>16</td><td>E</td></tr>' +
+              '<tr><td>7</td><td>111</td><td>7</td><td>7</td><td></td><td>15</td><td>1111</td><td>17</td><td>F</td></tr></table>'
+          }
+        ]
+      },
+
+      {
+        id: 'any-base-to-decimal',
+        term: 'Converting any base to decimal',
+        zh: '任意進位轉十進位',
+        aliases: ['conversion', 'base conversion', 'to decimal', '進位轉換', '轉十進位'],
+        tags: ['ch2.2', 'conversion'],
+        def:
+          'Multiply each digit by its <a href="#place-value">place value</a> in the source base and add: ' +
+          '<span class="mono">S<sub>k&minus;1</sub>&times;b<sup>k&minus;1</sup> + … + S&#8320;&times;b&#8304; + ' +
+          'S<sub>&minus;1</sub>&times;b<sup>&minus;1</sup> + … + S<sub>&minus;ℓ</sub>&times;b<sup>&minus;ℓ</sup></span>.',
+        notes: [
+          'It is just the definition of a <a href="#positional-number-system">positional number</a> ' +
+            'evaluated in decimal arithmetic.',
+          'Digits after the point use negative powers of b.'
+        ],
+        defZh: '每一位乘上它在原進位中的<a href="#place-value">位值</a>再相加：S<sub>k&minus;1</sub>×b<sup>k&minus;1</sup> + … + S&#8320;×b&#8304; + S<sub>&minus;1</sub>×b<sup>&minus;1</sup> + … + S<sub>&minus;ℓ</sub>×b<sup>&minus;ℓ</sup>。',
+        notesZh: ['就是把<a href="#positional-number-system">位值制</a>的定義用十進位算出來。', '小數點後的位數用 b 的負次方。'],
+        examples: [
+          {
+            label: 'From the notes (9/22)',
+            html: '<p>any base to decimal: S<sub>k&minus;1</sub>&times;b<sup>k&minus;1</sup> + … + S&#8320;&times;b&#8304; . S<sub>&minus;1</sub>&times;b<sup>&minus;1</sup> … S<sub>&minus;k</sub>&times;b<sup>&minus;k</sup></p>'
+          },
+          {
+            label: 'Three bases',
+            html:
+              '<p>(10011.1)&#8322; = 16 + 2 + 1 + 0.5 = 19.5</p>' +
+              '<p>(352)&#8328; = 192 + 40 + 2 = 234 &nbsp;&nbsp; (2A)&#8321;&#8326; = 32 + 10 = 42</p>'
+          }
+        ]
+      },
+
+      {
+        id: 'decimal-to-any-base',
+        term: 'Converting decimal to any base',
+        zh: '十進位轉任意進位',
+        aliases: ['repeated division', 'divide by b', 'multiply by b', 'remainder', 'quotient', '除法', '餘數', '連除法', '連乘法'],
+        tags: ['ch2.2', 'conversion'],
+        def:
+          'Convert the two parts separately. <strong>Integral part:</strong> divide by b again and again; ' +
+          'the remainders are the digits, from right to left. <strong>Fractional part:</strong> multiply ' +
+          'by b again and again; the integral parts that appear are the digits, from left to right.',
+        notes: [
+          'Integral part: stop when the quotient reaches 0 (the textbook\'s "divide by b" figure).',
+          'Fractional part: stop when the fraction becomes 0 — or, since it may never become zero ' +
+            '(0.1 in binary repeats forever), when enough digits have been produced.'
+        ],
+        defZh:
+          '整數部分和小數部分分開換。<strong>整數部分：</strong>一直除以 b，餘數就是各位數字，由右往左排。' +
+          '<strong>小數部分：</strong>一直乘以 b，每次得到的整數部分就是各位數字，由左往右排。',
+        notesZh: [
+          '整數部分：商變成 0 就停（課本「Divide by b」的圖）。',
+          '小數部分：小數變成 0 就停 &mdash; 但它可能永遠不會變 0（0.1 換成二進位會無限循環），所以產生夠多位數就停。'
+        ],
+        examples: [
+          {
+            label: 'From the notes (textbook figures)',
+            html:
+              '<p>decimal to any base — Integer: divide by b; the remainders R give the destination digits D&#8320;, D&#8321;, …</p>' +
+              '<p>Fraction: multiply by b; the integral parts I give D<sub>&minus;1</sub>, D<sub>&minus;2</sub>, …</p>' +
+              '<p>Note: the fraction may never become zero. Stop when enough digits have been created.</p>'
+          },
+          {
+            label: '35.625 to binary',
+            html:
+              '<p>35 &divide; 2 &rarr; remainders 1, 1, 0, 0, 0, 1 &nbsp;&rArr;&nbsp; read upward: 100011</p>' +
+              '<p>0.625 &times; 2 = 1.25 &rarr; 1; 0.25 &times; 2 = 0.5 &rarr; 0; 0.5 &times; 2 = 1.0 &rarr; 1 &nbsp;&rArr;&nbsp; .101</p>' +
+              '<p>35.625 = (100011.101)&#8322;</p>'
+          }
+        ]
+      },
+
+      {
+        id: 'binary-octal-hex-conversion',
+        term: 'Binary–octal–hexadecimal conversion',
+        zh: '二、八、十六進位互換',
+        aliases: ['binary to hex', 'binary to octal', 'octal to hex', 'grouping bits', '分組', '四位一組', '三位一組'],
+        tags: ['ch2.2', 'conversion'],
+        def:
+          'Group the bits instead of doing arithmetic. One <a href="#hexadecimal-system">hex</a> digit = ' +
+          '<strong>4 bits</strong>; one <a href="#octal-system">octal</a> digit = <strong>3 bits</strong>. ' +
+          'Octal &harr; hex goes through binary.',
+        notes: [
+          'Group from the point outward: from the right for the integral part, padding with 0s on the left ' +
+            'if a group is short.',
+          'Octal to hex: write each octal digit as 3 bits, regroup in fours, read off hex digits. Hex to ' +
+            'octal: 4 bits each, regroup in threes.',
+          'The textbook figure the notes paste is captioned "Figure 2.11 Binary to hexadecimal conversion", ' +
+            'but it shows <strong>octal</strong> digits (3 bits each) — the caption should say binary to octal.'
+        ],
+        defZh:
+          '不用計算，改用分組。一個<a href="#hexadecimal-system">十六進位</a>數字 = <strong>4 個位元</strong>；一個<a href="#octal-system">八進位</a>數字 = <strong>3 個位元</strong>。八進位與十六進位互換時，以二進位當中間站。',
+        notesZh: [
+          '從小數點往外分組：整數部分從右邊開始，最左邊一組不夠就補 0。',
+          '八進位轉十六進位：每個八進位數字寫成 3 個位元，改成 4 個一組，再讀出十六進位數字。十六進位轉八進位則反過來：各寫成 4 位元，再 3 個一組。',
+          '筆記貼的課本圖標題寫「Figure 2.11 Binary to hexadecimal conversion」，但圖裡畫的是<strong>八進位</strong>（每 3 位元一組）&mdash; 標題應為 binary to octal。'
+        ],
+        examples: [
+          {
+            label: 'From the notes (Figure 2.12)',
+            html:
+              '<p>(4116)&#8328; &rarr; 100 001 001 110 &rarr; 1000 0100 1110 &rarr; (84E)&#8321;&#8326;</p>' +
+              '<p>To convert from octal to hexadecimal, first convert to binary, then rearrange the bits in groups of four. ' +
+              'From hexadecimal to octal, rearrange in groups of three.</p>'
+          },
+          {
+            label: 'Binary to both',
+            html: '<p>(11101010)&#8322; = 1110 1010 = (EA)&#8321;&#8326; &nbsp;&nbsp; = 011 101 010 = (352)&#8328;</p>'
+          }
+        ]
+      },
+
+      {
+        id: 'number-of-digits',
+        term: 'Number of digits',
+        abbr: 'k',
+        zh: '位數',
+        aliases: ['digits', 'how many digits', 'log', 'ceiling', '位數', '需要幾位'],
+        tags: ['ch2.2', 'number systems'],
+        def:
+          'How many digits the integer N needs in base b. The notes give ' +
+          '<span class="mono">k = &lceil;log<sub>b</sub> N&rceil;</span>, with N the value in decimal; the exact ' +
+          'formula is <span class="mono">k = &lfloor;log<sub>b</sub> N&rfloor; + 1</span> (N ≥ 1).',
+        notes: [
+          'Correction: &lceil;log<sub>b</sub> N&rceil; is one short whenever N is an exact power of b. N = 100 ' +
+            'in decimal gives &lceil;2&rceil; = 2, but 100 has 3 digits; N = 8 in binary gives 3, but 1000&#8322; has 4. ' +
+            '&lfloor;log<sub>b</sub> N&rfloor; + 1, or equivalently &lceil;log<sub>b</sub>(N + 1)&rceil;, is right every time.',
+          'It is the reverse of <a href="#max-min-value">maximum value</a>: k digits reach up to b<sup>k</sup> &minus; 1, ' +
+            'so N needs the smallest k with b<sup>k</sup> &minus; 1 ≥ N. See ' +
+            '<a href="#digits-vs-max-min">number of digits vs. maximum / minimum</a>.',
+          'Small bases need many digits: the same value takes about 3.3 times as many bits as decimal digits.'
+        ],
+        defZh:
+          '整數 N 在底數 b 下需要幾位數。筆記給的是 k = &lceil;log<sub>b</sub> N&rceil;（N 為十進位的值）；精確的公式是 k = &lfloor;log<sub>b</sub> N&rfloor; + 1（N ≥ 1）。',
+        notesZh: [
+          '修正：N 剛好是 b 的次方時，&lceil;log<sub>b</sub> N&rceil; 會少一位。十進位 N = 100 得 &lceil;2&rceil; = 2，但 100 是 3 位數；二進位 N = 8 得 3，但 1000&#8322; 是 4 位。' +
+            '用 &lfloor;log<sub>b</sub> N&rfloor; + 1（或 &lceil;log<sub>b</sub>(N + 1)&rceil;）才每次都對。',
+          '它是<a href="#max-min-value">最大值</a>的反問題：k 位數最多到 b<sup>k</sup> &minus; 1，所以 N 需要的是讓 b<sup>k</sup> &minus; 1 ≥ N 的最小 k。見<a href="#digits-vs-max-min">位數與最大／最小值的比較</a>。',
+          '底數越小，位數越多：同一個數用二進位大約是十進位位數的 3.3 倍。'
+        ],
+        examples: [
+          {
+            label: 'From the notes',
+            html:
+              '<p>We can find the number of digits of base b by using relation k = &lceil;log<sub>b</sub> N&rceil;, N is decimal symbol of integer</p>' +
+              '<p>e.g. &lceil;log&#8321;&#8320; 234&rceil; = &lceil;2.37&rceil; = 3 &nbsp;&nbsp; &lceil;log&#8322; 234&rceil; = &lceil;7.87&rceil; = 8 &rArr; (11101010)&#8322;</p>'
+          },
+          { label: 'A value N → digits needed, in each base', html: NUM_DIGITS_TABLE }
+        ]
+      },
+
+      {
+        id: 'digits-for-conversion',
+        term: 'Number of digits for conversion',
+        zh: '換算所需位數',
+        aliases: ['conversion digits', 'destination digits', 'k log b1 / log b2', '需要幾位', '轉換位數'],
+        tags: ['ch2.2', 'conversion'],
+        def:
+          'When a k-digit number in base b&#8321; is converted to base b&#8322;, the destination needs at least ' +
+          '<span class="mono">x = &lceil;k &middot; log b&#8321; / log b&#8322;&rceil;</span> digits, so that it can hold ' +
+          'the source\'s largest value.',
+        notes: [
+          'Where it comes from: the largest k-digit source value is b&#8321;<sup>k</sup> &minus; 1 and the largest ' +
+            'x-digit destination value is b&#8322;<sup>x</sup> &minus; 1. Require b&#8322;<sup>x</sup> &minus; 1 ≥ ' +
+            'b&#8321;<sup>k</sup> &minus; 1 and take logs: x ≥ k &middot; log b&#8321; / log b&#8322;.',
+          'The notes label b&#8322;<sup>x</sup> &minus; 1 as "minimum"; it is the destination\'s ' +
+            '<em>maximum</em> value — x is the <em>minimum number of digits</em>.',
+          'Too few destination digits and the value does not fit — <a href="#overflow">overflow</a>, which ' +
+            'is why the notes stress finding this minimum.'
+        ],
+        defZh:
+          '把底數 b&#8321; 的 k 位數換成底數 b&#8322; 時，目的端至少要 x = &lceil;k · log b&#8321; / log b&#8322;&rceil; 位，才裝得下來源的最大值。',
+        notesZh: [
+          '推導：來源 k 位數最大是 b&#8321;<sup>k</sup> &minus; 1，目的端 x 位數最大是 b&#8322;<sup>x</sup> &minus; 1。要求 b&#8322;<sup>x</sup> &minus; 1 ≥ b&#8321;<sup>k</sup> &minus; 1，取對數：x ≥ k · log b&#8321; / log b&#8322;。',
+          '筆記把 b&#8322;<sup>x</sup> &minus; 1 標成「minimum」；它其實是目的端的<em>最大值</em> &mdash; x 才是<em>最少位數</em>。',
+          '目的端位數不夠，值就放不下 &mdash; 也就是<a href="#overflow">溢位</a>，所以筆記強調要先算出這個最小值。'
+        ],
+        examples: [
+          {
+            label: 'From the notes',
+            html:
+              '<p>If we convert one base to another, we need to know the maximum number of digits of source system and ' +
+              'minimum number of digits of destination system: maximum b&#8321;<sup>k</sup> &minus; 1, minimum b&#8322;<sup>x</sup> &minus; 1</p>' +
+              '<p>then b&#8322;<sup>x</sup> &minus; 1 ≥ b&#8321;<sup>k</sup> &minus; 1 &rArr; x ≥ k &middot; (log b&#8321; / log b&#8322;), x = &lceil;k &middot; (log b&#8321; / log b&#8322;)&rceil;</p>'
+          },
           {
             label: 'Working it out',
             html:
-              '<p>decimal, 4 digits: largest 10&#8308; &minus; 1 = 9999</p>' +
-              '<p>binary, 4 digits: largest 2&#8308; &minus; 1 = 15 = (1111)&#8322;</p>'
+              '<p>5 decimal digits &rarr; binary: x = &lceil;5 &times; 3.32&rceil; = &lceil;16.6&rceil; = 17 bits (99 999 &lt; 2<sup>17</sup> = 131 072)</p>' +
+              '<p>6 hex digits &rarr; decimal: x = &lceil;6 &times; 1.204&rceil; = 8 (16<sup>6</sup> &minus; 1 = 16 777 215)</p>'
           }
+        ]
+      },
+
+      {
+        id: 'overflow',
+        term: 'Overflow',
+        zh: '溢位',
+        aliases: ['overflow error', 'too many digits', '溢出'],
+        tags: ['ch2.2', 'conversion'],
+        def:
+          'What happens when a value needs more digits than are available: it cannot be stored, and the ' +
+          'result is wrong (typically the extra high digits are lost).',
+        notes: [
+          'The notes mention it as the reason to find the <a href="#digits-for-conversion">minimum number of ' +
+            'digits for conversion</a>; the definition is filled in here.',
+          'Example: 8 bits hold at most 255 (<a href="#max-min-value">2<sup>8</sup> &minus; 1</a>); storing 256 ' +
+            'would need a ninth bit.'
+        ],
+        defZh: '數值需要的位數超過可用的位數時發生的狀況：存不下，結果會出錯（通常是最高的幾位被截掉）。',
+        notesZh: [
+          '筆記提到它，是為了說明為何要算出<a href="#digits-for-conversion">換算所需的最少位數</a>；定義是這裡補上的。',
+          '例：8 個位元最多存到 255（<a href="#max-min-value">2<sup>8</sup> &minus; 1</a>）；要存 256 就需要第 9 個位元。'
+        ],
+        examples: [
+          { label: 'From the notes', html: '<p>* We have to know the minimum number of digits we need to avoid overflow while conversing.</p>' }
+        ]
+      },
+
+      {
+        id: 'digits-vs-max-min',
+        term: 'Number of digits vs. maximum / minimum value',
+        zh: '位數與最大／最小值的比較',
+        aliases: ['comparison', 'digits and range', 'how big', 'how many digits', '比較', '位數', '最大值'],
+        tags: ['ch2.2', 'number systems'],
+        added: true,
+        def:
+          'Two sides of one fact. <a href="#max-min-value">Maximum / minimum value</a> asks: with ' +
+          '<strong>k digits</strong> in base b, what is the biggest value? (b<sup>k</sup> &minus; 1, and ' +
+          '&minus;(b<sup>k</sup> &minus; 1) with a sign.) <a href="#number-of-digits">Number of digits</a> asks the ' +
+          'reverse: for a <strong>value N</strong>, how many digits? (&lfloor;log<sub>b</sub> N&rfloor; + 1.)',
+        notes: [
+          'They are inverse functions of each other: N fits in k digits exactly when N ≤ b<sup>k</sup> &minus; 1, ' +
+            'i.e. when k ≥ log<sub>b</sub>(N + 1).',
+          'Crossing a maximum costs one more digit: 999 is the largest 3-digit decimal, 1000 already needs 4; ' +
+            '255 = FF is the largest 2-digit hex, 256 = 100 needs 3.',
+          'Signed values have the same digit count as their size; the sign is stored separately, so the range ' +
+            'is symmetric: &minus;N<sub>max</sub> to +N<sub>max</sub>.',
+          '<a href="#digits-for-conversion">Digits for conversion</a> combines both: take the source\'s maximum, ' +
+            'then ask how many destination digits that value needs.'
+        ],
+        defZh:
+          '同一件事的兩面。<a href="#max-min-value">最大／最小值</a>問：底數 b、<strong>k 位數</strong>最大能到多少？（b<sup>k</sup> &minus; 1，加正負號時最小是 &minus;(b<sup>k</sup> &minus; 1)。）' +
+          '<a href="#number-of-digits">位數</a>反過來問：<strong>一個值 N</strong> 要幾位數？（&lfloor;log<sub>b</sub> N&rfloor; + 1。）',
+        notesZh: [
+          '兩者互為反函數：N 放得進 k 位數，恰好就是 N ≤ b<sup>k</sup> &minus; 1，也就是 k ≥ log<sub>b</sub>(N + 1)。',
+          '一超過最大值就要多一位：999 是十進位 3 位數的最大值，1000 就要 4 位；255 = FF 是十六進位 2 位數的最大值，256 = 100 就要 3 位。',
+          '有正負號時位數不變，符號另外存，所以範圍是對稱的：&minus;N<sub>max</sub> 到 +N<sub>max</sub>。',
+          '<a href="#digits-for-conversion">換算所需位數</a>就是把兩者合起來：先取來源的最大值，再問這個值在目的端要幾位。'
+        ],
+        examples: [
+          { label: 'k digits → largest value (maximum / minimum)', html: DIGITS_MAX_TABLE },
+          { label: 'value N → digits needed (number of digits)', html: NUM_DIGITS_TABLE }
         ]
       }
     ]
