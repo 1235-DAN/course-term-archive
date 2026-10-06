@@ -6,6 +6,9 @@
                  線性代數9_15.pdf (ch1.4 span, ch1.5 basis)
                  線性代數9_21.pdf (repeats 9_15; adds standard basis, dimension, ch1.6 dot product)
                  線性代數9_22.pdf (ch1.6 Cauchy–Schwarz, orthogonality, distance)
+                 線性代數10_5-10_6.pdf (ch2.3 transpose and inverse, ch2.2 AX = B and
+                                       solution subspaces; the 10/6 transformations have
+                                       no chapter number — tagged ch2.5)
 
    The card face is ENGLISH ONLY: term / def / notes / example labels /
    figure captions. Everything Chinese — zh, zhAlt, defZh, notesZh — is
@@ -95,11 +98,12 @@
       { file: '線性代數9_14.pdf', label: '線性代數9_14.pdf（ch1.2、ch1.3、ch1.4）' },
       { file: '線性代數9_15.pdf', label: '線性代數9_15.pdf（ch1.4、ch1.5）' },
       { file: '線性代數9_21.pdf', label: '線性代數9_21.pdf（ch1.4–ch1.6）' },
-      { file: '線性代數9_22.pdf', label: '線性代數9_22.pdf（ch1.6）' }
+      { file: '線性代數9_22.pdf', label: '線性代數9_22.pdf（ch1.6）' },
+      { file: '線性代數10_5-10_6.pdf', label: '線性代數10_5-10_6.pdf（ch2.2、ch2.3、ch2.5）' }
     ],
     blurb:
       '線性方程組的語言：方程式的零件、矩陣的零件與大小、增廣矩陣與基本列運算、' +
-      '消去法的終點 — 簡化列梯形、齊次方程組，向量空間 ℝⁿ 的向量運算、線性組合與子空間，基底、線性獨立與維度，內積、正交與柯西–施瓦茨不等式。',
+      '消去法的終點 — 簡化列梯形、齊次方程組，向量空間 ℝⁿ 的向量運算、線性組合與子空間，基底、線性獨立與維度，內積、正交與柯西–施瓦茨不等式，以及矩陣的轉置、反矩陣與平面變換。',
 
     terms: [
       /* ============================================ 9/7 — equations */
@@ -787,25 +791,40 @@
         term: 'Transpose',
         abbr: 'A&#7488;',
         zh: '轉置矩陣',
-        aliases: ['A transpose', '轉置'],
-        tags: ['ch1.1', 'matrix shapes'],
-        added: true,
+        aliases: ['A transpose', '轉置', 'interchange rows and columns'],
+        tags: ['ch2.3', 'matrix operations'],
         def:
-          'The matrix obtained by turning rows into columns: the (i, j) entry of ' +
+          'The matrix obtained by <strong>interchanging rows and columns</strong>: the (i, j) entry of ' +
           '<span class="mono">A&#7488;</span> is the (j, i) entry of A. An ' +
           '<span class="mono">m &times; n</span> matrix transposes to ' +
           '<span class="mono">n &times; m</span>.',
         notes: [
-          'Why this is here: the notes write a column vector as ' +
-            '<span class="mono">[1 3 &minus;2]&#7488;</span> — that superscript T is the transpose.'
+          '<strong>Properties</strong> (textbook Theorem 2.4), for matrices whose sizes allow the ' +
+            'operations and a scalar c: &#9312; (A + B)&#7488; = A&#7488; + B&#7488;; ' +
+            '&#9313; (cA)&#7488; = cA&#7488;; &#9314; <strong>(AB)&#7488; = B&#7488;A&#7488;</strong> ' +
+            '(the order reverses — the one the notes highlight); &#9315; (A&#7488;)&#7488; = A.',
+          'Why the order reverses in &#9314;: for the sizes to match, an m&times;n times n&times;p ' +
+            'becomes p&times;n times n&times;m.',
+          'The earlier notes already used it to write a column vector as ' +
+            '<span class="mono">[1 3 &minus;2]&#7488;</span>.'
         ],
         defZh:
-          '把列變成行得到的矩陣：A&#7488; 的 (i, j) 位置就是 A 的 (j, i) 位置。' +
+          '把<strong>列與行互換</strong>得到的矩陣：A&#7488; 的 (i, j) 位置就是 A 的 (j, i) 位置。' +
           'm &times; n 轉置後變成 n &times; m。',
         notesZh: [
-          '為什麼補這個：筆記用 [1 3 &minus;2]&#7488; 表示直的向量，那個上標 T 就是轉置。'
+          '<strong>性質</strong>（課本 Theorem 2.4），在大小允許運算、c 為純量時：&#9312; (A + B)&#7488; = A&#7488; + B&#7488;；' +
+            '&#9313; (cA)&#7488; = cA&#7488;；&#9314; <strong>(AB)&#7488; = B&#7488;A&#7488;</strong>（順序會反過來，筆記特別畫了螢光）；&#9315; (A&#7488;)&#7488; = A。',
+          '&#9314; 為什麼要反過來：大小才對得上 &mdash; m&times;n 乘 n&times;p，轉置後變成 p&times;n 乘 n&times;m。',
+          '之前的筆記已經用它把直的向量寫成 [1 3 &minus;2]&#7488;。'
         ],
         examples: [
+          {
+            label: 'From the notes (Theorem 2.4)',
+            html:
+              '<p>transpose: interchange rows and columns</p>' +
+              '<p>1. (A + B)&#7488; = A&#7488; + B&#7488; &nbsp; 2. (cA)&#7488; = cA&#7488;</p>' +
+              '<p>3. (AB)&#7488; = B&#7488;A&#7488; &nbsp; 4. (A&#7488;)&#7488; = A</p>'
+          },
           {
             label: 'Rows become columns',
             html:
@@ -2472,6 +2491,375 @@
           { label: 'From the notes (textbook)', html: '<p>(b) Pythagorean Theorem: If u · v = 0, then ‖u + v‖² = ‖u‖² + ‖v‖²</p>' },
           { label: 'Checking it', html: '<p>u = (3, 0), v = (0, 4): u · v = 0, ‖u + v‖² = 25 = 9 + 16 &#10003;</p>' }
         ]
+      },
+
+      /* ============================================ ch2.2 — the matrix form */
+      {
+        id: 'matrix-form-of-a-system',
+        term: 'Matrix form of a system',
+        abbr: 'AX = B',
+        zh: '方程組的矩陣形式',
+        zhAlt: '線性組合的矩陣寫法',
+        aliases: ['AX = B', 'matrix of linear combination', 'matrix equation', '矩陣方程式'],
+        tags: ['ch2.2', 'matrix operations'],
+        def:
+          'A whole <a href="#system-of-linear-equations">system of linear equations</a> written as one ' +
+          'matrix product: <span class="mono">AX = B</span>, where A is the ' +
+          '<a href="#coefficient-matrix">matrix of coefficients</a>, X the column of unknowns and B the ' +
+          'column of constants.',
+        notes: [
+          'The notes call it the "matrix of linear combination": each row of AX is the linear ' +
+            'combination a<sub>i1</sub>x&#8321; + … + a<sub>in</sub>x<sub>n</sub>, which the system sets ' +
+            'equal to b<sub>i</sub>.',
+          'Seen by columns it says the same thing about <a href="#linear-combination">linear ' +
+            'combinations</a> of A\'s columns: x&#8321;(column 1) + … + x<sub>n</sub>(column n) = B.',
+          'If A is square and <a href="#matrix-inverse">invertible</a>, the solution is X = A<sup>&minus;1</sup>B.'
+        ],
+        defZh:
+          '把一整個<a href="#system-of-linear-equations">線性方程組</a>寫成一個矩陣乘法：AX = B，' +
+          '其中 A 是<a href="#coefficient-matrix">係數矩陣</a>、X 是未知數的行向量、B 是常數項的行向量。',
+        notesZh: [
+          '筆記叫它「matrix of linear combination」：AX 的每一列就是線性組合 a<sub>i1</sub>x&#8321; + … + a<sub>in</sub>x<sub>n</sub>，方程組要它等於 b<sub>i</sub>。',
+          '換成用行來看也是同一件事：x&#8321;(第 1 行) + … + x<sub>n</sub>(第 n 行) = B，是 A 的行向量的<a href="#linear-combination">線性組合</a>。',
+          'A 是方陣且<a href="#matrix-inverse">可逆</a>時，解就是 X = A<sup>&minus;1</sup>B。'
+        ],
+        examples: [
+          {
+            label: 'From the notes',
+            html:
+              '<p>Matrix of linear combination:</p>' +
+              '<p>a<sub>11</sub>x&#8321; + … + a<sub>1n</sub>x<sub>n</sub> = b&#8321;, &nbsp;…, &nbsp;' +
+              'a<sub>m1</sub>x&#8321; + … + a<sub>mn</sub>x<sub>n</sub> = b<sub>m</sub></p>' +
+              '<p>&rArr; AX = B</p>'
+          },
+          {
+            label: 'A 2×2 system',
+            html:
+              '<p>' + SYS(['x&#8321; + 2x&#8322; = 5', '3x&#8321; &minus; x&#8322; = 1']) + '</p>' +
+              '<p>' + M([[1, 2], [3, '&minus;1']]) + M([['x&#8321;'], ['x&#8322;']]) + ' = ' + M([[5], [1]]) + '</p>'
+          }
+        ]
+      },
+
+      {
+        id: 'solution-space',
+        term: 'Solution set as a subspace',
+        zh: '解集合與子空間',
+        aliases: ['solution space', 'homogeneous solutions', 'null space', '解空間', '齊次解'],
+        tags: ['ch2.2', 'matrix operations'],
+        def:
+          'The solutions of a <strong>homogeneous</strong> system AX = <strong>0</strong> form a ' +
+          '<a href="#subspace">subspace</a> of &#8477;<sup>n</sup>; the solutions of a ' +
+          '<strong>non-homogeneous</strong> system AX = B (B &ne; <strong>0</strong>) do not.',
+        notes: [
+          'Why homogeneous works: if AX&#8321; = <strong>0</strong> and AX&#8322; = <strong>0</strong> then ' +
+            'A(X&#8321; + X&#8322;) = <strong>0</strong> (closed under addition) and A(cX&#8321;) = ' +
+            'c(AX&#8321;) = <strong>0</strong> (closed under scalar multiplication).',
+          'Why non-homogeneous fails: AX&#8321; = B and AX&#8322; = B give A(X&#8321; + X&#8322;) = 2B &ne; B. ' +
+            'It also misses the <a href="#zero-vector">zero vector</a>, since A<strong>0</strong> = <strong>0</strong> &ne; B.',
+          'Careful with the letters: the notes write A&#8321;X = 0, A&#8322;X = 0 &rArr; (A&#8321; + A&#8322;)X = 0. ' +
+            'What is being added are the <em>solutions</em>, so it should be AX&#8321; = <strong>0</strong>, ' +
+            'AX&#8322; = <strong>0</strong> &rArr; A(X&#8321; + X&#8322;) = <strong>0</strong> — same idea, correct labels.',
+          'This subspace is called the <strong>null space</strong> of A; its dimension is the number of ' +
+            '<a href="#free-variable">free variables</a>.'
+        ],
+        defZh:
+          '<strong>齊次</strong>方程組 AX = <strong>0</strong> 的解形成 &#8477;<sup>n</sup> 的<a href="#subspace">子空間</a>；' +
+          '<strong>非齊次</strong>方程組 AX = B（B &ne; <strong>0</strong>）的解則不是。',
+        notesZh: [
+          '齊次為什麼可以：若 AX&#8321; = <strong>0</strong>、AX&#8322; = <strong>0</strong>，則 A(X&#8321; + X&#8322;) = <strong>0</strong>（對加法封閉），' +
+            'A(cX&#8321;) = c(AX&#8321;) = <strong>0</strong>（對純量乘法封閉）。',
+          '非齊次為什麼不行：AX&#8321; = B、AX&#8322; = B 會得到 A(X&#8321; + X&#8322;) = 2B &ne; B；而且它不含<a href="#zero-vector">零向量</a>，因為 A<strong>0</strong> = <strong>0</strong> &ne; B。',
+          '字母要注意：筆記寫成 A&#8321;X = 0、A&#8322;X = 0 &rArr; (A&#8321; + A&#8322;)X = 0。相加的其實是<em>解</em>，所以應寫成 AX&#8321; = <strong>0</strong>、AX&#8322; = <strong>0</strong> &rArr; A(X&#8321; + X&#8322;) = <strong>0</strong> &mdash; 意思一樣，只是標對字母。',
+          '這個子空間叫 A 的<strong>零空間</strong>（null space），維度等於<a href="#free-variable">自由變數</a>的個數。'
+        ],
+        examples: [
+          {
+            label: 'From the notes',
+            html:
+              '<p>Subspace: A&#8321;X = 0, A&#8322;X = 0 &rArr; (A&#8321; + A&#8322;)X = 0 (closed under addition); ' +
+              'cA&#8321;X = 0 &rArr; A&#8321;(cX) = 0 (closed under scalar multiplication)</p>' +
+              '<p>* The sets of solutions to a homogeneous system of linear equations is a subspace, ' +
+              'but to a non homogeneous system AX = B: A&#8321;X = B, A&#8322;X = B &rArr; (A&#8321; + A&#8322;)X = 2B</p>' +
+              '<p>* The sets of solutions to a non homogeneous system of linear equation is not a subspace.</p>'
+          },
+          {
+            label: 'Checking with numbers',
+            html:
+              '<p>x + y = 0: (1, &minus;1) and (2, &minus;2) are solutions, so is their sum (3, &minus;3) &#10003;</p>' +
+              '<p>x + y = 1: (1, 0) and (0, 1) are solutions, but (1, 1) is not &#10007;</p>'
+          }
+        ]
+      },
+
+      /* ============================================ ch2.3 — the inverse */
+      {
+        id: 'matrix-inverse',
+        term: 'Inverse of a matrix',
+        abbr: 'A<sup>&minus;1</sup>',
+        zh: '反矩陣',
+        zhAlt: '逆矩陣',
+        aliases: ['inverse', 'invertible', 'nonsingular', '可逆', '反矩陣', 'AA^-1 = I'],
+        tags: ['ch2.3', 'matrix operations'],
+        def:
+          'Let A be an n &times; n matrix. If a matrix B can be found with ' +
+          '<span class="mono">AB = BA = I<sub>n</sub></span>, then A is <strong>invertible</strong> and B ' +
+          'is its inverse, written <span class="mono">A<sup>&minus;1</sup></span>: ' +
+          'AA<sup>&minus;1</sup> = I = A<sup>&minus;1</sup>A. If no such B exists, A has no inverse.',
+        notes: [
+          'The inverse is <strong>unique</strong> when it exists — the notes stress this.',
+          '<strong>Properties</strong> for invertible A, B and a non-zero scalar c: ' +
+            '&#9312; (A<sup>&minus;1</sup>)<sup>&minus;1</sup> = A; &#9313; (cA)<sup>&minus;1</sup> = ' +
+            '(1/c)A<sup>&minus;1</sup>; &#9314; (AB)<sup>&minus;1</sup> = B<sup>&minus;1</sup>A<sup>&minus;1</sup> ' +
+            '(order reverses, as with the <a href="#transpose">transpose</a>); &#9315; ' +
+            '(A<sup>n</sup>)<sup>&minus;1</sup> = (A<sup>&minus;1</sup>)<sup>n</sup>; &#9316; ' +
+            '(A&#7488;)<sup>&minus;1</sup> = (A<sup>&minus;1</sup>)&#7488;.',
+          'Solving a system: for <span class="mono">AX = Y</span>, if A<sup>&minus;1</sup> exists then A is ' +
+            '<a href="#row-equivalent">row equivalent</a> to I<sub>n</sub>, the system has a unique ' +
+            'solution, and it is <span class="mono">X = A<sup>&minus;1</sup>Y</span>.',
+          'Only square matrices can have an inverse, and not all of them do — a square matrix with a row ' +
+            'of zeros after elimination has none.'
+        ],
+        defZh:
+          '設 A 是 n &times; n 矩陣。若存在矩陣 B 使 AB = BA = I<sub>n</sub>，就說 A <strong>可逆</strong>，' +
+          'B 是它的反矩陣，記作 A<sup>&minus;1</sup>：AA<sup>&minus;1</sup> = I = A<sup>&minus;1</sup>A。若不存在這樣的 B，A 就沒有反矩陣。',
+        notesZh: [
+          '反矩陣存在時是<strong>唯一</strong>的 &mdash; 筆記特別強調。',
+          '<strong>性質</strong>（A、B 可逆，c 為非零純量）：&#9312; (A<sup>&minus;1</sup>)<sup>&minus;1</sup> = A；' +
+            '&#9313; (cA)<sup>&minus;1</sup> = (1/c)A<sup>&minus;1</sup>；&#9314; (AB)<sup>&minus;1</sup> = B<sup>&minus;1</sup>A<sup>&minus;1</sup>' +
+            '（順序反過來，和<a href="#transpose">轉置</a>一樣）；&#9315; (A<sup>n</sup>)<sup>&minus;1</sup> = (A<sup>&minus;1</sup>)<sup>n</sup>；' +
+            '&#9316; (A&#7488;)<sup>&minus;1</sup> = (A<sup>&minus;1</sup>)&#7488;。',
+          '解方程組：對 AX = Y，若 A<sup>&minus;1</sup> 存在，則 A 與 I<sub>n</sub> <a href="#row-equivalent">列等價</a>，' +
+            '方程組有唯一解，且解為 X = A<sup>&minus;1</sup>Y。',
+          '只有方陣才可能有反矩陣，而且不是每個方陣都有 &mdash; 消去後出現全零列的方陣就沒有。'
+        ],
+        examples: [
+          {
+            label: 'From the notes',
+            html:
+              '<p>Definition. Let A be an n &times; n matrix. If a matrix B can be found such that AB = BA = I<sub>n</sub>, ' +
+              'then A is said to be invertible and B is called an inverse of A. If such B does not exist, then A has no inverse.</p>' +
+              '<p>Unique: If a matrix is invertible, that inverse is unique.</p>' +
+              '<p>A<sub>mn</sub>X = Y: if A<sup>&minus;1</sup> exist &rArr; A is row equivalent to I<sub>n</sub> &rArr; unique solution, ' +
+              'and the solution: X = A<sup>&minus;1</sup>Y</p>'
+          },
+          {
+            label: 'A 2×2 inverse',
+            html:
+              '<p>A = ' + M([[2, 1], [1, 1]]) + ', A<sup>&minus;1</sup> = ' + M([[1, '&minus;1'], ['&minus;1', 2]]) + '</p>' +
+              '<p>check: AA<sup>&minus;1</sup> = ' + M([[1, 0], [0, 1]]) + '</p>'
+          }
+        ]
+      },
+
+      /* ============================================ ch2.5 — matrix transformations */
+      {
+        id: 'transformation',
+        term: 'Transformation (mapping)',
+        abbr: 'T',
+        zh: '變換（映射）',
+        zhAlt: '轉換',
+        aliases: ['mapping', 'transformation', 'image', 'domain', 'codomain', '映射', '變換', '像'],
+        tags: ['ch2.5', 'transformations'],
+        def:
+          'A rule T that assigns to each vector <strong>u</strong> in &#8477;<sup>n</sup> a unique vector ' +
+          '<strong>v</strong> in &#8477;<sup>m</sup>, written T(<strong>u</strong>) = <strong>v</strong>. ' +
+          '&#8477;<sup>n</sup> is the <strong>domain</strong> of T, &#8477;<sup>m</sup> its ' +
+          '<strong>codomain</strong>, and <strong>v</strong> is the <strong>image</strong> of ' +
+          '<strong>u</strong> under T.',
+        notes: [
+          'It is the "function" idea from calculus, with vectors instead of numbers: one ' +
+            'input, exactly one output.',
+          'In this chapter every T is given by a matrix: T(X) = AX, so an m &times; n matrix maps ' +
+            '&#8477;<sup>n</sup> into &#8477;<sup>m</sup>. <a href="#dilation-contraction">Dilations</a>, ' +
+            '<a href="#reflection">reflections</a> and <a href="#rotation">rotations</a> are the standard examples.',
+          'Because T(X) = AX, transformations inherit the matrix rules: T(X + Y) = T(X) + T(Y) and ' +
+            'T(cX) = cT(X) — what makes them <em>linear</em> (filled in here).'
+        ],
+        defZh:
+          '一個規則 T，把 &#8477;<sup>n</sup> 中每個向量 <strong>u</strong> 對應到 &#8477;<sup>m</sup> 中唯一的 <strong>v</strong>，記作 T(<strong>u</strong>) = <strong>v</strong>。' +
+          '&#8477;<sup>n</sup> 是 T 的<strong>定義域</strong>，&#8477;<sup>m</sup> 是<strong>對應域</strong>，<strong>v</strong> 是 <strong>u</strong> 在 T 之下的<strong>像</strong>。',
+        notesZh: [
+          '就是微積分裡「函數」的概念，只是把數換成向量：一個輸入，剛好一個輸出。',
+          '這一章的 T 都由矩陣給出：T(X) = AX，所以 m &times; n 的矩陣把 &#8477;<sup>n</sup> 映到 &#8477;<sup>m</sup>。' +
+            '<a href="#dilation-contraction">伸縮</a>、<a href="#reflection">鏡射</a>、<a href="#rotation">旋轉</a>是標準例子。',
+          '因為 T(X) = AX，變換會繼承矩陣的運算律：T(X + Y) = T(X) + T(Y)、T(cX) = cT(X) &mdash; 這就是它們「線性」的意思（這裡補上的）。'
+        ],
+        examples: [
+          {
+            label: 'From the notes',
+            html:
+              '<p>Transformation / Mapping T: A rule that assigns to each <strong>u</strong> in &#8477;<sup>n</sup> ' +
+              'a unique <strong>v</strong> in &#8477;<sup>m</sup></p>' +
+              '<p>&#8477;<sup>n</sup> is domain of T, &#8477;<sup>m</sup> is codomain of T</p>' +
+              '<p><strong>v</strong> is image of <strong>u</strong> under T</p>'
+          }
+        ],
+        figure: {
+          caption: 'T sends each u in the domain to a single image v in the codomain',
+          svg:
+            '<svg viewBox="0 0 320 150" role="img" aria-label="a transformation from Rn to Rm">' +
+            '<g fill="none" stroke="currentColor" stroke-width="1.4" opacity=".6">' +
+            '<ellipse cx="70" cy="75" rx="48" ry="52"/><ellipse cx="250" cy="75" rx="48" ry="52"/></g>' +
+            arrow(118, 75, 202, 75, ACC) +
+            '<g fill="currentColor"><circle cx="62" cy="75" r="4"/><circle cx="256" cy="75" r="4"/></g>' +
+            LBL +
+            '<text x="54" y="70" text-anchor="end" font-weight="700">u</text>' +
+            '<text x="266" y="70" font-weight="700">v</text>' +
+            '<text x="160" y="66" text-anchor="middle" fill="var(--accent)" font-style="normal">T(u) = v</text>' +
+            '<text x="70" y="140" text-anchor="middle" font-style="normal">&#8477;<tspan dy="-4" font-size="8">n</tspan><tspan dy="4"> — domain</tspan></text>' +
+            '<text x="250" y="140" text-anchor="middle" font-style="normal">&#8477;<tspan dy="-4" font-size="8">m</tspan><tspan dy="4"> — codomain</tspan></text>' +
+            '</g></svg>'
+        }
+      },
+
+      {
+        id: 'dilation-contraction',
+        term: 'Dilation and contraction',
+        zh: '放大與縮小',
+        zhAlt: '伸張與收縮',
+        aliases: ['dilation', 'contraction', 'scaling', '放大', '縮小', '伸縮'],
+        tags: ['ch2.5', 'transformations'],
+        def:
+          'The <a href="#transformation">transformation</a> T(X) = rX, i.e. the matrix ' +
+          '<span class="mono">[r 0; 0 r]</span>, which stretches every vector by the factor r. ' +
+          'It is a <strong>dilation</strong> when r &gt; 1 and a <strong>contraction</strong> when ' +
+          '0 &lt; r &lt; 1.',
+        notes: [
+          'Correction: the notes write the contraction condition as 0 &gt; r &gt; 1, which no number ' +
+            'satisfies; it should be <strong>0 &lt; r &lt; 1</strong>.',
+          'Direction is unchanged — only the length is scaled — because rX is a ' +
+            '<a href="#scalar-multiplication">scalar multiple</a> of X.',
+          'r = 1 leaves everything fixed (the <a href="#identity-matrix">identity matrix</a>); a negative r ' +
+            'also flips the direction.'
+        ],
+        defZh:
+          '<a href="#transformation">變換</a> T(X) = rX，也就是矩陣 [r 0; 0 r]，把每個向量都拉長 r 倍。' +
+          'r &gt; 1 時叫<strong>放大</strong>（dilation），0 &lt; r &lt; 1 時叫<strong>縮小</strong>（contraction）。',
+        notesZh: [
+          '修正：筆記把縮小的條件寫成 0 &gt; r &gt; 1，沒有數字符合；應該是 <strong>0 &lt; r &lt; 1</strong>。',
+          '方向不變、只有長度改變，因為 rX 就是 X 的<a href="#scalar-multiplication">純量倍數</a>。',
+          'r = 1 時什麼都不動（就是<a href="#identity-matrix">單位矩陣</a>）；r 為負時方向還會反過來。'
+        ],
+        examples: [
+          {
+            label: 'From the notes',
+            html:
+              '<p>Dilation: T([x; y]) = ' + M([['r', 0], [0, 'r']]) + M([['x'], ['y']]) + ', r &gt; 1</p>' +
+              '<p>Contraction: T([x; y]) = ' + M([['r', 0], [0, 'r']]) + M([['x'], ['y']]) + ', ' +
+              '<del>0 &gt; r &gt; 1</del> 0 &lt; r &lt; 1</p>'
+          },
+          {
+            label: 'On a vector',
+            html: '<p>r = 2: (3, 1) &rarr; (6, 2) &nbsp;&nbsp; r = ½: (3, 1) &rarr; (1.5, 0.5)</p>'
+          }
+        ],
+        figure: {
+          caption: 'r > 1 stretches (dilation); 0 < r < 1 shrinks (contraction)',
+          svg:
+            '<svg viewBox="0 0 300 150" role="img" aria-label="dilation and contraction of a vector">' +
+            axes(45, 120, 20, 290, 140, 10) +
+            arrow(45, 120, 225, 30, 'var(--accent)') +
+            arrow(45, 120, 135, 75, INK) +
+            arrow(45, 120, 90, 97.5, INK) +
+            LBL +
+            '<text x="232" y="28" fill="var(--accent)" font-weight="700" font-style="normal">2X</text>' +
+            '<text x="140" y="68" font-weight="700">X</text>' +
+            '<text x="86" y="112" font-weight="700" font-style="normal">½X</text></g></svg>'
+        }
+      },
+
+      {
+        id: 'reflection',
+        term: 'Reflection',
+        zh: '鏡射',
+        zhAlt: '反射',
+        aliases: ['reflection', 'mirror', '鏡射', '對稱變換'],
+        tags: ['ch2.5', 'transformations'],
+        def:
+          'The <a href="#transformation">transformation</a> that mirrors each vector across a line. ' +
+          'Across the x-axis it is <span class="mono">[1 0; 0 &minus;1]</span>, sending (x, y) to ' +
+          '(x, &minus;y).',
+        notes: [
+          'The notes write this one faintly and leave the other mirrors out; the usual matrices are ' +
+            'filled in here: across the y-axis [&minus;1 0; 0 1], across the line y = x [0 1; 1 0], ' +
+            'through the origin [&minus;1 0; 0 &minus;1].',
+          'Doing the same reflection twice returns the original vector, so each reflection matrix is its ' +
+            'own <a href="#matrix-inverse">inverse</a>.',
+          'Lengths are unchanged, so like <a href="#rotation">rotation</a> it is a rigid motion.'
+        ],
+        defZh:
+          '把每個向量對一條直線鏡射的<a href="#transformation">變換</a>。對 x 軸鏡射的矩陣是 [1 0; 0 &minus;1]，把 (x, y) 送到 (x, &minus;y)。',
+        notesZh: [
+          '筆記這一行寫得很淡，也沒寫其他鏡射；常見的矩陣補在這裡：對 y 軸 [&minus;1 0; 0 1]、對直線 y = x [0 1; 1 0]、對原點 [&minus;1 0; 0 &minus;1]。',
+          '同一個鏡射做兩次會回到原向量，所以鏡射矩陣是它自己的<a href="#matrix-inverse">反矩陣</a>。',
+          '長度不變，所以和<a href="#rotation">旋轉</a>一樣屬於剛體運動。'
+        ],
+        examples: [
+          {
+            label: 'From the notes',
+            html: '<p>Reflection: T([x; y]) = ' + M([[1, 0], [0, '&minus;1']]) + M([['x'], ['y']]) + ' = ' + M([['x'], ['&minus;y']]) + '</p>'
+          },
+          { label: 'On a vector', html: '<p>(3, 2) &rarr; (3, &minus;2) across the x-axis; &rarr; (&minus;3, 2) across the y-axis</p>' }
+        ]
+      },
+
+      {
+        id: 'rotation',
+        term: 'Rotation',
+        zh: '旋轉',
+        aliases: ['rotation matrix', 'rotate', 'about the origin', '旋轉矩陣', '繞原點'],
+        tags: ['ch2.5', 'transformations'],
+        def:
+          'The <a href="#transformation">transformation</a> that turns every vector through the angle θ ' +
+          'about the origin: <span class="mono">[x&prime;; y&prime;] = [cos θ &minus;sin θ; sin θ cos θ][x; y]</span>.',
+        notes: [
+          'θ is measured counter-clockwise; a negative θ turns the other way.',
+          'The columns of the matrix are the images of the standard basis: ' +
+            'e&#8321; &rarr; (cos θ, sin θ) and e&#8322; &rarr; (&minus;sin θ, cos θ). That is how the matrix ' +
+            'is built (filled in here).',
+          'Lengths and angles are preserved; the inverse is the rotation by &minus;θ, which is also the ' +
+            '<a href="#transpose">transpose</a> of the matrix.'
+        ],
+        defZh:
+          '把每個向量繞原點轉角 θ 的<a href="#transformation">變換</a>：[x&prime;; y&prime;] = [cos θ &minus;sin θ; sin θ cos θ][x; y]。',
+        notesZh: [
+          'θ 以逆時針為正；θ 為負就往反方向轉。',
+          '矩陣的兩行就是標準基底的像：e&#8321; &rarr; (cos θ, sin θ)、e&#8322; &rarr; (&minus;sin θ, cos θ)。矩陣就是這樣組出來的（這裡補上的）。',
+          '長度和夾角都不變；它的反矩陣就是轉 &minus;θ，也剛好等於原矩陣的<a href="#transpose">轉置</a>。'
+        ],
+        examples: [
+          {
+            label: 'From the notes',
+            html:
+              '<p>Rotation: ' + M([['x&prime;'], ['y&prime;']]) + ' = ' +
+              M([['cos θ', '&minus;sin θ'], ['sin θ', 'cos θ']]) + M([['x'], ['y']]) + ' (rotation about the origin)</p>'
+          },
+          {
+            label: 'Turning 90°',
+            html: '<p>θ = π/2: ' + M([[0, '&minus;1'], [1, 0]]) + ', so (3, 1) &rarr; (&minus;1, 3)</p>'
+          }
+        ],
+        figure: {
+          caption: 'X turned through θ about the origin becomes X′',
+          svg: (function () {
+            var ox = 60, oy = 120, r = 120, a = 28 * Math.PI / 180, b = 72 * Math.PI / 180;
+            return (
+              '<svg viewBox="0 0 300 150" role="img" aria-label="rotating a vector about the origin">' +
+              axes(ox, oy, 20, 290, 142, 8) +
+              '<path d="M' + (ox + 60) + ' ' + (oy - 60 * Math.tan(a)).toFixed(1) +
+              ' A60 60 0 0 0 ' + (ox + 60 * Math.cos(b - a + a)).toFixed(1) + ' ' +
+              (oy - 60 * Math.sin(b)).toFixed(1) + '" fill="none" stroke="var(--accent)" stroke-width="1.6" opacity=".7"/>' +
+              arrow(ox, oy, ox + r * Math.cos(a), oy - r * Math.sin(a), INK) +
+              arrow(ox, oy, ox + r * Math.cos(b), oy - r * Math.sin(b), ACC) +
+              LBL +
+              '<text x="' + (ox + r * Math.cos(a) + 6) + '" y="' + (oy - r * Math.sin(a) + 4).toFixed(1) + '" font-weight="700">X</text>' +
+              '<text x="' + (ox + r * Math.cos(b) + 6) + '" y="' + (oy - r * Math.sin(b)).toFixed(1) + '" fill="var(--accent)" font-weight="700">X&prime;</text>' +
+              '<text x="' + (ox + 70) + '" y="' + (oy - 40) + '" fill="var(--accent)" font-style="normal">θ</text>' +
+              '</g></svg>'
+            );
+          })()
+        }
       }
     ]
   });
