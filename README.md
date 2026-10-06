@@ -31,6 +31,7 @@ linear-algebra/                 ← 線性代數
   線性代數9_15.pdf
   線性代數9_21.pdf
   線性代數9_22.pdf
+  線性代數10_5-10_6.pdf
 computer-science/               ← 計算機概論
   computer-science.html
   computer-science.js
@@ -39,6 +40,7 @@ computer-science/               ← 計算機概論
   計算機概論9_15.pdf
   計算機概論9_17.pdf
   計算機概論9_22.pdf
+  計算機概論9_24-10_6.pdf
 physics/                        ← 普通物理
   physics.html
   physics.js

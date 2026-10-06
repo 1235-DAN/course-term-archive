@@ -5,6 +5,8 @@
                  計算機概論9_15.pdf   (ch1.2 program, ch1.3 components, ch2.2 number systems)
                  計算機概論9_17.pdf   (ch2.2 reals, max/min, binary)
                  計算機概論9_22.pdf   (no chapter number: hex, octal, conversion, number of digits — ch2.2)
+                 計算機概論9_24-10_6.pdf (ch3.1 bits and bytes, ch3.4 audio, ch3.5 images,
+                                        ch3.6 video)
 
    The card face is ENGLISH ONLY: term / def / notes / example labels /
    figure captions. Everything Chinese — zh, zhAlt, defZh, notesZh — is
@@ -139,11 +141,12 @@
       { file: '計算機概論9_10-2.pdf', label: '計算機概論9_10-2.pdf（ch1.1，補充版）' },
       { file: '計算機概論9_15.pdf', label: '計算機概論9_15.pdf（ch1.2、ch1.3、ch2.2）' },
       { file: '計算機概論9_17.pdf', label: '計算機概論9_17.pdf（ch2.2）' },
-      { file: '計算機概論9_22.pdf', label: '計算機概論9_22.pdf（ch2.2）' }
+      { file: '計算機概論9_22.pdf', label: '計算機概論9_22.pdf（ch2.2）' },
+      { file: '計算機概論9_24-10_6.pdf', label: '計算機概論9_24-10_6.pdf（ch3.1、ch3.4–ch3.6）' }
     ],
     blurb:
       '電腦的兩種基本模型 — 圖靈模型與馮紐曼模型、馮紐曼電腦裡的四個子系統、程式如何逐條執行、' +
-      '電腦的組成（硬體與資料），位值進位制（十、二、八、十六進位）、進位轉換與位數。',
+      '電腦的組成（硬體與資料），位值進位制（十、二、八、十六進位）、進位轉換與位數，以及資料的儲存：位元與位元組、聲音、影像與影片。',
 
     terms: [
       /* ============================================ models */
@@ -955,18 +958,456 @@
         term: 'Bit (binary digit)',
         zh: '位元',
         zhAlt: '二進位數字',
-        aliases: ['bits', 'binary digit', 'byte', '位元組'],
-        tags: ['ch2.2', 'number systems'],
+        aliases: ['bits', 'binary digit', 'smallest unit of data', '位元'],
+        tags: ['ch3.1', 'data storage'],
         def:
-          'A single symbol of the <a href="#binary-system">binary system</a>: 0 or 1. The name is short ' +
-          'for <strong>b</strong>inary dig<strong>it</strong>.',
+          'The <strong>smallest unit of data</strong> that can be stored in a computer, with two ' +
+          'possible values, <strong>0 or 1</strong>. The name is short for ' +
+          '<strong>b</strong>inary dig<strong>it</strong> — a single symbol of the ' +
+          '<a href="#binary-system">binary system</a>.',
         notes: [
-          'Eight bits make a <strong>byte</strong>.',
-          'A group of k bits can hold 2<sup>k</sup> different patterns — 8 bits give 256.'
+          'Eight bits make a <a href="#byte">byte</a>.',
+          'A group of k bits can hold 2<sup>k</sup> different patterns — 8 bits give 256.',
+          'ch2.2 introduced it as the binary digit; ch3.1 defines it as the unit of storage.'
         ],
-        defZh: '<a href="#binary-system">二進位系統</a>的單一符號：0 或 1。名稱是 <strong>b</strong>inary dig<strong>it</strong> 的縮寫。',
-        notesZh: ['8 個位元是一個<strong>位元組</strong>（byte）。', 'k 個位元一共有 2<sup>k</sup> 種排列 &mdash; 8 個位元有 256 種。'],
-        examples: [{ label: 'From the notes (9/17)', html: '<p>Binary digits / bits: symbols of binary system.</p>' }]
+        defZh:
+          '電腦中能儲存的<strong>最小資料單位</strong>，只有 <strong>0 或 1</strong> 兩種值。' +
+          '名稱是 <strong>b</strong>inary dig<strong>it</strong> 的縮寫 &mdash; 也就是<a href="#binary-system">二進位系統</a>的單一符號。',
+        notesZh: [
+          '8 個位元是一個<a href="#byte">位元組</a>（byte）。',
+          'k 個位元一共有 2<sup>k</sup> 種排列 &mdash; 8 個位元有 256 種。',
+          'ch2.2 把它當成二進位的數字介紹；ch3.1 則把它定義成儲存的單位。'
+        ],
+        examples: [
+          { label: 'From the notes (9/17)', html: '<p>Binary digits / bits: symbols of binary system.</p>' },
+          {
+            label: 'From the notes (9/24, ch3.1)',
+            html: '<p>Bit (Binary digit): The smallest unit of data that can be stored in a computer and have two value of 0 or 1.</p>'
+          }
+        ]
+      },
+
+      {
+        id: 'byte',
+        term: 'Byte',
+        abbr: 'B',
+        zh: '位元組',
+        aliases: ['bytes', '8 bits', 'KB', 'MB', '位元組'],
+        tags: ['ch3.1', 'data storage'],
+        def: 'Eight <a href="#bit">bits</a> taken as one unit: <span class="mono">8 bits = 1 byte</span>.',
+        notes: [
+          'A byte holds 2<sup>8</sup> = 256 different patterns — enough for one character of English text, ' +
+            'which is why memory is measured in bytes.',
+          'Bigger units go up in thousands: 1 KB ≈ 10³ bytes, 1 MB ≈ 10⁶, 1 GB ≈ 10⁹ (in powers of two, ' +
+            '1 KiB = 2<sup>10</sup> = 1024 bytes).',
+          'Watch the symbols: B is a byte, b is a bit — a "100 Mb/s" line moves about 12.5 MB per second.'
+        ],
+        defZh: '把 8 個<a href="#bit">位元</a>看成一個單位：8 bits = 1 byte。',
+        notesZh: [
+          '一個位元組有 2<sup>8</sup> = 256 種排列 &mdash; 剛好夠表示一個英文字元，所以記憶體都以位元組計算。',
+          '更大的單位每級約一千倍：1 KB ≈ 10³ bytes、1 MB ≈ 10⁶、1 GB ≈ 10⁹（用 2 的次方時 1 KiB = 2<sup>10</sup> = 1024 bytes）。',
+          '符號要看清楚：B 是位元組、b 是位元 &mdash; 「100 Mb/s」的網路大約每秒 12.5 MB。'
+        ],
+        examples: [{ label: 'From the notes', html: '<p>Byte: 8 bits equal to 1 byte.</p>' }]
+      },
+
+      {
+        id: 'bit-pattern',
+        term: 'Bit pattern',
+        zh: '位元樣式',
+        zhAlt: '位元串',
+        aliases: ['bit string', 'string of bits', 'pattern', '位元串', '位元樣式'],
+        tags: ['ch3.1', 'data storage'],
+        def:
+          'A <strong>sequence of bits</strong>, often called a string of bits. It is what a computer ' +
+          'actually stores: every type of data — text, numbers, images, audio, video — is represented as ' +
+          'a bit pattern.',
+        notes: [
+          'Correction: the notes say "a bit pattern is made of 16 bits". A bit pattern can be any length; ' +
+            '16 is just the length used in the textbook\'s example figure.',
+          'The same pattern means different things depending on how it is interpreted — see ' +
+            '<a href="#data-types">data types</a>.'
+        ],
+        defZh:
+          '一串<strong>位元的序列</strong>，常稱為 string of bits。電腦真正存的就是它：文字、數字、圖片、聲音、影片等各種資料，都用位元樣式表示。',
+        notesZh: [
+          '修正：筆記寫「一個位元樣式由 16 個位元組成」。位元樣式可以是任意長度；16 只是課本例圖用的長度。',
+          '同一串樣式依照解讀方式不同，意思也不同 &mdash; 見<a href="#data-types">資料型態</a>。'
+        ],
+        examples: [
+          {
+            label: 'From the notes',
+            html:
+              '<p>Bit pattern: A sequence and often called a string of bits. Use it to represent different ' +
+              'types of data. A bit pattern is made of 16 bits. &nbsp;&rarr;&nbsp; (any length; 16 is the example)</p>'
+          },
+          { label: 'One pattern, two readings', html: '<p>01000001 = 65 as a number, "A" as text</p>' }
+        ]
+      },
+
+      {
+        id: 'data-types',
+        term: 'Data types in memory',
+        zh: '記憶體中的資料型態',
+        aliases: ['data type', 'text', 'number', 'image', 'audio', 'video', 'multimedia', '資料型態', '多媒體'],
+        tags: ['ch3.1', 'data storage'],
+        def:
+          'Computers handle several kinds of data — text, numbers, images, audio and video — but memory ' +
+          'stores them all as <a href="#bit-pattern">bit patterns</a>, <strong>without recording which ' +
+          'kind each one is</strong>. The program (and the processor) decides how to read them.',
+        notes: [
+          'The notes: different processors represent different data types, and memory stores them without ' +
+            'recognising the datatype.',
+          'That is why a file needs a format or extension: it tells the program how to interpret the bits.',
+          'Handling all these kinds together is what the industry calls <em>multimedia</em> (filled in here).'
+        ],
+        defZh:
+          '電腦要處理文字、數字、圖片、聲音、影片等各種資料，但記憶體一律用<a href="#bit-pattern">位元樣式</a>儲存，' +
+          '<strong>而且不會記錄它是哪一種</strong>。要怎麼解讀，由程式（和處理器）決定。',
+        notesZh: [
+          '筆記：不同處理器表示不同的資料型態，記憶體儲存時不會辨認資料型態。',
+          '所以檔案才需要格式或副檔名：它告訴程式要怎麼解讀這些位元。',
+          '把這些型態一起處理，業界稱為<em>多媒體</em>（multimedia，這裡補上的）。'
+        ],
+        examples: [
+          {
+            label: 'From the notes',
+            html: '<p>* With different processor represent different data type, memory stores them without recognizing datatype.</p>'
+          }
+        ]
+      },
+
+      {
+        id: 'data-compression',
+        term: 'Data compression',
+        zh: '資料壓縮',
+        aliases: ['compression', 'compress', 'lossless', 'lossy', '壓縮', '無失真', '失真'],
+        tags: ['ch3.1', 'data storage'],
+        def:
+          'Rewriting data so it takes <strong>less memory space</strong>. Data is normally compressed ' +
+          'before being stored, and expanded again when it is used.',
+        notes: [
+          'Two kinds (filled in here): <strong>lossless</strong> compression can rebuild the original ' +
+            'exactly (ZIP, PNG); <strong>lossy</strong> compression throws away detail people are unlikely ' +
+            'to notice (JPEG, MP3), so it cannot be undone.',
+          'Audio and video are the biggest beneficiaries: an uncompressed CD-quality minute is about 10 MB.'
+        ],
+        defZh: '把資料改寫成占<strong>更少記憶體空間</strong>的形式。資料通常壓縮後才儲存，使用時再還原。',
+        notesZh: [
+          '兩種（這裡補上的）：<strong>無失真</strong>壓縮可以完全還原（ZIP、PNG）；<strong>失真</strong>壓縮會丟掉人不太察覺的細節（JPEG、MP3），無法還原。',
+          '聲音和影片受益最大：未壓縮的 CD 音質一分鐘大約 10 MB。'
+        ],
+        examples: [
+          {
+            label: 'From the notes',
+            html: '<p>Data compression: To occupy less memory space, data is normally compressed before being stored.</p>'
+          }
+        ]
+      },
+
+      /* ============================================ ch3.4 — audio */
+      {
+        id: 'sampling',
+        term: 'Sampling',
+        zh: '取樣',
+        aliases: ['sample', 'sampling rate', 'analog to digital', '取樣率', '類比'],
+        tags: ['ch3.4', 'audio'],
+        def:
+          'Turning an analog signal into numbers by <strong>selecting only a finite number of points</strong> ' +
+          'on it, then measuring and recording the value at each one. How many points per second is the ' +
+          '<strong>sampling rate</strong>.',
+        notes: [
+          'An analog signal has a value at every instant; storing it would take infinitely many numbers, ' +
+            'so only samples are kept.',
+          'Rule of thumb (filled in here): sample at least twice the highest frequency present, which is ' +
+            'why CD audio uses 44 100 samples per second for sound up to about 20 kHz.',
+          'Sampling is the first of three steps — then <a href="#quantization">quantization</a>, then ' +
+            '<a href="#encoding">encoding</a>.'
+        ],
+        defZh:
+          '把類比訊號變成數字：在訊號上<strong>只取有限個點</strong>，量出並記錄每個點的值。每秒取幾個點就是<strong>取樣率</strong>。',
+        notesZh: [
+          '類比訊號每一瞬間都有值，要全存下來得用無限多個數字，所以只留取樣點。',
+          '經驗法則（這裡補上的）：取樣率至少要是訊號最高頻率的兩倍，所以 CD 用每秒 44 100 個取樣來錄最高約 20 kHz 的聲音。',
+          '取樣是三步驟的第一步 &mdash; 接著是<a href="#quantization">量化</a>，再來是<a href="#encoding">編碼</a>。'
+        ],
+        examples: [
+          {
+            label: 'From the notes',
+            html: '<p>Sampling（取樣）: Select only a finite number of point on the analog signals, measure and record the value.</p>'
+          }
+        ]
+      },
+
+      {
+        id: 'quantization',
+        term: 'Quantization',
+        zh: '量化',
+        aliases: ['quantize', 'rounding', 'quantization error', '量化', '四捨五入'],
+        tags: ['ch3.4', 'audio'],
+        def:
+          'A process that <strong>rounds the recorded value of each sample to the closest integer</strong>, ' +
+          'so that it can be stored in a fixed number of bits.',
+        notes: [
+          'The rounding loses a little accuracy — the difference is the <em>quantization error</em>, heard ' +
+            'as noise when it is large (filled in here).',
+          'How many levels are available is set by the <a href="#bit-depth">bit depth</a>: B bits give ' +
+            '2<sup>B</sup> levels.'
+        ],
+        defZh: '把每個取樣記錄到的值<strong>四捨五入到最接近的整數</strong>，這樣才能用固定的位元數存起來。',
+        notesZh: [
+          '四捨五入會損失一點精度 &mdash; 這個差距叫<em>量化誤差</em>，誤差大時會聽成雜訊（這裡補上的）。',
+          '可用的階數由<a href="#bit-depth">位元深度</a>決定：B 個位元有 2<sup>B</sup> 階。'
+        ],
+        examples: [
+          {
+            label: 'From the notes',
+            html: '<p>Quantization（量化）: A process that round the recorded value of sample to the closest integer value.</p>'
+          },
+          { label: 'Rounding a sample', html: '<p>measured 17.62 &rarr; stored as 18</p>' }
+        ]
+      },
+
+      {
+        id: 'encoding',
+        term: 'Encoding (of samples)',
+        zh: '編碼',
+        aliases: ['encode', 'encoding', '編碼'],
+        tags: ['ch3.4', 'audio'],
+        def:
+          'Writing each <a href="#quantization">quantized</a> sample value as a ' +
+          '<a href="#bit-pattern">bit pattern</a> — the last step that turns sound into stored data.',
+        notes: [
+          'Every sample gets the same number of bits, the <a href="#bit-depth">bit depth</a>.',
+          'The whole chain is: analog signal &rarr; <a href="#sampling">sampling</a> &rarr; quantization ' +
+            '&rarr; encoding &rarr; bits in memory.'
+        ],
+        defZh: '把每個<a href="#quantization">量化</a>後的取樣值寫成<a href="#bit-pattern">位元樣式</a> &mdash; 聲音變成儲存資料的最後一步。',
+        notesZh: [
+          '每個取樣都用同樣的位元數，也就是<a href="#bit-depth">位元深度</a>。',
+          '整條流程是：類比訊號 &rarr; <a href="#sampling">取樣</a> &rarr; 量化 &rarr; 編碼 &rarr; 記憶體中的位元。'
+        ],
+        examples: [
+          { label: 'From the notes', html: '<p>Encoding: Quantized sample values need to be encoded as bit pattern.</p>' },
+          { label: 'One sample', html: '<p>value 18 with 8-bit depth &rarr; 00010010</p>' }
+        ]
+      },
+
+      {
+        id: 'bit-depth',
+        term: 'Bit depth',
+        zh: '位元深度',
+        aliases: ['bits per sample', 'sample size', '取樣位元數'],
+        tags: ['ch3.4', 'audio'],
+        def: 'The number of <strong>bits used per sample</strong>.',
+        notes: [
+          'B bits give 2<sup>B</sup> possible levels, so more bits mean finer ' +
+            '<a href="#quantization">quantization</a> and less noise: 8 bits give 256 levels, 16 bits 65 536.',
+          'CD audio uses 16 bits per sample.',
+          'It is the audio counterpart of <a href="#color-depth">color depth</a> for images.'
+        ],
+        defZh: '每個取樣所用的<strong>位元數</strong>。',
+        notesZh: [
+          'B 個位元有 2<sup>B</sup> 階，位元越多<a href="#quantization">量化</a>越細、雜訊越小：8 位元 256 階，16 位元 65 536 階。',
+          'CD 音訊每個取樣用 16 個位元。',
+          '它相當於影像裡的<a href="#color-depth">色彩深度</a>。'
+        ],
+        examples: [{ label: 'From the notes', html: '<p>Bit depth: Bit per sample.</p>' }]
+      },
+
+      {
+        id: 'bit-rate',
+        term: 'Bit rate',
+        abbr: 'bits/s',
+        zh: '位元率',
+        zhAlt: '位元速率',
+        aliases: ['bit rate', 'bits per second', 'bitrate', '位元率', '每秒位元'],
+        tags: ['ch3.4', 'audio'],
+        def:
+          'How many bits a second of the recording takes: ' +
+          '<span class="mono">bit rate = sampling rate &times; bit depth</span>, measured in bits per second.',
+        notes: [
+          'The notes\' example: 640 000 bits per second = 40 000 samples per second &times; 16 bits per sample.',
+          'For stereo, multiply by the number of channels (filled in here): CD audio is ' +
+            '44 100 &times; 16 &times; 2 ≈ 1.41 Mbit/s.',
+          'Multiply by the length to get the file size — which is why audio is usually ' +
+            '<a href="#data-compression">compressed</a>.'
+        ],
+        defZh: '每秒錄音要用掉多少位元：位元率 = 取樣率 × 位元深度，單位是每秒位元數。',
+        notesZh: [
+          '筆記的例子：每秒 640 000 位元 = 每秒 40 000 個取樣 × 每個取樣 16 位元。',
+          '立體聲要再乘上聲道數（這裡補上的）：CD 音訊是 44 100 × 16 × 2 ≈ 1.41 Mbit/s。',
+          '乘上時間長度就是檔案大小 &mdash; 所以聲音通常要<a href="#data-compression">壓縮</a>。'
+        ],
+        examples: [
+          {
+            label: 'From the notes',
+            html:
+              '<p>Bit rate (bits per sec): Bit rate = sampling rate &times; bit depth</p>' +
+              '<p>640 000 per second = 40 000 samples per second and 16 bits per sample</p>'
+          }
+        ]
+      },
+
+      /* ============================================ ch3.5 — images */
+      {
+        id: 'raster-graphic',
+        term: 'Raster graphic',
+        zh: '點陣圖',
+        zhAlt: '位圖',
+        aliases: ['raster', 'bitmap', 'pixel', '像素', '點陣'],
+        tags: ['ch3.5', 'images'],
+        def:
+          'An image stored as a <strong>grid of pixels</strong>, each pixel holding a colour value. ' +
+          'Photographs and scanned images are raster graphics.',
+        notes: [
+          'The notes give only the heading; the definition is filled in here.',
+          'It is the image version of <a href="#sampling">sampling</a>: the picture is cut into a finite ' +
+            'number of points, and each point\'s colour is recorded.',
+          'Enlarging one does not add detail, so it goes blocky — unlike a ' +
+            '<a href="#vector-graphic">vector graphic</a>.',
+          'Size in bits = number of pixels &times; <a href="#color-depth">color depth</a>.'
+        ],
+        defZh: '以<strong>像素方格</strong>儲存的影像，每個像素存一個顏色值。照片、掃描的圖都是點陣圖。',
+        notesZh: [
+          '筆記只寫了標題；定義是這裡補上的。',
+          '它是影像版的<a href="#sampling">取樣</a>：把畫面切成有限個點，記錄每個點的顏色。',
+          '放大不會多出細節，所以會變馬賽克 &mdash; 這點和<a href="#vector-graphic">向量圖</a>不同。',
+          '位元數 = 像素數 × <a href="#color-depth">色彩深度</a>。'
+        ],
+        examples: [
+          { label: 'From the notes', html: '<p>Raster graphic</p><p>&rarr; (heading only)</p>' },
+          { label: 'A size calculation', html: '<p>1920 &times; 1080 pixels at 24 bits = about 6.2 MB uncompressed</p>' }
+        ]
+      },
+
+      {
+        id: 'resolution',
+        term: 'Resolution',
+        zh: '解析度',
+        aliases: ['resolution', 'pixels', 'scanning rate', '解析度', '像素數'],
+        tags: ['ch3.5', 'images'],
+        def:
+          'How many <strong>pixels</strong> are used for the image — the "scanning rate" of image ' +
+          'processing. It is the choice of how finely the picture is cut up.',
+        notes: [
+          'Usually written as width &times; height (1920 &times; 1080), or as dots per inch for printing.',
+          'Higher resolution means more detail and a bigger file; it is the image counterpart of the ' +
+            'audio <a href="#sampling">sampling rate</a>.'
+        ],
+        defZh: '影像用了多少<strong>像素</strong> &mdash; 也就是影像處理裡的「掃描率」，決定畫面要切得多細。',
+        notesZh: [
+          '通常寫成寬 × 高（1920 × 1080），印刷則用每英吋點數（dpi）。',
+          '解析度越高、細節越多、檔案越大；它相當於聲音的<a href="#sampling">取樣率</a>。'
+        ],
+        examples: [
+          {
+            label: 'From the notes',
+            html: '<p>Resolution: Scanning rate in image processing. We need to decide how many pixels.</p>'
+          }
+        ]
+      },
+
+      {
+        id: 'color-depth',
+        term: 'Color depth',
+        zh: '色彩深度',
+        aliases: ['colour depth', 'true color', 'index color', 'indexed color', 'palette', '真彩色', '索引色', '調色盤'],
+        tags: ['ch3.5', 'images'],
+        def:
+          'The <strong>number of bits used to represent one pixel</strong>. With d bits a pixel can take ' +
+          '2<sup>d</sup> different colours.',
+        notes: [
+          '<strong>True color</strong>: 24 bits per pixel, 8 each for red, green and blue — about 16.7 ' +
+            'million colours. The notes give the name only; the numbers are filled in here.',
+          '<strong>Indexed color</strong>: the pixel stores a small number that points into a palette ' +
+            'table of chosen colours, e.g. 8 bits for 256 colours. Smaller files, fewer colours.',
+          'It is the image counterpart of audio <a href="#bit-depth">bit depth</a>.'
+        ],
+        defZh: '表示一個像素所用的<strong>位元數</strong>。d 個位元可以表示 2<sup>d</sup> 種顏色。',
+        notesZh: [
+          '<strong>真彩色</strong>（true color）：每像素 24 位元，紅綠藍各 8 位元 &mdash; 約 1670 萬色。筆記只寫了名稱，數字是這裡補上的。',
+          '<strong>索引色</strong>（index color）：像素存的是指向調色盤的小編號，例如 8 位元對應 256 色。檔案較小、顏色較少。',
+          '它相當於聲音的<a href="#bit-depth">位元深度</a>。'
+        ],
+        examples: [
+          {
+            label: 'From the notes',
+            html: '<p>Color depth: Number of bits used to represent a pixel.</p><p>True-color &nbsp;&nbsp; Index-color</p>'
+          },
+          {
+            label: 'How many colours',
+            html:
+              '<table><tr><th>depth</th><th>colours</th><th>name</th></tr>' +
+              '<tr><td>1 bit</td><td>2</td><td>black and white</td></tr>' +
+              '<tr><td>8 bits</td><td>256</td><td>indexed</td></tr>' +
+              '<tr><td>24 bits</td><td>16 777 216</td><td>true color</td></tr></table>'
+          }
+        ]
+      },
+
+      {
+        id: 'vector-graphic',
+        term: 'Vector graphic',
+        zh: '向量圖',
+        aliases: ['vector', 'geometric', 'scalable', '向量圖形', 'SVG'],
+        tags: ['ch3.5', 'images'],
+        def:
+          'An image stored as <strong>geometric descriptions</strong> — lines, curves, shapes and their ' +
+          'colours — instead of pixels. Drawing it works out the pixels only when it is displayed.',
+        notes: [
+          'The notes give only the heading; the definition is filled in here.',
+          'It can be enlarged to any size without going blocky, because the shapes are recomputed — the ' +
+            'big advantage over a <a href="#raster-graphic">raster graphic</a>.',
+          'It suits logos, diagrams and fonts; it cannot store a photograph well.',
+          'The figures on this site are vector graphics (SVG).'
+        ],
+        defZh:
+          '以<strong>幾何描述</strong>儲存的影像 &mdash; 直線、曲線、形狀和顏色 &mdash; 而不是像素。要顯示時才算出像素。',
+        notesZh: [
+          '筆記只寫了標題；定義是這裡補上的。',
+          '放大到任何尺寸都不會變馬賽克，因為形狀會重新計算 &mdash; 這是它勝過<a href="#raster-graphic">點陣圖</a>的地方。',
+          '適合標誌、圖表、字型；但不適合存照片。',
+          '這個網站上的圖都是向量圖（SVG）。'
+        ],
+        examples: [
+          { label: 'From the notes', html: '<p>Vector graphic</p><p>&rarr; (heading only)</p>' },
+          { label: 'How a circle is stored', html: '<p>raster: the colour of every pixel</p><p>vector: centre, radius, colour</p>' }
+        ]
+      },
+
+      /* ============================================ ch3.6 — video */
+      {
+        id: 'frame',
+        term: 'Frame (and frame rate)',
+        zh: '影格',
+        zhAlt: '幀／畫面',
+        aliases: ['frame rate', 'fps', 'video', '幀', '影格率', '影片'],
+        tags: ['ch3.6', 'video'],
+        def:
+          'A video is a <strong>sequence of images</strong> shown one after another; each image is a ' +
+          '<strong>frame</strong>. How many are shown per second is the <strong>frame rate</strong> (fps).',
+        notes: [
+          'The notes give only the term; the definition is filled in here.',
+          'Showing about 24 frames or more per second makes the motion look continuous to the eye.',
+          'Size adds up fast: frame size &times; frame rate &times; length, which is why video is always ' +
+            '<a href="#data-compression">compressed</a> — and compression also stores just the changes ' +
+            'between frames.'
+        ],
+        defZh:
+          '影片是<strong>一連串接著播放的影像</strong>，每一張影像就是一個<strong>影格</strong>。每秒播放幾張就是<strong>影格率</strong>（fps）。',
+        notesZh: [
+          '筆記只寫了名詞；定義是這裡補上的。',
+          '每秒大約 24 張以上，眼睛就會看成連續的動作。',
+          '檔案大小增加得很快：單張大小 × 影格率 × 片長，所以影片一定要<a href="#data-compression">壓縮</a> &mdash; 壓縮時也只存影格之間的變化。'
+        ],
+        examples: [
+          { label: 'From the notes', html: '<p>ch3.6 — frame（幀）</p>' },
+          {
+            label: 'One minute of raw video',
+            html: '<p>1920 &times; 1080 at 24 bits, 30 fps &rarr; about 11 GB per minute uncompressed</p>'
+          }
+        ]
       },
 
       {
