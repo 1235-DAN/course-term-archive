@@ -4,11 +4,12 @@
                  線性代數9_14.pdf (ch1.2 homogeneous systems; ch1.3 vectors in Rⁿ;
                                    ch1.4 subsets and subspaces),
                  線性代數9_15.pdf (ch1.4 span, ch1.5 basis)
-                 線性代數9_21.pdf (repeats 9_15; adds standard basis, dimension, ch1.6 dot product)
+                 線性代數9_21.pdf (repeats 9_15; adds standard basis, dimension, ch1.6 dot product,
+                                 norm, unit vector, normalizing, angle between vectors)
                  線性代數9_22.pdf (ch1.6 Cauchy–Schwarz, orthogonality, distance)
-                 線性代數10_5-10_6.pdf (ch2.3 transpose and inverse, ch2.2 AX = B and
-                                       solution subspaces; the 10/6 transformations have
-                                       no chapter number — tagged ch2.5)
+                 線性代數10_5-10_6.pdf (ch2.2 AX = B and solution subspaces; ch2.3 transpose,
+                                       symmetric matrix, trace; ch2.4 inverse; the 10/6
+                                       transformations have no chapter number — tagged ch2.5)
 
    The card face is ENGLISH ONLY: term / def / notes / example labels /
    figure captions. Everything Chinese — zh, zhAlt, defZh, notesZh — is
@@ -99,7 +100,7 @@
       { file: '線性代數9_15.pdf', label: '線性代數9_15.pdf（ch1.4、ch1.5）' },
       { file: '線性代數9_21.pdf', label: '線性代數9_21.pdf（ch1.4–ch1.6）' },
       { file: '線性代數9_22.pdf', label: '線性代數9_22.pdf（ch1.6）' },
-      { file: '線性代數10_5-10_6.pdf', label: '線性代數10_5-10_6.pdf（ch2.2、ch2.3、ch2.5）' }
+      { file: '線性代數10_5-10_6.pdf', label: '線性代數10_5-10_6.pdf（ch2.2、ch2.3、ch2.4、ch2.5）' }
     ],
     blurb:
       '線性方程組的語言：方程式的零件、矩陣的零件與大小、增廣矩陣與基本列運算、' +
@@ -844,6 +845,108 @@
         ]
       },
 
+
+      {
+        id: 'symmetric-matrix',
+        term: 'Symmetric matrix',
+        abbr: 'A = A&#7488;',
+        zh: '對稱矩陣',
+        aliases: ['symmetric', '對稱', 'equal to its transpose'],
+        tags: ['ch2.3', 'matrix operations'],
+        def:
+          'A matrix that is <strong>equal to its own ' +
+          '<a href="#transpose">transpose</a></strong>: ' +
+          '<span class="mono">A = A&#7488;</span>.',
+        notes: [
+          'Only a <a href="#square-matrix">square matrix</a> can be symmetric &mdash; otherwise A and ' +
+            'A&#7488; do not even have the same size.',
+          'Entry-wise the condition is <span class="mono">a<sub>ij</sub> = a<sub>ji</sub></span>: the ' +
+            'matrix is a mirror image of itself across the main diagonal. The diagonal entries ' +
+            'themselves are unconstrained.',
+          'A&#7488;A and AA&#7488; are symmetric for <em>every</em> matrix A, because ' +
+            '(A&#7488;A)&#7488; = A&#7488;(A&#7488;)&#7488; = A&#7488;A by property &#9314; of the transpose.'
+        ],
+        defZh:
+          '和自己的<a href="#transpose">轉置矩陣</a>相等的矩陣：A = A&#7488;。',
+        notesZh: [
+          '只有<a href="#square-matrix">方陣</a>可能對稱 &mdash; 不是方陣的話 A 跟 A&#7488; 連大小都不一樣。',
+          '用元素寫就是 a<sub>ij</sub> = a<sub>ji</sub>：整個矩陣以主對角線為鏡面對稱，對角線上的元素本身沒有限制。',
+          '對<em>任何</em>矩陣 A，A&#7488;A 與 AA&#7488; 都是對稱的，因為由轉置性質 &#9314; 可得 (A&#7488;A)&#7488; = A&#7488;(A&#7488;)&#7488; = A&#7488;A。（這裡補上的）'
+        ],
+        examples: [
+          {
+            label: 'From the notes',
+            html: '<p>Symmetric matrix: a matrix that is equal to its transpose &nbsp; A = A&#7488;</p>'
+          },
+          {
+            label: 'Symmetric and not symmetric',
+            html:
+              '<p>' +
+              M([
+                [1, 2],
+                [2, 3]
+              ]) +
+              ' is symmetric; ' +
+              M([
+                [1, 2],
+                [5, 3]
+              ]) +
+              ' is not (2 &ne; 5).</p>'
+          }
+        ]
+      },
+
+      {
+        id: 'trace',
+        term: 'Trace of a matrix',
+        abbr: 'tr(A)',
+        zh: '跡',
+        zhAlt: '跡數／對角線和',
+        aliases: ['trace', 'tr', '跡數', 'diagonal sum'],
+        tags: ['ch2.3', 'matrix operations'],
+        def:
+          'The <strong>sum of the diagonal elements</strong> of a ' +
+          '<a href="#square-matrix">square matrix</a>: ' +
+          '<span class="mono">tr(A) = a&#8321;&#8321; + a&#8322;&#8322; + &hellip; + a<sub>nn</sub></span>.',
+        notes: [
+          '<strong>Properties</strong> (textbook Theorem 2.5), for A and B of the same size and a ' +
+            'scalar c: &#9312; tr(A + B) = tr(A) + tr(B); &#9313; <strong>tr(AB) = tr(BA)</strong>; ' +
+            '&#9314; tr(cA) = c&middot;tr(A); &#9315; tr(A&#7488;) = tr(A).',
+          'Defined only for a square matrix &mdash; a non-square matrix has no "main diagonal" to add up.',
+          '&#9313; is the surprising one: AB and BA are usually different matrices (and can even be ' +
+            'different sizes), yet their traces always agree. &#9315; holds because transposing moves ' +
+            'a<sub>ij</sub> to a<sub>ji</sub> and leaves the diagonal alone.'
+        ],
+        defZh:
+          '<a href="#square-matrix">方陣</a><strong>對角線元素的總和</strong>：tr(A) = a&#8321;&#8321; + a&#8322;&#8322; + … + a<sub>nn</sub>。',
+        notesZh: [
+          '<strong>性質</strong>（課本 Theorem 2.5），A、B 同大小、c 為純量：&#9312; tr(A + B) = tr(A) + tr(B)；' +
+            '&#9313; <strong>tr(AB) = tr(BA)</strong>；&#9314; tr(cA) = c&middot;tr(A)；&#9315; tr(A&#7488;) = tr(A)。',
+          '只對方陣有定義 &mdash; 不是方陣就沒有「主對角線」可以加。',
+          '&#9313; 最反直覺：AB 和 BA 通常不是同一個矩陣（大小都可能不同），跡卻一定相等。' +
+            '&#9315; 成立是因為轉置只是把 a<sub>ij</sub> 搬到 a<sub>ji</sub>，對角線原地不動。（這裡補上的）'
+        ],
+        examples: [
+          {
+            label: 'From the notes (Theorem 2.5)',
+            html:
+              '<p>Trace of matrix: sum of diagonal elements of a square matrix.</p>' +
+              '<p>1. tr(A + B) = tr(A) + tr(B) &nbsp; 2. tr(AB) = tr(BA)</p>' +
+              '<p>3. tr(cA) = c&middot;tr(A) &nbsp; 4. tr(A&#7488;) = tr(A)</p>'
+          },
+          {
+            label: 'Computing one',
+            html:
+              '<p>tr' +
+              M([
+                [1, 5, 7],
+                [2, 3, 0],
+                [4, 6, 8]
+              ]) +
+              ' = 1 + 3 + 8 = 12</p>'
+          }
+        ]
+      },
       /* ============================================ 9/8 — matrix form */
       {
         id: 'coefficient-matrix',
@@ -2266,34 +2369,174 @@
         abbr: '‖u‖',
         zh: '範數',
         zhAlt: '向量長度／大小',
-        aliases: ['norm', 'length', 'magnitude', 'unit vector', '長度', '大小', '單位向量'],
+        aliases: ['norm', 'length', 'magnitude', '長度', '大小'],
         tags: ['ch1.6', 'dot product'],
-        added: true,
         def:
-          'The length of a vector: <span class="mono">‖u‖ = &radic;(u · u) = &radic;(a&#8321;² + &hellip; + a<sub>n</sub>²)</span>. ' +
-          'It is Pythagoras\' theorem extended to n components.',
+          'The <strong>length</strong> (magnitude) of a vector: ' +
+          '<span class="mono">‖u‖ = &radic;(u · u) = &radic;(a&#8321;² + &hellip; + a<sub>n</sub>²)</span>. ' +
+          'It is Pythagoras&rsquo; theorem extended to n components.',
         notes: [
-          'Why this is here: the notes begin a new heading with just "N" and stop; in textbook ' +
-            'section 1.6 the topic after the <a href="#dot-product">dot product</a> is the norm.',
-          'Dividing a non-zero vector by its norm gives a <strong>unit vector</strong> (length 1) in the ' +
-            'same direction: u / ‖u‖.',
-          'Property &#9315; of the dot product guarantees the square root is of a non-negative number.'
+          'The notes write it for &#8477;²: for <span class="mono">u = [a&#8321;, a&#8322;]</span>, ' +
+            '<span class="mono">|u| = &radic;(a&#8321;² + a&#8322;²)</span>. The same formula keeps going ' +
+            'for any number of components.',
+          'Property &#9315; of the <a href="#dot-product">dot product</a> (u · u ≥ 0) guarantees the ' +
+            'square root is of a non-negative number, so every vector has a real length.',
+          '‖u‖ = 0 happens only for the <a href="#zero-vector">zero vector</a>, and ' +
+            '‖cu‖ = |c| ‖u‖ for a scalar c.'
         ],
         defZh:
-          '向量的長度：‖u‖ = &radic;(u · u) = &radic;(a&#8321;² + … + a<sub>n</sub>²)。就是把畢氏定理推廣到 n 個分量。',
+          '向量的<strong>長度</strong>（大小）：‖u‖ = &radic;(u · u) = &radic;(a&#8321;² + … + a<sub>n</sub>²)。就是把畢氏定理推廣到 n 個分量。',
         notesZh: [
-          '為什麼補這個：筆記在新標題只寫了一個「N」就停了；課本 1.6 節在<a href="#dot-product">內積</a>之後講的正是範數。',
-          '非零向量除以自己的範數，得到同方向、長度為 1 的<strong>單位向量</strong>：u / ‖u‖。',
-          '內積的性質 &#9315; 保證根號裡面不會是負數。'
+          '筆記寫的是 &#8477;² 的情形：u = [a&#8321;, a&#8322;] 時 |u| = &radic;(a&#8321;² + a&#8322;²)。分量再多，公式一樣。',
+          '<a href="#dot-product">內積</a>的性質 &#9315;（u · u ≥ 0）保證根號裡不會是負數，所以每個向量都有實數長度。',
+          '只有<a href="#zero-vector">零向量</a>的 ‖u‖ = 0；另外對純量 c 有 ‖cu‖ = |c| ‖u‖。（這兩點是這裡補上的）'
         ],
         examples: [
           {
-            label: 'Computing one',
+            label: 'From the notes',
             html:
-              '<p>‖(3, 4)‖ = &radic;(9 + 16) = 5</p>' +
-              '<p>unit vector: (3, 4) / 5 = (0.6, 0.8)</p>'
+              '<p>Norm (length / Magnitude): u = [a&#8321;, a&#8322;]</p>' +
+              '<p>|u| = &radic;(a&#8321;² + a&#8322;²)</p>'
+          },
+          {
+            label: 'Computing one',
+            html: '<p>‖(3, 4)‖ = &radic;(9 + 16) = &radic;25 = 5</p>'
           }
         ]
+      },
+
+      {
+        id: 'unit-vector',
+        term: 'Unit vector',
+        abbr: '‖u‖ = 1',
+        zh: '單位向量',
+        aliases: ['unit vector', 'length 1', '單位向量', '長度為一'],
+        tags: ['ch1.6', 'dot product'],
+        def:
+          'A vector whose <a href="#norm">norm</a> is <strong>1</strong>.',
+        notes: [
+          'A unit vector carries only a <strong>direction</strong> &mdash; the length has been stripped ' +
+            'out. That is why every vector splits as ‖u‖ &times; (unit vector in the same direction).',
+          'The vectors of the <a href="#standard-basis">standard basis</a> &mdash; (1, 0, 0), (0, 1, 0), ' +
+            '(0, 0, 1) &mdash; are the most-used unit vectors.',
+          'Being a unit vector is not enough to be <a href="#orthonormal">orthonormal</a>: that also ' +
+            'requires the vectors to be mutually <a href="#orthogonal">orthogonal</a>.'
+        ],
+        defZh: '<a href="#norm">範數</a>等於 <strong>1</strong> 的向量。',
+        notesZh: [
+          '單位向量只帶<strong>方向</strong>，長度被抽掉了。所以任何向量都可以拆成「‖u‖ × 同方向的單位向量」。（這裡補上的）',
+          '<a href="#standard-basis">標準基底</a>的 (1, 0, 0)、(0, 1, 0)、(0, 0, 1) 就是最常用的單位向量。',
+          '是單位向量還不足以<a href="#orthonormal">單範正交</a>：還要兩兩<a href="#orthogonal">正交</a>才行。'
+        ],
+        examples: [
+          {
+            label: 'From the notes',
+            html: '<p>Unit vector: vector whose norm is 1</p>'
+          },
+          {
+            label: 'Which ones qualify',
+            html:
+              '<p>(0.6, 0.8): &radic;(0.36 + 0.64) = 1 &#10003;</p>' +
+              '<p>(1, 1): &radic;2 ≈ 1.41 &#10007;</p>'
+          }
+        ]
+      },
+
+      {
+        id: 'normalizing',
+        term: 'Normalizing a vector',
+        abbr: 'u / ‖u‖',
+        zh: '正規化',
+        zhAlt: '單位化',
+        aliases: ['normalize', 'normalizing', 'normalization', '正規化', '單位化', '歸一化'],
+        tags: ['ch1.6', 'dot product'],
+        def:
+          'Turning a vector into a <a href="#unit-vector">unit vector</a> by dividing it by its own ' +
+          '<a href="#norm">norm</a>: <span class="mono">u / ‖u‖</span>.',
+        notes: [
+          'The direction is unchanged, because dividing by ‖u‖ is just ' +
+            '<a href="#scalar-multiplication">scalar multiplication</a> by the positive number 1/‖u‖.',
+          'It works for every vector except the <a href="#zero-vector">zero vector</a>, whose norm is 0 ' +
+            '&mdash; and <strong>0</strong> has no direction to keep.',
+          'Check it afterwards: ‖u / ‖u‖‖ = ‖u‖ / ‖u‖ = 1.'
+        ],
+        defZh:
+          '把向量除以自己的<a href="#norm">範數</a>，變成<a href="#unit-vector">單位向量</a>：u / ‖u‖。',
+        notesZh: [
+          '方向不變，因為除以 ‖u‖ 只是乘上正數 1/‖u‖ 的<a href="#scalar-multiplication">純量乘法</a>。',
+          '除了<a href="#zero-vector">零向量</a>以外都做得到 &mdash; 零向量的範數是 0，而且它本來就沒有方向。（這兩點是這裡補上的）',
+          '做完可以驗算：‖u / ‖u‖‖ = ‖u‖ / ‖u‖ = 1。'
+        ],
+        examples: [
+          {
+            label: 'From the notes',
+            html: '<p>Normalizing: let a vector become unit vector</p>'
+          },
+          {
+            label: 'Doing it',
+            html:
+              '<p>u = (3, 4), ‖u‖ = 5</p>' +
+              '<p>u / ‖u‖ = (3/5, 4/5) = (0.6, 0.8)</p>'
+          }
+        ]
+      },
+
+      {
+        id: 'angle-between-vectors',
+        term: 'Angle between vectors',
+        abbr: 'cos θ',
+        zh: '向量夾角',
+        zhAlt: '夾角',
+        aliases: ['angle', 'angle between vector', 'cos theta', '夾角', '角度'],
+        tags: ['ch1.6', 'dot product'],
+        def:
+          'The angle θ between two non-zero vectors <strong>u</strong> and <strong>v</strong>, defined by ' +
+          '<span class="mono">cos θ = (u · v) / (‖u‖ ‖v‖)</span>.',
+        notes: [
+          'The notes immediately bound it: <span class="mono">|cos θ| = |u · v| / (‖u‖ ‖v‖) ≤ 1</span>. ' +
+            'That bound is exactly the <a href="#cauchy-schwarz">Cauchy–Schwarz inequality</a>, and it is ' +
+            'what makes the definition legal &mdash; a cosine can never leave [&minus;1, 1].',
+          'Reading the sign: u · v &gt; 0 gives an acute angle, u · v &lt; 0 an obtuse one, and ' +
+            'u · v = 0 gives θ = 90&deg; &mdash; the vectors are <a href="#orthogonal">orthogonal</a>.',
+          'Normalizing first makes it simpler still: for <a href="#unit-vector">unit vectors</a> the ' +
+            'formula collapses to cos θ = u · v.'
+        ],
+        defZh:
+          '兩個非零向量 <strong>u</strong>、<strong>v</strong> 的夾角 θ，由 cos θ = (u · v) / (‖u‖ ‖v‖) 定義。',
+        notesZh: [
+          '筆記緊接著寫出界限：|cos θ| = |u · v| / (‖u‖ ‖v‖) ≤ 1。這個界限就是' +
+            '<a href="#cauchy-schwarz">柯西–施瓦茨不等式</a>，也正是這個定義合法的理由 &mdash; 餘弦值不可能跑出 [&minus;1, 1]。',
+          '看正負號：u · v &gt; 0 是銳角，u · v &lt; 0 是鈍角，u · v = 0 則 θ = 90&deg;，兩向量<a href="#orthogonal">正交</a>。（這裡補上的）',
+          '先<a href="#normalizing">正規化</a>會更簡單：對<a href="#unit-vector">單位向量</a>來說公式就剩 cos θ = u · v。'
+        ],
+        examples: [
+          {
+            label: 'From the notes',
+            html:
+              '<p>Angles between vector（夾角）: θ is an angle between u and v</p>' +
+              '<p>cos θ = (u · v) / (‖u‖ · ‖v‖) &nbsp;&rarr;&nbsp; |cos θ| = |u · v| / (‖u‖ · ‖v‖) ≤ 1</p>'
+          },
+          {
+            label: 'Computing one',
+            html:
+              '<p>u = (1, 0), v = (1, 1): u · v = 1, ‖u‖ = 1, ‖v‖ = &radic;2</p>' +
+              '<p>cos θ = 1/&radic;2 &nbsp;&rarr;&nbsp; θ = 45&deg;</p>'
+          }
+        ],
+        figure: {
+          svg:
+            '<svg viewBox="0 0 340 150" role="img">' +
+            arrow(40, 120, 190, 90, ACC) +
+            arrow(40, 120, 130, 30, INK) +
+            '<path d="M 84 111 A 45 45 0 0 0 72 88" fill="none" stroke="currentColor" stroke-width="1"/>' +
+            LBL +
+            '<text x="92" y="101">&#952;</text>' +
+            '<text x="196" y="94">u</text>' +
+            '<text x="132" y="26">v</text>' +
+            '</g>' +
+            '</svg>',
+          caption: 'θ is read off the dot product: cos θ = (u · v) / (‖u‖ ‖v‖).'
+        }
       },
 
       {
@@ -2310,7 +2553,7 @@
         notes: [
           'The notes write it as |u||v| ≥ |u · v|, using |u| for the <a href="#norm">norm</a>, and ' +
             'rearrange it as |u · v| / (|u||v|) ≤ 1.',
-          'That ratio is why the angle between vectors can be defined (filled in here): ' +
+          'That ratio is what makes the <a href="#angle-between-vectors">angle between vectors</a> definable: ' +
             '<span class="mono">cos θ = u · v / (‖u‖ ‖v‖)</span> always lands between &minus;1 and 1.',
           'Equality holds exactly when one vector is a multiple of the other (they lie on one line).'
         ],
@@ -2318,7 +2561,7 @@
           '&#8477;<sup>n</sup> 中任意向量 <strong>u</strong>、<strong>v</strong> 都有 |u · v| ≤ ‖u‖ ‖v‖：<a href="#dot-product">內積</a>的大小永遠不會超過兩個長度的乘積。',
         notesZh: [
           '筆記寫成 |u||v| ≥ |u · v|（用 |u| 表示<a href="#norm">範數</a>），並改寫成 |u · v| / (|u||v|) ≤ 1。',
-          '這個比值讓我們能定義兩向量的夾角（這裡補上的）：cos θ = u · v / (‖u‖ ‖v‖) 一定落在 &minus;1 到 1 之間。',
+          '這個比值讓我們能定義兩向量的<a href="#angle-between-vectors">夾角</a>：cos θ = u · v / (‖u‖ ‖v‖) 一定落在 &minus;1 到 1 之間。',
           '等號成立，恰好是其中一個向量是另一個的倍數（兩者共線）時。'
         ],
         examples: [
@@ -2592,7 +2835,7 @@
         ]
       },
 
-      /* ============================================ ch2.3 — the inverse */
+      /* ============================================ ch2.4 — the inverse */
       {
         id: 'matrix-inverse',
         term: 'Inverse of a matrix',
@@ -2600,7 +2843,7 @@
         zh: '反矩陣',
         zhAlt: '逆矩陣',
         aliases: ['inverse', 'invertible', 'nonsingular', '可逆', '反矩陣', 'AA^-1 = I'],
-        tags: ['ch2.3', 'matrix operations'],
+        tags: ['ch2.4', 'matrix operations'],
         def:
           'Let A be an n &times; n matrix. If a matrix B can be found with ' +
           '<span class="mono">AB = BA = I<sub>n</sub></span>, then A is <strong>invertible</strong> and B ' +
