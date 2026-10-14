@@ -10,6 +10,11 @@
                  線性代數10_5-10_6.pdf (ch2.2 AX = B and solution subspaces; ch2.3 transpose,
                                        symmetric matrix, trace; ch2.4 inverse; the 10/6
                                        transformations have no chapter number — tagged ch2.5)
+                 線性代數10_12-10_13.pdf (ch2.5 matrix transformation, orthogonal matrix and
+                                         transformation, translation, affine; ch2.6 linear
+                                         transformation; ch3.1 determinant, minor, cofactor)
+                 線性代數10_14.pdf (ch2.6 the standard matrix derivation — it fills in the
+                                   heading the 10/13 page left blank)
 
    The card face is ENGLISH ONLY: term / def / notes / example labels /
    figure captions. Everything Chinese — zh, zhAlt, defZh, notesZh — is
@@ -100,11 +105,13 @@
       { file: '線性代數9_15.pdf', label: '線性代數9_15.pdf（ch1.4、ch1.5）' },
       { file: '線性代數9_21.pdf', label: '線性代數9_21.pdf（ch1.4–ch1.6）' },
       { file: '線性代數9_22.pdf', label: '線性代數9_22.pdf（ch1.6）' },
-      { file: '線性代數10_5-10_6.pdf', label: '線性代數10_5-10_6.pdf（ch2.2、ch2.3、ch2.4、ch2.5）' }
+      { file: '線性代數10_5-10_6.pdf', label: '線性代數10_5-10_6.pdf（ch2.2、ch2.3、ch2.4、ch2.5）' },
+      { file: '線性代數10_12-10_13.pdf', label: '線性代數10_12-10_13.pdf（ch2.5、ch2.6、ch3.1）' },
+      { file: '線性代數10_14.pdf', label: '線性代數10_14.pdf（ch2.6）' }
     ],
     blurb:
       '線性方程組的語言：方程式的零件、矩陣的零件與大小、增廣矩陣與基本列運算、' +
-      '消去法的終點 — 簡化列梯形、齊次方程組，向量空間 ℝⁿ 的向量運算、線性組合與子空間，基底、線性獨立與維度，內積、正交與柯西–施瓦茨不等式，以及矩陣的轉置、反矩陣與平面變換。',
+      '消去法的終點 — 簡化列梯形、齊次方程組，向量空間 ℝⁿ 的向量運算、線性組合與子空間，基底、線性獨立與維度，內積、正交與柯西–施瓦茨不等式，矩陣的轉置、反矩陣與平面變換，線性變換與標準矩陣，以及行列式、子行列式與餘因子。',
 
     terms: [
       /* ============================================ 9/7 — equations */
@@ -3103,6 +3110,515 @@
             );
           })()
         }
+      },
+
+      {
+        id: 'matrix-transformation',
+        term: 'Matrix transformation',
+        abbr: 'T(x) = Ax',
+        zh: '矩陣變換',
+        zhAlt: '矩陣轉換',
+        aliases: ['matrix transformation', 'T(x) = Ax', '矩陣變換', 'image of x'],
+        tags: ['ch2.5', 'transformations'],
+        def:
+          'Let A be an <span class="mono">m &times; n</span> matrix and let <strong>x</strong> be an ' +
+          'element of &#8477;<sup>n</sup> written as a column matrix. Then A defines a ' +
+          '<strong>matrix transformation</strong> <span class="mono">T(x) = Ax</span> of ' +
+          '&#8477;<sup>n</sup> into &#8477;<sup>m</sup>. The vector Ax is the <strong>image</strong> of ' +
+          '<strong>x</strong>; the <a href="#transformation">domain</a> is &#8477;<sup>n</sup> and the ' +
+          'codomain is &#8477;<sup>m</sup>.',
+        notes: [
+          'What it preserves (textbook): a matrix transformation maps <strong>line segments into line ' +
+            'segments</strong> (or into points). If the matrix is <a href="#matrix-inverse">invertible</a> ' +
+            'it also maps <strong>parallel lines into parallel lines</strong>.',
+          'The notes add the warning: <strong>not every transformation can be written as a matrix</strong>. ' +
+            'The <a href="#translation">translation</a> on the next line is the counter-example — it moves ' +
+            'the origin, and T(x) = Ax always fixes it.',
+          'But every <a href="#linear-transformation">linear transformation</a> &#8477;<sup>n</sup> &rarr; ' +
+            '&#8477;<sup>m</sup> <em>is</em> a matrix transformation: its matrix is the ' +
+            '<a href="#standard-matrix">standard matrix</a>.',
+          'The sizes decide the direction: an m &times; n matrix eats a vector from &#8477;<sup>n</sup> and ' +
+            'produces one in &#8477;<sup>m</sup>. <a href="#dilation-contraction">Dilation</a>, ' +
+            '<a href="#reflection">reflection</a> and <a href="#rotation">rotation</a> are the ones the ' +
+            '10/6 notes already built this way.'
+        ],
+        defZh:
+          '設 A 是 <span class="mono">m &times; n</span> 矩陣，<strong>x</strong> 是 &#8477;<sup>n</sup> 中寫成行矩陣的元素。' +
+          '則 A 定義了一個<strong>矩陣變換</strong> T(x) = Ax，把 &#8477;<sup>n</sup> 送到 &#8477;<sup>m</sup>。' +
+          'Ax 稱為 <strong>x</strong> 的<strong>像</strong>；<a href="#transformation">定義域</a>是 &#8477;<sup>n</sup>，對應域是 &#8477;<sup>m</sup>。',
+        notesZh: [
+          '它保留什麼（課本）：矩陣變換把<strong>線段映成線段</strong>（或映成點）；若矩陣<a href="#matrix-inverse">可逆</a>，' +
+            '還會把<strong>平行線映成平行線</strong>。',
+          '筆記特別註明：<strong>不是每個變換都寫得成矩陣</strong>。下一行的<a href="#translation">平移</a>就是反例 &mdash; ' +
+            '它會移動原點，而 T(x) = Ax 永遠把原點留在原地。',
+          '不過每個 &#8477;<sup>n</sup> &rarr; &#8477;<sup>m</sup> 的<a href="#linear-transformation">線性變換</a>' +
+            '<em>都是</em>矩陣變換，它的矩陣就是<a href="#standard-matrix">標準矩陣</a>。（這兩點是這裡補上的）',
+          '大小決定方向：m &times; n 矩陣吃 &#8477;<sup>n</sup> 的向量，吐出 &#8477;<sup>m</sup> 的向量。' +
+            '10/6 筆記的<a href="#dilation-contraction">放大縮小</a>、<a href="#reflection">鏡射</a>、' +
+            '<a href="#rotation">旋轉</a>都是這樣做出來的。'
+        ],
+        examples: [
+          {
+            label: 'From the notes (textbook definition)',
+            html:
+              '<p>Let A be an m &times; n matrix. Let x be an element of &#8477;<sup>n</sup> written in column matrix form. ' +
+              'A defines a matrix transformation T(x) = Ax of &#8477;<sup>n</sup> into &#8477;<sup>m</sup>. ' +
+              'The vector Ax is the image of x. The domain of the transformation is &#8477;<sup>n</sup> and the codomain is &#8477;<sup>m</sup>.</p>' +
+              '<p>Matrix transformations map line segments into line segments (or points). If the matrix is invertible ' +
+              'the transformation also maps parallel lines into parallel lines.</p>' +
+              '<p>&#10033; Not any transformation can be written as matrix.</p>'
+          },
+          {
+            label: 'Taking an image',
+            html:
+              '<p>A = ' + M([[2, 0], [0, 3]]) + ', x = ' + M([[1], [4]]) + '</p>' +
+              '<p>T(x) = Ax = ' + M([[2], [12]]) + ' &mdash; a 2 &times; 2 matrix, so &#8477;² &rarr; &#8477;²</p>'
+          }
+        ]
+      },
+
+      {
+        id: 'orthogonal-matrix',
+        term: 'Orthogonal matrix',
+        abbr: 'A&#8315;&#185; = A&#7488;',
+        zh: '正交矩陣',
+        aliases: ['orthogonal matrix', 'A inverse equals A transpose', '正交矩陣'],
+        tags: ['ch2.5', 'transformations'],
+        def:
+          'A square matrix whose <a href="#matrix-inverse">inverse</a> is its own ' +
+          '<a href="#transpose">transpose</a>: <span class="mono">A<sup>&minus;1</sup> = A&#7488;</span>.',
+        notes: [
+          'Equivalently <span class="mono">A&#7488;A = AA&#7488; = I<sub>n</sub></span>, which is just the ' +
+            'definition of the inverse with A&#7488; put in place of A<sup>&minus;1</sup>.',
+          'Read column by column, A&#7488;A = I says the columns of A are ' +
+            '<a href="#orthonormal">orthonormal</a> — mutually ' +
+            '<a href="#orthogonal">orthogonal</a> and each of ' +
+            '<a href="#norm">norm</a> 1. That is where the name comes from.',
+          'Inverting such a matrix costs nothing: you only have to swap rows and columns.',
+          'The <a href="#rotation">rotation</a> matrix is the example already on hand — its columns ' +
+            '(cos θ, sin θ) and (&minus;sin θ, cos θ) are perpendicular unit vectors.'
+        ],
+        defZh:
+          '<a href="#matrix-inverse">反矩陣</a>剛好等於自己<a href="#transpose">轉置</a>的方陣：A<sup>&minus;1</sup> = A&#7488;。',
+        notesZh: [
+          '等價地說就是 A&#7488;A = AA&#7488; = I<sub>n</sub> &mdash; 把反矩陣定義裡的 A<sup>&minus;1</sup> 換成 A&#7488; 而已。',
+          '逐行來看，A&#7488;A = I 說的是 A 的各行<a href="#orthonormal">單範正交</a>：兩兩<a href="#orthogonal">正交</a>' +
+            '且<a href="#norm">範數</a>都是 1。名字就是這樣來的。',
+          '這種矩陣求逆完全不費力，把列與行對調就好。',
+          '現成的例子就是<a href="#rotation">旋轉</a>矩陣 &mdash; 它的兩行 (cos θ, sin θ) 與 (&minus;sin θ, cos θ) 正是互相垂直的單位向量。（後三點是這裡補上的）'
+        ],
+        examples: [
+          {
+            label: 'From the notes',
+            html: '<p>Orthogonal matrix: A<sup>&minus;1</sup> = A&#7488;</p>'
+          },
+          {
+            label: 'Checking one',
+            html:
+              '<p>A = ' + M([[0, '&minus;1'], [1, 0]]) + ' (rotation by 90&deg;), A&#7488; = ' +
+              M([[0, 1], ['&minus;1', 0]]) + '</p>' +
+              '<p>A&#7488;A = ' + M([[1, 0], [0, 1]]) + ' &#10003;</p>'
+          }
+        ]
+      },
+
+      {
+        id: 'orthogonal-transformation',
+        term: 'Orthogonal transformation',
+        abbr: 'rigid motion',
+        zh: '正交變換',
+        zhAlt: '剛體運動',
+        aliases: ['orthogonal transformation', 'rigid motion', '剛體運動', '正交變換', '保距'],
+        tags: ['ch2.5', 'transformations'],
+        def:
+          'A <a href="#matrix-transformation">matrix transformation</a> whose matrix is ' +
+          '<a href="#orthogonal-matrix">orthogonal</a>. The notes gloss it as a ' +
+          '<strong>rigid motion</strong>.',
+        notes: [
+          'Textbook: orthogonal transformations <strong>preserve angles and distances</strong> ' +
+            '(left as Exercise 21). "Rigid motion" is exactly that — the figure may be moved, but it is ' +
+            'never stretched, squashed or bent.',
+          'Why distances survive: ‖Ax‖² = (Ax)&#7488;(Ax) = x&#7488;A&#7488;Ax = x&#7488;x = ‖x‖², ' +
+            'using A&#7488;A = I. Angles follow because the <a href="#dot-product">dot product</a> ' +
+            'itself is unchanged, and the <a href="#angle-between-vectors">angle</a> is read off it.',
+          '<a href="#rotation">Rotation</a> and <a href="#reflection">reflection</a> are orthogonal; ' +
+            '<a href="#dilation-contraction">dilation and contraction</a> are not, because they change ' +
+            'every length by the factor r.'
+        ],
+        defZh:
+          '矩陣是<a href="#orthogonal-matrix">正交矩陣</a>的<a href="#matrix-transformation">矩陣變換</a>。筆記直接註明這就是<strong>剛體運動</strong>。',
+        notesZh: [
+          '課本：正交變換<strong>保持角度與距離</strong>（留作習題 21）。「剛體運動」講的就是這件事 &mdash; 圖形可以被搬動，但不會被拉長、壓扁或扭曲。',
+          '距離為什麼不變：‖Ax‖² = (Ax)&#7488;(Ax) = x&#7488;A&#7488;Ax = x&#7488;x = ‖x‖²，用到 A&#7488;A = I。' +
+            '角度跟著不變，是因為<a href="#dot-product">內積</a>本身沒變，而<a href="#angle-between-vectors">夾角</a>就是從內積讀出來的。（這裡補上的）',
+          '<a href="#rotation">旋轉</a>和<a href="#reflection">鏡射</a>是正交變換；' +
+            '<a href="#dilation-contraction">放大與縮小</a>不是，因為它們把每個長度都乘上了 r。'
+        ],
+        examples: [
+          {
+            label: 'From the notes',
+            html:
+              '<p>Orthogonal transformation（rigid motion）</p>' +
+              '<p>We leave it for the reader to show that orthogonal transformations also preserve ' +
+              'angles and distances in Exercise 21.</p>'
+          }
+        ]
+      },
+
+      {
+        id: 'translation',
+        term: 'Translation',
+        abbr: 'T(u) = u + v',
+        zh: '平移',
+        aliases: ['translation', 'shift', '平移', '位移變換'],
+        tags: ['ch2.5', 'transformations'],
+        def:
+          'The transformation that <strong>adds a fixed vector</strong> to every vector: ' +
+          '<span class="mono">T(u) = u + v</span>.',
+        notes: [
+          'A translation is <strong>not</strong> a <a href="#matrix-transformation">matrix ' +
+            'transformation</a> (unless v = <strong>0</strong>): T(<strong>0</strong>) = v, while ' +
+            'A<strong>0</strong> = <strong>0</strong> for every matrix A. This is what the notes mean by ' +
+            '"not any transformation can be written as matrix".',
+          'For the same reason it is not <a href="#linear-transformation">linear</a>: ' +
+            'T(u + w) = u + w + v, but T(u) + T(w) = u + w + 2v.',
+          'Correction to the notes: the example is written so that the input bracket reads ' +
+            '<span class="mono">[1; 2]</span>, the same as the vector being added. The left side has to be ' +
+            'the general vector <span class="mono">[x; y]</span> — otherwise the line states one particular ' +
+            'image rather than the rule.'
+        ],
+        defZh:
+          '把每個向量都<strong>加上同一個固定向量</strong>的變換：T(u) = u + v。',
+        notesZh: [
+          '平移<strong>不是</strong><a href="#matrix-transformation">矩陣變換</a>（除非 v = <strong>0</strong>）：' +
+            'T(<strong>0</strong>) = v，但對任何矩陣 A 都有 A<strong>0</strong> = <strong>0</strong>。' +
+            '筆記寫的「不是每個變換都寫得成矩陣」指的就是這個。',
+          '同樣的理由讓它不是<a href="#linear-transformation">線性</a>的：T(u + w) = u + w + v，而 T(u) + T(w) = u + w + 2v。（這裡補上的）',
+          '筆記修正：範例把輸入的括號寫成和被加的向量一樣的 <span class="mono">[1; 2]</span>。' +
+            '左邊應該是一般的 <span class="mono">[x; y]</span> &mdash; 不然那一行只是寫出某一個像，而不是寫出規則。'
+        ],
+        examples: [
+          {
+            label: 'From the notes (input corrected to [x; y])',
+            html:
+              '<p>Translation（平移）: T(u) = u + v</p>' +
+              '<p>T' + M([['x'], ['y']]) + ' = ' + M([['x'], ['y']]) + ' + ' + M([[1], [2]]) + '</p>'
+          }
+        ],
+        figure: {
+          svg:
+            '<svg viewBox="0 0 340 150" role="img" aria-label="a triangle moved by a fixed vector">' +
+            '<path d="M50 120 L110 120 L80 70 Z" fill="none" stroke="currentColor" stroke-width="1.6"/>' +
+            '<path d="M170 90 L230 90 L200 40 Z" fill="none" stroke="var(--accent)" stroke-width="1.6"/>' +
+            arrow(80, 103, 200, 73, ACC, true) +
+            LBL +
+            '<text x="72" y="136">S</text>' +
+            '<text x="192" y="106" fill="var(--accent)">S + v</text>' +
+            '<text x="134" y="80" fill="var(--accent)">v</text>' +
+            '</g>' +
+            '</svg>',
+          caption: 'Every point moves by the same v, so the shape is unchanged — but the origin moves too.'
+        }
+      },
+
+      {
+        id: 'affine-transformation',
+        term: 'Affine transformation',
+        abbr: 'T(u) = Au + v',
+        zh: '仿射變換',
+        aliases: ['affine', 'affine transformation', '仿射', '仿射變換'],
+        tags: ['ch2.5', 'transformations'],
+        def:
+          'A <a href="#matrix-transformation">matrix transformation</a> followed by a ' +
+          '<a href="#translation">translation</a>: <span class="mono">T(u) = Au + v</span>.',
+        notes: [
+          'The two special cases sit at the ends: v = <strong>0</strong> leaves a plain matrix ' +
+            'transformation, A = I leaves a plain translation.',
+          'It is the general "straight lines stay straight, parallel stays parallel" map of the plane — ' +
+            'which is why graphics and image software describe placements this way.',
+          'Not <a href="#linear-transformation">linear</a> when v &ne; <strong>0</strong>, for the same ' +
+            'reason the translation is not: T(<strong>0</strong>) = v.'
+        ],
+        defZh:
+          '先做<a href="#matrix-transformation">矩陣變換</a>、再做<a href="#translation">平移</a>：T(u) = Au + v。',
+        notesZh: [
+          '兩個特例分佔兩端：v = <strong>0</strong> 就退回純矩陣變換，A = I 就退回純平移。',
+          '它是平面上「直線還是直線、平行還是平行」的一般映射 &mdash; 繪圖與影像軟體描述物件擺放時用的就是這個。（這兩點是這裡補上的）',
+          'v &ne; <strong>0</strong> 時不是<a href="#linear-transformation">線性</a>的，理由和平移一樣：T(<strong>0</strong>) = v。'
+        ],
+        examples: [
+          {
+            label: 'From the notes',
+            html:
+              '<p>Affine transformation: a matrix transformation followed by a translation.</p>' +
+              '<p>T(u) = Au + v</p>'
+          },
+          {
+            label: 'Rotate, then shift',
+            html:
+              '<p>T(u) = ' + M([[0, '&minus;1'], [1, 0]]) + 'u + ' + M([[1], [2]]) + '</p>' +
+              '<p>u = ' + M([[3], [1]]) + ' &rarr; ' + M([['&minus;1'], [3]]) + ' + ' +
+              M([[1], [2]]) + ' = ' + M([[0], [5]]) + '</p>'
+          }
+        ]
+      },
+
+      /* ============================================ 10/13, 10/14 — ch2.6 linear transformations */
+      {
+        id: 'linear-transformation',
+        term: 'Linear transformation',
+        zh: '線性變換',
+        zhAlt: '線性映射',
+        aliases: ['linear transformation', 'linear map', '線性變換', '線性映射', 'additivity', 'homogeneity'],
+        tags: ['ch2.6', 'transformations'],
+        def:
+          'A <a href="#transformation">transformation</a> T that respects the two vector-space ' +
+          'operations: &#9312; <span class="mono">T(u + v) = T(u) + T(v)</span> and ' +
+          '&#9313; <span class="mono">cT(u) = T(cu)</span> for every scalar c.',
+        notes: [
+          'In words: it does not matter whether you add (or scale) first and transform after, or ' +
+            'transform first and add (or scale) after.',
+          'Putting c = 0 in &#9313; forces <span class="mono">T(<strong>0</strong>) = <strong>0</strong></span>. ' +
+            'That single test rules out <a href="#translation">translation</a> and any ' +
+            '<a href="#affine-transformation">affine</a> map with v &ne; <strong>0</strong>.',
+          'Both conditions together are the same as <span class="mono">T(au + bv) = aT(u) + bT(v)</span>, ' +
+            'so a <a href="#linear-combination">linear combination</a> passes straight through T — which is ' +
+            'what makes the <a href="#standard-matrix">standard matrix</a> work.',
+          '<a href="#dilation-contraction">Dilation</a>, <a href="#reflection">reflection</a> and ' +
+            '<a href="#rotation">rotation</a> are linear; every ' +
+            '<a href="#matrix-transformation">matrix transformation</a> is.'
+        ],
+        defZh:
+          '尊重向量空間兩種運算的<a href="#transformation">變換</a> T：&#9312; T(u + v) = T(u) + T(v)；&#9313; 對任何純量 c 有 cT(u) = T(cu)。',
+        notesZh: [
+          '白話說：先加（或先乘）再變換，和先變換再加（或再乘），結果一樣。',
+          '在 &#9313; 取 c = 0 就逼出 <span class="mono">T(<strong>0</strong>) = <strong>0</strong></span>。' +
+            '光這一個檢查就排除了<a href="#translation">平移</a>、以及任何 v &ne; <strong>0</strong> 的<a href="#affine-transformation">仿射</a>變換。',
+          '兩個條件合起來等同於 T(au + bv) = aT(u) + bT(v)，所以<a href="#linear-combination">線性組合</a>可以直接穿過 T &mdash; ' +
+            '這正是<a href="#standard-matrix">標準矩陣</a>能成立的原因。（這三點是這裡補上的）',
+          '<a href="#dilation-contraction">放大縮小</a>、<a href="#reflection">鏡射</a>、<a href="#rotation">旋轉</a>都是線性的；' +
+            '每個<a href="#matrix-transformation">矩陣變換</a>也都是。'
+        ],
+        examples: [
+          {
+            label: 'From the notes',
+            html:
+              '<p>Linear transformation:</p>' +
+              '<p>&#9312; T(u + v) = T(u) + T(v) &nbsp;&nbsp; &#9313; cT(u) = T(cu)</p>'
+          },
+          {
+            label: 'One that passes, one that fails',
+            html:
+              '<p>T(x, y) = (2x, 3y): T(0, 0) = (0, 0), and both rules hold &#10003;</p>' +
+              '<p>T(x, y) = (x + 1, y): T(0, 0) = (1, 0) &ne; (0, 0) &#10007;</p>'
+          }
+        ]
+      },
+
+      {
+        id: 'standard-matrix',
+        term: 'Standard matrix',
+        abbr: 'A = [T(e&#8321;) &hellip; T(e<sub>n</sub>)]',
+        zh: '標準矩陣',
+        aliases: ['standard matrix', 'matrix of a transformation', '標準矩陣', 'T(e1)'],
+        tags: ['ch2.6', 'transformations'],
+        def:
+          'The matrix of a <a href="#linear-transformation">linear transformation</a> T, built by ' +
+          'transforming each <a href="#standard-basis">standard basis</a> vector and standing the results ' +
+          'up as columns: <span class="mono">A = [T(e&#8321;) T(e&#8322;) &hellip; T(e<sub>n</sub>)]</span>.',
+        notes: [
+          'The derivation on the 10/14 page: write ' +
+            '<span class="mono">u = c&#8321;e&#8321; + c&#8322;e&#8322; + &hellip; + c<sub>n</sub>e<sub>n</sub></span>, ' +
+            'then linearity gives ' +
+            '<span class="mono">T(u) = c&#8321;T(e&#8321;) + &hellip; + c<sub>n</sub>T(e<sub>n</sub>)</span>, ' +
+            'which is exactly [T(e&#8321;) &hellip; T(e<sub>n</sub>)] times the column of c&#8217;s.',
+          'So <span class="mono">T(u) = Au</span>: <strong>every linear transformation of ' +
+            '&#8477;<sup>n</sup> into &#8477;<sup>m</sup> is a ' +
+            '<a href="#matrix-transformation">matrix transformation</a></strong>, and A is unique.',
+          'Practical recipe: to find the matrix of a transformation, just see where e&#8321;, e&#8322;, … go. ' +
+            'That is how the <a href="#rotation">rotation</a> matrix was read off earlier.',
+          'The 10/13 page leaves this heading blank; the definition here is the 10/14 derivation that ' +
+            'follows it.'
+        ],
+        defZh:
+          '<a href="#linear-transformation">線性變換</a> T 的矩陣：把每個<a href="#standard-basis">標準基底</a>向量變換後，' +
+          '當作一行一行立起來 &mdash; A = [T(e&#8321;) T(e&#8322;) … T(e<sub>n</sub>)]。',
+        notesZh: [
+          '10/14 那頁的推導：先把 u 寫成 u = c&#8321;e&#8321; + c&#8322;e&#8322; + … + c<sub>n</sub>e<sub>n</sub>，' +
+            '再用線性得到 T(u) = c&#8321;T(e&#8321;) + … + c<sub>n</sub>T(e<sub>n</sub>)，' +
+            '這正好就是 [T(e&#8321;) … T(e<sub>n</sub>)] 乘上那一行係數。',
+          '所以 T(u) = Au：<strong>每個 &#8477;<sup>n</sup> &rarr; &#8477;<sup>m</sup> 的線性變換都是' +
+            '<a href="#matrix-transformation">矩陣變換</a></strong>，而且 A 唯一。',
+          '實用做法：要找一個變換的矩陣，只要看 e&#8321;、e&#8322;、… 被送到哪裡。之前<a href="#rotation">旋轉</a>矩陣就是這樣讀出來的。（這點是這裡補上的）',
+          '10/13 那頁這個標題底下是空白的，這裡的定義取自接在後面的 10/14 推導。'
+        ],
+        examples: [
+          {
+            label: 'From the notes (10/14)',
+            html:
+              '<p>Let e&#8321; = [1; …; 0], e&#8322; = [0; …; 0], …, e<sub>n</sub> = [0; …; 1] and u = [c&#8321;; c&#8322;; …; c<sub>n</sub>]</p>' +
+              '<p>&rArr; u = c&#8321;e&#8321; + c&#8322;e&#8322; + c&#8323;e&#8323; … c<sub>n</sub>e<sub>n</sub></p>' +
+              '<p>&rArr; T(u) = T(c&#8321;e&#8321; + c&#8322;e&#8322; … + c<sub>n</sub>e<sub>n</sub>) = ' +
+              'c&#8321;T(e&#8321;) + c&#8322;T(e&#8322;) … + c<sub>n</sub>T(e<sub>n</sub>) = ' +
+              '[T(e&#8321;) T(e&#8322;) … T(e<sub>n</sub>)][c&#8321;; c&#8322;; …; c<sub>n</sub>]</p>' +
+              '<p>Thus the matrix of transformation T is A = [T(e&#8321;), T(e&#8322;) … T(e<sub>n</sub>)]. ' +
+              'A is also called standard matrix.</p>'
+          },
+          {
+            label: 'Building one',
+            html:
+              '<p>T(x, y) = (2x, x + y): T(e&#8321;) = (2, 1), T(e&#8322;) = (0, 1)</p>' +
+              '<p>A = ' + M([[2, 0], [1, 1]]) + '</p>'
+          }
+        ]
+      },
+
+      /* ============================================ 10/13 — ch3.1 determinants */
+      {
+        id: 'determinant',
+        term: 'Determinant',
+        abbr: 'det(A) = |A|',
+        zh: '行列式',
+        aliases: ['determinant', 'det', '行列式', 'ad - bc', 'cofactor expansion'],
+        tags: ['ch3.1', 'determinants'],
+        def:
+          'A single number attached to a <a href="#square-matrix">square matrix</a>: the ' +
+          '<strong>sum of the products of the elements of the first row and their ' +
+          '<a href="#cofactor">cofactors</a></strong>. For 2 &times; 2, ' +
+          '<span class="mono">det(A) = |A| = ad &minus; bc</span>.',
+        notes: [
+          'Written out: <span class="mono">|A| = a&#8321;&#8321;C&#8321;&#8321; + a&#8321;&#8322;C&#8321;&#8322; ' +
+            '+ &hellip; + a&#8321;<sub>n</sub>C&#8321;<sub>n</sub></span>. The definition is recursive — each ' +
+            '<a href="#cofactor">cofactor</a> is built from a smaller determinant.',
+          'Supplement to the notes: the <strong>first row is only a convenient choice</strong>. Expanding ' +
+            'along any row or any column gives the same number, so pick the line with the most zeros.',
+          'Only square matrices have one — a non-square matrix has no determinant at all.',
+          '<span class="mono">|A| &ne; 0</span> is exactly the test for A being ' +
+            '<a href="#matrix-inverse">invertible</a>, which is what the chapter is heading towards.'
+        ],
+        defZh:
+          '掛在<a href="#square-matrix">方陣</a>上的一個數：<strong>第一列各元素與其<a href="#cofactor">餘因子</a>乘積的總和</strong>。' +
+          '2 &times; 2 時 det(A) = |A| = ad &minus; bc。',
+        notesZh: [
+          '寫開來是 |A| = a&#8321;&#8321;C&#8321;&#8321; + a&#8321;&#8322;C&#8321;&#8322; + … + a&#8321;<sub>n</sub>C&#8321;<sub>n</sub>。' +
+            '這個定義是遞迴的 &mdash; 每個<a href="#cofactor">餘因子</a>都由更小的行列式組成。',
+          '補充筆記：<strong>第一列只是方便的選擇</strong>。沿任何一列或任何一行展開，得到的數都一樣，所以挑零最多的那一條。',
+          '只有方陣有行列式 &mdash; 不是方陣就根本沒有。',
+          '<span class="mono">|A| &ne; 0</span> 正是 A <a href="#matrix-inverse">可逆</a>的判別條件，也是這一章要走到的地方。（後三點是這裡補上的）'
+        ],
+        examples: [
+          {
+            label: 'From the notes',
+            html:
+              '<p>Determinant: sum of products of the elements of the first row and their cofactors.</p>' +
+              '<p>2&times;2 matrix A&#8322;&#8339;&#8322;: ' + M([['a', 'b'], ['c', 'd']]) +
+              ' &rArr; det|A| = |A| = ad &minus; bc</p>'
+          },
+          {
+            label: 'A 3×3 along the first row',
+            html:
+              '<p>A = ' + M([[1, 3, 4], [2, 5, 6], [7, 7, 8]]) + '</p>' +
+              '<p>|A| = 1&middot;(5&middot;8 &minus; 6&middot;7) &minus; 3&middot;(2&middot;8 &minus; 6&middot;7) + ' +
+              '4&middot;(2&middot;7 &minus; 5&middot;7)</p>' +
+              '<p>= 1&middot;(&minus;2) &minus; 3&middot;(&minus;26) + 4&middot;(&minus;21) = &minus;8</p>'
+          }
+        ]
+      },
+
+      {
+        id: 'minor',
+        term: 'Minor',
+        abbr: 'M<sub>ij</sub>',
+        zh: '子行列式',
+        zhAlt: '餘子式',
+        aliases: ['minor', 'Mij', '子行列式', '餘子式', 'delete row and column'],
+        tags: ['ch3.1', 'determinants'],
+        def:
+          '<span class="mono">M<sub>ij</sub></span> is the <a href="#determinant">determinant</a> of the ' +
+          'matrix that remains after <strong>deleting row i and column j</strong> of A.',
+        notes: [
+          'An n &times; n matrix therefore has (n &minus; 1) &times; (n &minus; 1) minors, one for each ' +
+            'position — it is a determinant, so a number, not a matrix.',
+          'The indices name what is <em>removed</em>, not what is kept: M&#8322;&#8321; deletes the second ' +
+            'row and the first column.',
+          'Attach the sign and it becomes the <a href="#cofactor">cofactor</a>, which is what the ' +
+            '<a href="#determinant">determinant</a> expansion actually uses.'
+        ],
+        defZh:
+          '<span class="mono">M<sub>ij</sub></span> 是把 A 的<strong>第 i 列與第 j 行刪掉</strong>後，剩下那個矩陣的<a href="#determinant">行列式</a>。',
+        notesZh: [
+          '所以 n &times; n 矩陣的子行列式是 (n &minus; 1) &times; (n &minus; 1) 的行列式，每個位置一個 &mdash; 它是行列式，所以是一個數，不是矩陣。（這點是這裡補上的）',
+          '下標指的是被<em>刪掉</em>的、不是被留下的：M&#8322;&#8321; 刪的是第二列和第一行。',
+          '加上正負號就變成<a href="#cofactor">餘因子</a>，<a href="#determinant">行列式</a>展開實際用的是餘因子。'
+        ],
+        examples: [
+          {
+            label: 'From the notes',
+            html:
+              '<p>Minor: M<sub>ij</sub> is determinant of the matrix that remains after deleting row i and column j of A.</p>' +
+              '<p>A = ' + M([[1, 3, 4], [2, 5, 6], [7, 7, 8]]) + ', M&#8322;&#8321; = ' +
+              M([[3, 4], [7, 8]]) + ' = 24 &minus; 28 = &minus;4</p>'
+          }
+        ],
+        figure: {
+          svg:
+            '<svg viewBox="0 0 340 150" role="img" aria-label="deleting row 2 and column 1 of a 3 by 3 matrix">' +
+            '<g font-family="sans-serif" font-size="15" fill="currentColor" text-anchor="middle">' +
+            '<text x="70" y="55">1</text><text x="115" y="55">3</text><text x="160" y="55">4</text>' +
+            '<text x="70" y="90">2</text><text x="115" y="90">5</text><text x="160" y="90">6</text>' +
+            '<text x="70" y="125">7</text><text x="115" y="125">7</text><text x="160" y="125">8</text>' +
+            '<text x="255" y="72">3</text><text x="295" y="72">4</text>' +
+            '<text x="255" y="107">7</text><text x="295" y="107">8</text>' +
+            '</g>' +
+            '<path d="M48 85 H182" stroke="var(--accent)" stroke-width="1.8"/>' +
+            '<path d="M70 32 V138" stroke="var(--accent)" stroke-width="1.8"/>' +
+            '<path d="M44 34 h-6 v102 h6" fill="none" stroke="currentColor" stroke-width="1.3"/>' +
+            '<path d="M186 34 h6 v102 h-6" fill="none" stroke="currentColor" stroke-width="1.3"/>' +
+            '<path d="M232 52 h-6 v68 h6" fill="none" stroke="currentColor" stroke-width="1.3"/>' +
+            '<path d="M318 52 h6 v68 h-6" fill="none" stroke="currentColor" stroke-width="1.3"/>' +
+            arrow(196, 86, 220, 86, ACC) +
+            '</svg>',
+          caption: 'M₂₁: strike out row 2 and column 1, then take the determinant of what is left (−4).'
+        }
+      },
+
+      {
+        id: 'cofactor',
+        term: 'Cofactor',
+        abbr: 'C<sub>ij</sub>',
+        zh: '餘因子',
+        zhAlt: '代數餘子式',
+        aliases: ['cofactor', 'Cij', '餘因子', '代數餘子式', 'signed minor'],
+        tags: ['ch3.1', 'determinants'],
+        def:
+          'The <a href="#minor">minor</a> with a sign attached: ' +
+          '<span class="mono">C<sub>ij</sub> = (&minus;1)<sup>i+j</sup> M<sub>ij</sub></span>.',
+        notes: [
+          'The sign only depends on the position, and it alternates like a chessboard: + &minus; + / ' +
+            '&minus; + &minus; / + &minus; + . Where i + j is even the minor is kept as it is.',
+          'This is the piece the <a href="#determinant">determinant</a> is built from — expanding a row ' +
+            'means multiplying each element by <em>its</em> cofactor and adding.',
+          'Minor and cofactor differ only by that sign, so |C<sub>ij</sub>| = |M<sub>ij</sub>| always.'
+        ],
+        defZh:
+          '加上正負號的<a href="#minor">子行列式</a>：C<sub>ij</sub> = (&minus;1)<sup>i+j</sup> M<sub>ij</sub>。',
+        notesZh: [
+          '正負號只看位置，像棋盤一樣交錯：+ &minus; + ／&minus; + &minus;／+ &minus; +。i + j 是偶數時子行列式原封不動。（這點是這裡補上的）',
+          '這就是<a href="#determinant">行列式</a>的組成零件 &mdash; 沿一列展開，就是把每個元素乘上<em>它自己的</em>餘因子再相加。',
+          '餘因子與子行列式只差那個符號，所以 |C<sub>ij</sub>| = |M<sub>ij</sub>| 恆成立。'
+        ],
+        examples: [
+          {
+            label: 'From the notes',
+            html:
+              '<p>Cofactor: C<sub>ij</sub> = (&minus;1)<sup>i+j</sup> M<sub>ij</sub></p>' +
+              '<p>C&#8322;&#8321; = (&minus;1)<sup>2+1</sup> &middot; (&minus;4) = 4</p>'
+          },
+          {
+            label: 'The sign pattern (3 × 3)',
+            html: '<p>' + M([['+', '&minus;', '+'], ['&minus;', '+', '&minus;'], ['+', '&minus;', '+']]) + '</p>'
+          }
+        ]
       }
     ]
   });
