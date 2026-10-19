@@ -15,6 +15,8 @@
                                          transformation; ch3.1 determinant, minor, cofactor)
                  線性代數10_14.pdf (ch2.6 the standard matrix derivation — it fills in the
                                    heading the 10/13 page left blank)
+                 線性代數10_19.pdf (repeats the 10/14 standard matrix page; adds ch3.2 Theorem 3.2,
+                                   singular and nonsingular matrices, determinant arithmetic)
 
    The card face is ENGLISH ONLY: term / def / notes / example labels /
    figure captions. Everything Chinese — zh, zhAlt, defZh, notesZh — is
@@ -107,11 +109,12 @@
       { file: '線性代數9_22.pdf', label: '線性代數9_22.pdf（ch1.6）' },
       { file: '線性代數10_5-10_6.pdf', label: '線性代數10_5-10_6.pdf（ch2.2、ch2.3、ch2.4、ch2.5）' },
       { file: '線性代數10_12-10_13.pdf', label: '線性代數10_12-10_13.pdf（ch2.5、ch2.6、ch3.1）' },
-      { file: '線性代數10_14.pdf', label: '線性代數10_14.pdf（ch2.6）' }
+      { file: '線性代數10_14.pdf', label: '線性代數10_14.pdf（ch2.6）' },
+      { file: '線性代數10_19.pdf', label: '線性代數10_19.pdf（ch2.6、ch3.2）' }
     ],
     blurb:
       '線性方程組的語言：方程式的零件、矩陣的零件與大小、增廣矩陣與基本列運算、' +
-      '消去法的終點 — 簡化列梯形、齊次方程組，向量空間 ℝⁿ 的向量運算、線性組合與子空間，基底、線性獨立與維度，內積、正交與柯西–施瓦茨不等式，矩陣的轉置、反矩陣與平面變換，線性變換與標準矩陣，以及行列式、子行列式與餘因子。',
+      '消去法的終點 — 簡化列梯形、齊次方程組，向量空間 ℝⁿ 的向量運算、線性組合與子空間，基底、線性獨立與維度，內積、正交與柯西–施瓦茨不等式，矩陣的轉置、反矩陣與平面變換，線性變換與標準矩陣，以及行列式、子行列式、餘因子與奇異／非奇異矩陣。',
 
     terms: [
       /* ============================================ 9/7 — equations */
@@ -3617,6 +3620,228 @@
           {
             label: 'The sign pattern (3 × 3)',
             html: '<p>' + M([['+', '&minus;', '+'], ['&minus;', '+', '&minus;'], ['+', '&minus;', '+']]) + '</p>'
+          }
+        ]
+      },
+
+      /* ============================================ 10/19 — ch3.2 properties of determinants */
+      {
+        id: 'determinant-row-operations',
+        term: 'Properties of the determinant',
+        abbr: 'Theorem 3.2',
+        zh: '行列式的性質',
+        zhAlt: '列運算對行列式的影響',
+        aliases: ['properties of determinant', 'theorem 3.2', '行列式性質', 'row operation determinant', '列運算'],
+        tags: ['ch3.2', 'determinants'],
+        def:
+          'What the three <a href="#elementary-row-operation">elementary row operations</a> do to ' +
+          '<span class="mono">|A|</span> (textbook Theorem 3.2), for an n &times; n matrix A and a ' +
+          'non-zero scalar c: &#9312; <strong>multiplying</strong> a row (column) by c gives ' +
+          '<span class="mono">|B| = c|A|</span>; &#9313; <strong>interchanging</strong> two rows (columns) ' +
+          'gives <span class="mono">|B| = &minus;|A|</span>; &#9314; <strong>adding a multiple</strong> of ' +
+          'one row (column) to another leaves <span class="mono">|B| = |A|</span>.',
+        notes: [
+          'Everything holds for columns as well as rows, which is the same symmetry that lets the ' +
+            '<a href="#determinant">determinant</a> be expanded along either.',
+          'This is how a determinant is computed in practice: run ' +
+            '<a href="#gaussian-elimination">Gaussian elimination</a>, keep a tally of the swaps and the ' +
+            'scalings, and read the answer off the triangular matrix at the end. &#9314; is free, so most ' +
+            'of the work costs nothing.',
+          'Two quick consequences: a matrix with a repeated row has |A| = 0 (swapping those two rows ' +
+            'changes nothing yet must flip the sign, so |A| = &minus;|A|), and scaling a whole n &times; n ' +
+            'matrix multiplies the determinant by c<sup>n</sup>, not by c — see ' +
+            '<a href="#determinant-arithmetic">determinant arithmetic</a>.'
+        ],
+        defZh:
+          '三種<a href="#elementary-row-operation">基本列運算</a>對 <span class="mono">|A|</span> 的影響（課本 Theorem 3.2）。' +
+          '設 A 是 n &times; n 矩陣、c 是非零純量：&#9312; 把某一列（行）<strong>乘以 c</strong> 得 |B| = c|A|；' +
+          '&#9313; <strong>對調</strong>兩列（行）得 |B| = &minus;|A|；&#9314; 把某列（行）的倍數<strong>加到另一列（行）</strong>，|B| = |A| 不變。',
+        notesZh: [
+          '對行跟對列都成立，這就是<a href="#determinant">行列式</a>可以沿列或沿行展開的那個對稱性。',
+          '實務上行列式就是這樣算的：做<a href="#gaussian-elimination">高斯消去法</a>，一邊記下對調了幾次、乘了哪些倍數，' +
+            '最後從三角矩陣讀出答案。&#9314; 不花代價，所以大部分步驟都是免費的。',
+          '兩個立即的推論：有重複列的矩陣 |A| = 0（對調那兩列什麼都沒變，卻必須變號，所以 |A| = &minus;|A|）；' +
+            '把整個 n &times; n 矩陣乘上 c，行列式乘的是 c<sup>n</sup> 而不是 c &mdash; 見' +
+            '<a href="#determinant-arithmetic">行列式的運算律</a>。（這兩點是這裡補上的）'
+        ],
+        examples: [
+          {
+            label: 'From the notes (Theorem 3.2)',
+            html:
+              '<p>Let A be an n &times; n matrix and c be a nonzero scalar.</p>' +
+              '<table>' +
+              '<tr><th>B obtained from A by…</th><th>|B|</th></tr>' +
+              '<tr><td>(a) multiplying the elements of a row (column) by c</td><td>c|A|</td></tr>' +
+              '<tr><td>(b) interchanging two rows (columns)</td><td>&minus;|A|</td></tr>' +
+              '<tr><td>(c) adding a multiple of one row (column) to another row (column)</td><td>|A|</td></tr>' +
+              '</table>'
+          },
+          {
+            label: 'Watching it happen',
+            html:
+              '<p>A = ' + M([[1, 2], [3, 4]]) + ', |A| = &minus;2</p>' +
+              '<p>(a) double row 1: ' + M([[2, 4], [3, 4]]) + ' = &minus;4 = 2(&minus;2)</p>' +
+              '<p>(b) swap the rows: ' + M([[3, 4], [1, 2]]) + ' = 2 = &minus;(&minus;2)</p>' +
+              '<p>(c) R&#8322; &minus; 3R&#8321;: ' + M([[1, 2], [0, '&minus;2']]) + ' = &minus;2, unchanged</p>'
+          }
+        ]
+      },
+
+      {
+        id: 'singular-matrix',
+        term: 'Singular matrix',
+        abbr: '|A| = 0',
+        zh: '奇異矩陣',
+        zhAlt: '不可逆矩陣',
+        aliases: ['singular', 'singular matrix', '奇異矩陣', '不可逆', 'determinant is zero'],
+        tags: ['ch3.2', 'determinants'],
+        def:
+          'A square matrix whose <a href="#determinant">determinant</a> is <strong>0</strong>. ' +
+          'A singular matrix <strong>has no <a href="#matrix-inverse">inverse</a></strong>.',
+        notes: [
+          '<strong>Tests from the notes</strong> — A is singular if &#9312; all the elements of a row ' +
+            '(column) are zero; &#9313; two rows (columns) are equal; &#9314; two rows (columns) are ' +
+            'proportional.',
+          'Those three are <strong>sufficient, not exhaustive</strong>: they are the easy cases to spot, ' +
+            'but a matrix can be singular without any of them holding — in ' +
+            '<span class="mono">[1 2 3; 4 5 6; 5 7 9]</span> no two rows are proportional, yet row 3 = ' +
+            'row 1 + row 2, so |A| = 0.',
+          'What ties them together is the <a href="#linear-independence">linear dependence</a> of the ' +
+            'rows. Case &#9314; also covers &#9312; and &#9313;, since a zero row is 0 times any row and ' +
+            'equal rows are 1 times each other.',
+          'For a system, <a href="#matrix-form-of-a-system">AX = B</a> with A singular never has exactly ' +
+            'one solution: it has none, or infinitely many.'
+        ],
+        defZh:
+          '<a href="#determinant">行列式</a>為 <strong>0</strong> 的方陣。奇異矩陣<strong>沒有<a href="#matrix-inverse">反矩陣</a></strong>。',
+        notesZh: [
+          '<strong>筆記上的判別法</strong> &mdash; A 是奇異矩陣，若 &#9312; 某一列（行）全為零；&#9313; 有兩列（行）相等；&#9314; 有兩列（行）成比例。',
+          '這三條是<strong>充分條件，不是全部</strong>：它們是一眼看得出來的情形，但矩陣可能三條都不符合卻仍然奇異 &mdash; ' +
+            '例如 <span class="mono">[1 2 3; 4 5 6; 5 7 9]</span> 沒有任兩列成比例，但第三列 = 第一列 + 第二列，所以 |A| = 0。（這裡補上的）',
+          '把它們串起來的是各列的<a href="#linear-independence">線性相依</a>。&#9314; 其實也涵蓋了 &#9312; 和 &#9313;：' +
+            '零列是任一列的 0 倍，相等的兩列則是彼此的 1 倍。',
+          '對方程組來說，A 奇異時 <a href="#matrix-form-of-a-system">AX = B</a> 絕不會恰好一組解：不是無解，就是無限多解。'
+        ],
+        examples: [
+          {
+            label: 'From the notes',
+            html:
+              '<p>Singular matrix: determinant of matrix is 0, and it does not have inverse.</p>' +
+              '<p>Let A be a square matrix. A is singular if</p>' +
+              '<p>(a) all the elements of a row (column) are zero.</p>' +
+              '<p>(b) two rows (columns) are equal.</p>' +
+              '<p>(c) two rows (columns) are proportional.</p>'
+          },
+          {
+            label: 'One of each kind',
+            html:
+              '<p>(a) ' + M([[1, 2], [0, 0]]) + ' = 0 &nbsp; (b) ' + M([[3, 5], [3, 5]]) + ' = 0</p>' +
+              '<p>(c) ' + M([[1, 2], [4, 8]]) + ' = 8 &minus; 8 = 0 (row 2 = 4 &times; row 1)</p>'
+          }
+        ]
+      },
+
+      {
+        id: 'nonsingular-matrix',
+        term: 'Nonsingular matrix',
+        abbr: '|A| &ne; 0',
+        zh: '非奇異矩陣',
+        zhAlt: '可逆矩陣',
+        aliases: ['nonsingular', 'non-singular', 'invertible', '非奇異', '可逆矩陣'],
+        tags: ['ch3.2', 'determinants'],
+        def:
+          'A square matrix whose <a href="#determinant">determinant</a> is <strong>non-zero</strong>. ' +
+          'A nonsingular matrix <strong>has an <a href="#matrix-inverse">inverse</a></strong>.',
+        notes: [
+          '"Nonsingular" and "invertible" name the same property — one by the determinant test, the other ' +
+            'by what the matrix can do. Every square matrix is one or the other, never both.',
+          'The earlier ch2.4 statement lines up with this: if A<sup>&minus;1</sup> exists then A is ' +
+            '<a href="#row-equivalent">row equivalent</a> to I<sub>n</sub> and ' +
+            '<a href="#matrix-form-of-a-system">AX = Y</a> has the unique solution ' +
+            'X = A<sup>&minus;1</sup>Y.',
+          'So <span class="mono">|A| &ne; 0</span> is a one-number test for "this system has exactly one ' +
+            'solution" — no elimination needed to find out.'
+        ],
+        defZh:
+          '<a href="#determinant">行列式</a><strong>不為零</strong>的方陣。非奇異矩陣<strong>有<a href="#matrix-inverse">反矩陣</a></strong>。',
+        notesZh: [
+          '「非奇異」和「可逆」講的是同一件事 &mdash; 一個從行列式判別，一個從矩陣能做什麼來說。每個方陣必居其一，不會兩者皆是。',
+          '這和 ch2.4 的說法對得上：若 A<sup>&minus;1</sup> 存在，則 A 與 I<sub>n</sub> <a href="#row-equivalent">列等價</a>，' +
+            '且 <a href="#matrix-form-of-a-system">AX = Y</a> 有唯一解 X = A<sup>&minus;1</sup>Y。',
+          '所以 <span class="mono">|A| &ne; 0</span> 就是「這個方程組恰好一組解」的單一數字檢驗 &mdash; 不必真的去消去。（這兩點是這裡補上的）'
+        ],
+        examples: [
+          {
+            label: 'From the notes',
+            html: '<p>Nonsingular matrix: determinant of matrix is nonzero, and it has inverse.</p>'
+          },
+          {
+            label: 'Checking one',
+            html:
+              '<p>A = ' + M([[2, 1], [1, 1]]) + ', |A| = 2 &minus; 1 = 1 &ne; 0 &rArr; nonsingular</p>' +
+              '<p>A<sup>&minus;1</sup> = ' + M([[1, '&minus;1'], ['&minus;1', 2]]) + '</p>'
+          }
+        ]
+      },
+
+      {
+        id: 'determinant-arithmetic',
+        term: 'Determinant arithmetic',
+        abbr: '|AB| = |A||B|',
+        zh: '行列式的運算律',
+        zhAlt: '行列式與矩陣運算',
+        aliases: ['determinant of a product', 'determinant of a transpose', 'determinant of an inverse',
+          'cA determinant', '行列式運算', '乘積的行列式'],
+        tags: ['ch3.2', 'determinants'],
+        def:
+          'How <span class="mono">|&nbsp;|</span> behaves under the matrix operations, for n &times; n ' +
+          'matrices A, B and a non-zero scalar c: ' +
+          '&#9312; <span class="mono">|cA| = c<sup>n</sup>|A|</span>; ' +
+          '&#9313; <span class="mono">|AB| = |A||B|</span>; ' +
+          '&#9314; <span class="mono">|A&#7488;| = |A|</span>; ' +
+          '&#9315; <span class="mono">|A<sup>&minus;1</sup>| = 1/|A|</span> (assuming A<sup>&minus;1</sup> exists).',
+        notes: [
+          'The exponent in &#9312; is the <strong>size of the matrix</strong>, not 1: scaling by c scales ' +
+            'each of the n rows, and each row costs a factor of c by ' +
+            '<a href="#determinant-row-operations">Theorem 3.2</a>. Writing |cA| = c|A| is the usual slip.',
+          '&#9313; is the surprising one — the determinant turns matrix multiplication, which is not even ' +
+            'commutative, into ordinary multiplication of numbers. It also gives |AB| = |BA| for free.',
+          '&#9315; follows from &#9313;: AA<sup>&minus;1</sup> = I and |I| = 1, so |A||A<sup>&minus;1</sup>| = 1. ' +
+            'The proviso matters — a <a href="#singular-matrix">singular</a> A would need 1/0.',
+          '&#9314; is why every row statement about determinants has a column twin, and it fits the ' +
+            '<a href="#transpose">transpose</a> leaving the diagonal alone.'
+        ],
+        defZh:
+          '<span class="mono">|&nbsp;|</span> 在矩陣運算下的行為。設 A、B 是 n &times; n 矩陣、c 是非零純量：' +
+          '&#9312; |cA| = c<sup>n</sup>|A|；&#9313; |AB| = |A||B|；&#9314; |A&#7488;| = |A|；' +
+          '&#9315; |A<sup>&minus;1</sup>| = 1/|A|（假設 A<sup>&minus;1</sup> 存在）。',
+        notesZh: [
+          '&#9312; 的指數是<strong>矩陣的大小</strong>，不是 1：乘上 c 等於把 n 個列各乘一次 c，' +
+            '而由 <a href="#determinant-row-operations">Theorem 3.2</a> 每一列各貢獻一個 c。寫成 |cA| = c|A| 是最常見的錯。',
+          '&#9313; 最意外 &mdash; 行列式把連交換律都沒有的矩陣乘法，變成一般數字的乘法。順便也免費得到 |AB| = |BA|。',
+          '&#9315; 由 &#9313; 推出：AA<sup>&minus;1</sup> = I 且 |I| = 1，所以 |A||A<sup>&minus;1</sup>| = 1。' +
+            '那個但書有意義 &mdash; A 若<a href="#singular-matrix">奇異</a>就要算 1/0 了。',
+          '&#9314; 正是每條關於列的行列式性質都有一條關於行的雙胞胎的原因，也和<a href="#transpose">轉置</a>不動對角線相合。（這些說明是這裡補上的）'
+        ],
+        examples: [
+          {
+            label: 'From the notes',
+            html:
+              '<p>Let A and B be n &times; n matrices and c be a nonzero scalar.</p>' +
+              '<table>' +
+              '<tr><th></th><th>rule</th></tr>' +
+              '<tr><td>(a) Determinant of a scalar multiple</td><td>|cA| = c<sup>n</sup>|A|</td></tr>' +
+              '<tr><td>(b) Determinant of a product</td><td>|AB| = |A||B|</td></tr>' +
+              '<tr><td>(c) Determinant of a transpose</td><td>|A&#7488;| = |A|</td></tr>' +
+              '<tr><td>(d) Determinant of an inverse</td><td>|A<sup>&minus;1</sup>| = 1/|A| (assuming A<sup>&minus;1</sup> exists)</td></tr>' +
+              '</table>'
+          },
+          {
+            label: 'The cⁿ trap',
+            html:
+              '<p>A = ' + M([[1, 2], [3, 4]]) + ', |A| = &minus;2, n = 2</p>' +
+              '<p>3A = ' + M([[3, 6], [9, 12]]) + ' = 36 &minus; 54 = &minus;18 = 3²(&minus;2) &#10003;</p>' +
+              '<p>not 3(&minus;2) = &minus;6 &#10007;</p>'
           }
         ]
       }
