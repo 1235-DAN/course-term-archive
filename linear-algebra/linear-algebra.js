@@ -17,6 +17,15 @@
                                    heading the 10/13 page left blank)
                  線性代數10_19.pdf (repeats the 10/14 standard matrix page; adds ch3.2 Theorem 3.2,
                                    singular and nonsingular matrices, determinant arithmetic)
+                 線性代數11_3-11_10.pdf (10/20 ch3.3 matrix of cofactors and adjoint; ch3.2 triangular
+                                        determinant; 11/3 ch3.3 Cramer's rule; 11/8 ch3.4 eigenvalues;
+                                        11/10 ch4.5 row space and rank)
+                 線性代數11_15.pdf (extends the 11/10 page with column vectors and the rank conditions;
+                                   adds the general vector space, subspace and dependence boxes — those
+                                   carry no chapter number, tagged ch4.1 from the textbook — and
+                                   ch4.4 basis and dimension)
+                 線性代數11_16.pdf (repeats 11/15 p2; adds 11/16 ch4.5 Theorem 4.18 and ch4.6
+                                   orthogonal and orthonormal sets and bases)
 
    The card face is ENGLISH ONLY: term / def / notes / example labels /
    figure captions. Everything Chinese — zh, zhAlt, defZh, notesZh — is
@@ -110,11 +119,15 @@
       { file: '線性代數10_5-10_6.pdf', label: '線性代數10_5-10_6.pdf（ch2.2、ch2.3、ch2.4、ch2.5）' },
       { file: '線性代數10_12-10_13.pdf', label: '線性代數10_12-10_13.pdf（ch2.5、ch2.6、ch3.1）' },
       { file: '線性代數10_14.pdf', label: '線性代數10_14.pdf（ch2.6）' },
-      { file: '線性代數10_19.pdf', label: '線性代數10_19.pdf（ch2.6、ch3.2）' }
+      { file: '線性代數10_19.pdf', label: '線性代數10_19.pdf（ch2.6、ch3.2）' },
+      { file: '線性代數11_3-11_10.pdf', label: '線性代數11_3-11_10.pdf（ch3.2、ch3.3、ch3.4、ch4.5）' },
+      { file: '線性代數11_15.pdf', label: '線性代數11_15.pdf（ch4.1、ch4.4、ch4.5）' },
+      { file: '線性代數11_16.pdf', label: '線性代數11_16.pdf（ch4.4、ch4.5、ch4.6）' }
     ],
     blurb:
       '線性方程組的語言：方程式的零件、矩陣的零件與大小、增廣矩陣與基本列運算、' +
-      '消去法的終點 — 簡化列梯形、齊次方程組，向量空間 ℝⁿ 的向量運算、線性組合與子空間，基底、線性獨立與維度，內積、正交與柯西–施瓦茨不等式，矩陣的轉置、反矩陣與平面變換，線性變換與標準矩陣，以及行列式、子行列式、餘因子與奇異／非奇異矩陣。',
+      '消去法的終點 — 簡化列梯形、齊次方程組，向量空間 ℝⁿ 的向量運算、線性組合與子空間，基底、線性獨立與維度，內積、正交與柯西–施瓦茨不等式，矩陣的轉置、反矩陣與平面變換，線性變換與標準矩陣，行列式、餘因子、伴隨矩陣與克拉瑪公式，特徵值與特徵向量，' +
+      '以及一般向量空間、rank 與單範正交基底。',
 
     terms: [
       /* ============================================ 9/7 — equations */
@@ -1144,7 +1157,7 @@
           'The column a pivot sits in is a <strong>pivot column</strong>; its variable is ' +
             'determined. A column with no pivot belongs to a ' +
             '<a href="#free-variable">free variable</a>.',
-          'The number of pivots is the <strong>rank</strong> of the matrix. For a consistent ' +
+          'The number of pivots is the <strong><a href="#rank">rank</a></strong> of the matrix. For a consistent ' +
             'system, rank = number of variables means a unique solution; rank &lt; number of ' +
             'variables means infinitely many. (Whether the system is consistent at all is decided ' +
             'by the last column: a pivot there means 0 = non-zero, so no solution.)'
@@ -1155,7 +1168,7 @@
         notesZh: [
           '主元所在的那一行叫 <strong>pivot column</strong>（主行），' +
             '它對應的變數是被綁定的；沒有主元的行對應<a href="#free-variable">自由變數</a>。',
-          '主元的個數就是矩陣的 <strong>rank</strong>（秩）。方程組有解時，rank = 變數個數 &rArr; 唯一解；' +
+          '主元的個數就是矩陣的 <strong><a href="#rank">rank</a></strong>（秩）。方程組有解時，rank = 變數個數 &rArr; 唯一解；' +
             'rank &lt; 變數個數 &rArr; 無限多解。（有沒有解則看最後一行：那裡出現主元代表 0 = 非零數，無解。）'
         ],
         examples: [
@@ -2027,7 +2040,11 @@
           'The notes add that all subspaces of &#8477;<sup>n</sup> have the same features as a vector ' +
             'space: every rule for adding and scaling in &#8477;<sup>n</sup> still holds inside W.',
           'In &#8477;³ the subspaces are {<strong>0</strong>}, lines through the origin, planes through the ' +
-            'origin, and &#8477;³ itself.'
+            'origin, and &#8477;³ itself.',
+          'The 11/15 notes restate the definition for a general <a href="#vector-space">vector space</a> ' +
+            'V — a non-empty subset U of V closed under both operations, which "inherits the other vector ' +
+            'space properties from V" — and record the zero-vector test as textbook <strong>Theorem ' +
+            '4.2</strong>.'
         ],
         defZh:
           '&#8477;<sup>n</sup> 的一個非空<a href="#subset">子集合</a> W，對<a href="#vector-addition">加法</a>與<a href="#scalar-multiplication">純量乘法</a>' +
@@ -2037,7 +2054,10 @@
             '和它平行但不過原點的 L&#8322; 就不是 &mdash; <strong>w</strong> + <strong>s</strong> 跑出去了。',
           '快速檢查：子空間一定包含<a href="#zero-vector">零向量</a>（取 k = 0）。不經過<a href="#origin">原點</a>的集合馬上出局 &mdash; L&#8322; 就是敗在這裡。',
           '筆記補充：&#8477;<sup>n</sup> 的所有子空間都具有向量空間的性質 &mdash; &#8477;<sup>n</sup> 裡加法與伸縮的規則在 W 裡照樣成立。',
-          '&#8477;³ 的子空間只有：{<strong>0</strong>}、通過原點的直線、通過原點的平面、&#8477;³ 本身。'
+          '&#8477;³ 的子空間只有：{<strong>0</strong>}、通過原點的直線、通過原點的平面、&#8477;³ 本身。',
+          '11/15 的筆記把定義重述成一般<a href="#vector-space">向量空間</a> V 的版本 &mdash; ' +
+            'V 的非空子集 U 對兩種運算封閉，並且「從 V 繼承其他向量空間性質」&mdash; ' +
+            '同時把零向量的檢查記成課本 <strong>Theorem 4.2</strong>。'
         ],
         examples: [
           {
@@ -2134,7 +2154,13 @@
             'of weights.',
           'Every basis of &#8477;³ has exactly 3 vectors — that count is the ' +
             '<a href="#dimension">dimension</a>. Too few cannot span; too many cannot be independent.',
-          'The simplest one is the <a href="#standard-basis">standard basis</a>.'
+          'The simplest one is the <a href="#standard-basis">standard basis</a>.',
+          'The 11/15 notes generalise it to any <a href="#vector-space">vector space</a> V under ch4.4, ' +
+            'spell out the uniqueness ("each vector in V is <strong>uniquely</strong> a linear ' +
+            'combination of the vectors in a basis") and add the shortcut for checking one — see ' +
+            '<a href="#basis-tests">testing for a basis</a>. A basis that is also ' +
+            '<a href="#orthogonal-set">orthogonal</a> is better still: see ' +
+            '<a href="#orthonormal-basis">orthonormal basis</a>.'
         ],
         defZh:
           '空間裡具備兩個性質的一組向量：<strong>&#9312; 生成整個空間</strong> &mdash; 每個向量都能寫成它們的' +
@@ -2143,7 +2169,11 @@
           '筆記以 &#8477;³ 為例：&#8477;³ 中的向量若能<a href="#span">生成</a> &#8477;³ 又線性獨立，就是 &#8477;³ 的基底。',
           '為什麼兩個都要：「生成」保證每個向量<em>至少有一種</em>組法；「獨立」保證<em>至多一種</em>。合起來，每個向量的權重恰好只有一組。',
           '&#8477;³ 的每組基底都剛好 3 個向量 &mdash; 這個數就是<a href="#dimension">維度</a>。太少生成不了，太多就不可能獨立。',
-          '最簡單的是<a href="#standard-basis">標準基底</a>。'
+          '最簡單的是<a href="#standard-basis">標準基底</a>。',
+          '11/15 的筆記在 ch4.4 把它推廣到任何<a href="#vector-space">向量空間</a> V，明寫出唯一性' +
+            '（「V 中每個向量都<strong>唯一</strong>是基底向量的線性組合」），並補上驗證基底的捷徑 &mdash; ' +
+            '見<a href="#basis-tests">基底的判別</a>。基底若同時<a href="#orthogonal-set">正交</a>更好用：' +
+            '見<a href="#orthonormal-basis">單範正交基底</a>。'
         ],
         examples: [
           {
@@ -2191,7 +2221,13 @@
             '&rArr; dependent.',
           'Quick checks: two vectors are dependent exactly when one is a multiple of the other; a set ' +
             'containing the <a href="#zero-vector">zero vector</a> is always dependent; more than n ' +
-            'vectors in &#8477;<sup>n</sup> are always dependent.'
+            'vectors in &#8477;<sup>n</sup> are always dependent.',
+          'The 11/15 notes add two more, for any <a href="#vector-space">vector space</a>: ' +
+            '<strong>any set containing a dependent set is itself dependent</strong>, and the definition ' +
+            'restated — a set of two or more vectors is dependent if and only if one of them is a linear ' +
+            'combination of the others. The easy way round is ' +
+            '<a href="#orthogonal-set">Theorem 4.19</a>: an orthogonal set of non-zero vectors is ' +
+            'independent for free.'
         ],
         defZh:
           '向量 <strong>v</strong>&#8321;, …, <strong>v</strong><sub>k</sub> <strong>線性獨立</strong>，是指要讓 ' +
@@ -2202,7 +2238,11 @@
             '9/21 的筆記用灰字補了檢驗法：若 a[1,0,0] + b[0,1,0] + c[0,0,1] = [0,0,0] 只有 a = 0、b = 0、c = 0 這組解，這些向量就線性獨立。',
           '檢驗法：解 c&#8321;<strong>v</strong>&#8321; + … + c<sub>k</sub><strong>v</strong><sub>k</sub> = <strong>0</strong>，這是以 c 為未知數的<a href="#homogeneous-system">齊次方程組</a>。' +
             '只有<a href="#trivial-solution">零解</a> &rArr; 獨立；有非零解 &rArr; 相依。',
-          '快速判斷：兩個向量相依，恰好是其中一個是另一個的倍數；含<a href="#zero-vector">零向量</a>的集合一定相依；&#8477;<sup>n</sup> 裡超過 n 個向量一定相依。'
+          '快速判斷：兩個向量相依，恰好是其中一個是另一個的倍數；含<a href="#zero-vector">零向量</a>的集合一定相依；&#8477;<sup>n</sup> 裡超過 n 個向量一定相依。',
+          '11/15 的筆記又補了兩條，對任何<a href="#vector-space">向量空間</a>都成立：' +
+            '<strong>任何包含相依集合的集合本身也相依</strong>；以及定義的重述 &mdash; ' +
+            '兩個以上向量的集合相依，若且唯若其中一個是其他向量的線性組合。' +
+            '反過來最省事的是 <a href="#orthogonal-set">Theorem 4.19</a>：非零向量的正交集直接就是獨立的。'
         ],
         examples: [
           {
@@ -2300,14 +2340,20 @@
           'Subspaces of &#8477;³ by dimension: {<strong>0</strong>} has 0, a line through the origin 1, ' +
             'a plane through the origin 2, &#8477;³ itself 3.',
           'In a space of dimension n, n independent vectors automatically span, and n spanning vectors ' +
-            'are automatically independent — you only need to check one property.'
+            'are automatically independent — you only need to check one property.',
+          'The 11/15 notes restate this for a general <a href="#vector-space">vector space</a> V under ' +
+            'ch4.4 and turn it into a rule: see <a href="#basis-tests">testing for a basis</a>. The same ' +
+            'page also notes that an independent set of fewer than n vectors can always be extended to a ' +
+            'basis of V.'
         ],
         defZh:
           '<a href="#basis">基底</a>裡向量的個數。同一個空間的每組基底個數都一樣，所以這個數有明確定義：dim &#8477;<sup>n</sup> = n。',
         notesZh: [
           '筆記：<a href="#standard-basis">標準基底</a> {[1,0,…,0], [0,1,…,0], …, [0,…,0,1]} 有 n 個向量，所以 &#8477;<sup>n</sup> 的維度是 n &mdash; 和<a href="#vector-space-rn">向量空間</a>卡上的「n 維度」一致。',
           '&#8477;³ 的子空間依維度分：{<strong>0</strong>} 是 0 維、通過原點的直線 1 維、通過原點的平面 2 維、&#8477;³ 本身 3 維。',
-          '在 n 維空間裡，n 個獨立的向量自動能生成，n 個能生成的向量也自動獨立 &mdash; 只要檢查其中一個性質就好。'
+          '在 n 維空間裡，n 個獨立的向量自動能生成，n 個能生成的向量也自動獨立 &mdash; 只要檢查其中一個性質就好。',
+          '11/15 的筆記在 ch4.4 把這件事重述成一般<a href="#vector-space">向量空間</a> V 的版本，並寫成一條規則：' +
+            '見<a href="#basis-tests">基底的判別</a>。同一頁也提到，向量數少於 n 的獨立集合一定可以擴充成 V 的基底。'
         ],
         examples: [
           {
@@ -3842,6 +3888,907 @@
               '<p>A = ' + M([[1, 2], [3, 4]]) + ', |A| = &minus;2, n = 2</p>' +
               '<p>3A = ' + M([[3, 6], [9, 12]]) + ' = 36 &minus; 54 = &minus;18 = 3²(&minus;2) &#10003;</p>' +
               '<p>not 3(&minus;2) = &minus;6 &#10007;</p>'
+          }
+        ]
+      },
+
+      {
+        id: 'triangular-determinant',
+        term: 'Determinant of a triangular matrix',
+        abbr: '&prod; diagonal',
+        zh: '三角矩陣的行列式',
+        aliases: ['triangular', 'triangular matrix determinant', '三角矩陣', '對角線相乘'],
+        tags: ['ch3.2', 'determinants'],
+        def:
+          'The <a href="#determinant">determinant</a> of a <strong>triangular matrix</strong> — one ' +
+          'whose entries are all zero on one side of the main diagonal — is the ' +
+          '<strong>product of its diagonal elements</strong>.',
+        notes: [
+          'Upper triangular, lower triangular and <a href="#diagonal-matrix">diagonal</a> matrices all ' +
+            'qualify, and so does <a href="#identity-matrix">I<sub>n</sub></a>, whose determinant is ' +
+            'therefore 1.',
+          'Why it is worth knowing: <a href="#gaussian-elimination">Gaussian elimination</a> turns any ' +
+            'matrix into a triangular one, and by ' +
+            '<a href="#determinant-row-operations">Theorem 3.2</a> the step that does most of the work ' +
+            'leaves |A| alone. Eliminate, multiply the diagonal, adjust for the swaps and scalings.',
+          'A triangular matrix is therefore <a href="#singular-matrix">singular</a> exactly when some ' +
+            'diagonal entry is 0.'
+        ],
+        defZh:
+          '<strong>三角矩陣</strong>（主對角線某一側全為零的矩陣）的<a href="#determinant">行列式</a>，' +
+          '就是<strong>對角線元素的乘積</strong>。',
+        notesZh: [
+          '上三角、下三角和<a href="#diagonal-matrix">對角矩陣</a>都算，' +
+            '<a href="#identity-matrix">I<sub>n</sub></a> 也是，所以 |I<sub>n</sub>| = 1。',
+          '為什麼實用：<a href="#gaussian-elimination">高斯消去法</a>可以把任何矩陣變成三角矩陣，而由' +
+            '<a href="#determinant-row-operations">Theorem 3.2</a>，做最多事的那個步驟根本不改變 |A|。' +
+            '消去、對角線相乘、再補上對調與伸縮的修正就好。',
+          '因此三角矩陣是<a href="#singular-matrix">奇異</a>的，恰好在對角線上出現 0 的時候。（這三點是這裡補上的）'
+        ],
+        examples: [
+          {
+            label: 'From the notes',
+            html: '<p>The determinant of a triangular matrix is the product of its diagonal elements.</p>'
+          },
+          {
+            label: 'Reading one off',
+            html:
+              '<p>' + M([[2, 7, 1], [0, 3, 5], [0, 0, 4]]) + ' = 2 &middot; 3 &middot; 4 = 24</p>'
+          }
+        ]
+      },
+
+      /* ============================================ 10/20, 11/3 — ch3.3 adjoint and Cramer */
+      {
+        id: 'matrix-of-cofactors',
+        term: 'Matrix of cofactors',
+        abbr: '[C<sub>ij</sub>]',
+        zh: '餘因子矩陣',
+        aliases: ['matrix of cofactor', 'cofactor matrix', '餘因子矩陣'],
+        tags: ['ch3.3', 'determinants'],
+        def:
+          'The matrix built by replacing every entry <span class="mono">a<sub>ij</sub></span> of A with ' +
+          'its <a href="#cofactor">cofactor</a> <span class="mono">C<sub>ij</sub></span>.',
+        notes: [
+          'Same size as A, and every entry costs one smaller <a href="#determinant">determinant</a>, so a ' +
+            '3 &times; 3 matrix needs nine 2 &times; 2 determinants.',
+          'Do not stop here: the <a href="#adjoint">adjoint</a> is this matrix <em>transposed</em>, and ' +
+            'that is the one that appears in the inverse formula.',
+          'Keep the chessboard of signs in view — <a href="#minor">minor</a> first, then ' +
+            '(&minus;1)<sup>i+j</sup>.'
+        ],
+        defZh:
+          '把 A 的每個元素 <span class="mono">a<sub>ij</sub></span> 換成它的<a href="#cofactor">餘因子</a> ' +
+          '<span class="mono">C<sub>ij</sub></span> 所組成的矩陣。',
+        notesZh: [
+          '大小和 A 一樣，每個位置都要算一個較小的<a href="#determinant">行列式</a>，所以 3 &times; 3 要算九個 2 &times; 2。',
+          '不要停在這裡：<a href="#adjoint">伴隨矩陣</a>是這個矩陣再<em>轉置</em>，出現在反矩陣公式裡的是那一個。',
+          '符號的棋盤要記著 &mdash; 先算<a href="#minor">子行列式</a>，再乘 (&minus;1)<sup>i+j</sup>。（這三點是這裡補上的）'
+        ],
+        examples: [
+          {
+            label: 'From the notes',
+            html:
+              '<p>Matrix of cofactor: the matrix composed of cofactors C<sub>ij</sub> of a<sub>ij</sub> of ' +
+              'matrix A, call <strong>matrix of cofactors of A</strong>.</p>'
+          },
+          {
+            label: 'A 2 × 2 one',
+            html:
+              '<p>A = ' + M([[1, 2], [3, 4]]) + ' &rarr; cofactors ' +
+              M([[4, '&minus;3'], ['&minus;2', 1]]) + '</p>'
+          }
+        ]
+      },
+
+      {
+        id: 'adjoint',
+        term: 'Adjoint of a matrix',
+        abbr: 'adj(A)',
+        zh: '伴隨矩陣',
+        zhAlt: '古典伴隨矩陣',
+        aliases: ['adjoint', 'adj', 'adjugate', '伴隨矩陣', '轉置的餘因子矩陣'],
+        tags: ['ch3.3', 'determinants'],
+        def:
+          'The <a href="#transpose">transpose</a> of the ' +
+          '<a href="#matrix-of-cofactors">matrix of cofactors</a>, written ' +
+          '<span class="mono">adj(A)</span>.',
+        notes: [
+          'It gives a closed formula for the <a href="#matrix-inverse">inverse</a>: for a square A with ' +
+            '|A| &ne; 0, <span class="mono">A<sup>&minus;1</sup> = (1/|A|) adj(A)</span>.',
+          'The notes record the matching criterion: <strong>a square matrix A is invertible if and only ' +
+            'if |A| &ne; 0</strong> — the same split as ' +
+            '<a href="#singular-matrix">singular</a> versus ' +
+            '<a href="#nonsingular-matrix">nonsingular</a>.',
+          'The transpose is not decoration: adj(A) is defined so that ' +
+            'A&middot;adj(A) = |A| I<sub>n</sub>, which is what makes the division by |A| work.',
+          'Useful for 2 &times; 2 and for proofs; for anything larger ' +
+            '<a href="#gaussian-elimination">elimination</a> is far less work than n² cofactors.'
+        ],
+        defZh:
+          '<a href="#matrix-of-cofactors">餘因子矩陣</a>的<a href="#transpose">轉置</a>，記作 ' +
+          '<span class="mono">adj(A)</span>。',
+        notesZh: [
+          '它給出<a href="#matrix-inverse">反矩陣</a>的公式解：方陣 A 若 |A| &ne; 0，則 A<sup>&minus;1</sup> = (1/|A|) adj(A)。',
+          '筆記同時記下對應的判準：<strong>方陣 A 可逆的充要條件是 |A| &ne; 0</strong> &mdash; 也就是' +
+            '<a href="#singular-matrix">奇異</a>與<a href="#nonsingular-matrix">非奇異</a>的那條界線。',
+          '轉置不是裝飾：adj(A) 這樣定義才會有 A&middot;adj(A) = |A| I<sub>n</sub>，除以 |A| 才說得通。',
+          '2 &times; 2 和證明時好用；再大就不如直接做<a href="#gaussian-elimination">消去法</a>，不必算 n² 個餘因子。（後兩點是這裡補上的）'
+        ],
+        examples: [
+          {
+            label: 'From the notes',
+            html:
+              '<p>Adjoint of matrix: the <strong>transpose</strong> of matrix of cofactors of a matrix. ' +
+              'Denoted <strong>adj(A)</strong>.</p>' +
+              '<p>Let A be a square matrix with |A| &ne; 0. A is invertible with ' +
+              'A<sup>&minus;1</sup> = (1/|A|) adj(A)</p>' +
+              '<p>A square matrix A is invertible if and only if |A| &ne; 0.</p>'
+          },
+          {
+            label: 'Inverting a 2 × 2 with it',
+            html:
+              '<p>A = ' + M([[1, 2], [3, 4]]) + ', |A| = &minus;2, cofactors ' +
+              M([[4, '&minus;3'], ['&minus;2', 1]]) + ', adj(A) = ' +
+              M([[4, '&minus;2'], ['&minus;3', 1]]) + '</p>' +
+              '<p>A<sup>&minus;1</sup> = (1/&minus;2)&middot;adj(A) = ' +
+              M([['&minus;2', 1], ['1.5', '&minus;0.5']]) + '</p>'
+          }
+        ]
+      },
+
+      {
+        id: 'cramers-rule',
+        term: "Cramer's rule",
+        abbr: 'x<sub>i</sub> = |A<sub>i</sub>|/|A|',
+        zh: '克拉瑪公式',
+        zhAlt: '克萊姆法則',
+        aliases: ['cramer', "cramer's rule", '克拉瑪', '克萊姆', 'determinant solution'],
+        tags: ['ch3.3', 'determinants'],
+        def:
+          'For <a href="#matrix-form-of-a-system">AX = B</a> with A square and ' +
+          '<span class="mono">|A| &ne; 0</span>, the unique solution is read off as a ratio of ' +
+          'determinants: <span class="mono">x&#8321; = |A&#8321;|/|A|, x&#8322; = |A&#8322;|/|A|, &hellip;, ' +
+          'x<sub>n</sub> = |A<sub>n</sub>|/|A|</span>, where <strong>A<sub>i</sub> is A with column i ' +
+          'replaced by B</strong>.',
+        notes: [
+          'The notes pair it with textbook Theorem 3.7: for a system of n equations in n variables, ' +
+            '|A| &ne; 0 gives a unique solution; |A| = 0 gives many solutions or none.',
+          'It solves for one unknown without touching the others, which ' +
+            '<a href="#gaussian-elimination">elimination</a> cannot do — handy when only x&#8323; is wanted.',
+          'The cost is steep: n + 1 determinants of size n. Past 3 &times; 3 it is a formula for proofs, ' +
+            'not for computing.',
+          'It needs A square and non-singular; with |A| = 0 the formula divides by zero and says nothing ' +
+            'about which of the two cases you are in.'
+        ],
+        defZh:
+          '對 <a href="#matrix-form-of-a-system">AX = B</a>，A 是方陣且 <span class="mono">|A| &ne; 0</span> 時，' +
+          '唯一解可以用行列式的比值讀出來：x&#8321; = |A&#8321;|/|A|、x&#8322; = |A&#8322;|/|A|、…、x<sub>n</sub> = |A<sub>n</sub>|/|A|，' +
+          '其中 <strong>A<sub>i</sub> 是把 A 的第 i 行換成 B</strong> 的矩陣。',
+        notesZh: [
+          '筆記把它和課本 Theorem 3.7 擺在一起：n 個方程式、n 個變數的方程組，|A| &ne; 0 有唯一解；|A| = 0 則是無限多解或無解。',
+          '它可以只解其中一個未知數而不動其他的，這是<a href="#gaussian-elimination">消去法</a>辦不到的 &mdash; 只想要 x&#8323; 時很方便。',
+          '代價很高：要算 n + 1 個 n 階行列式。超過 3 &times; 3 就只適合用在證明，不適合實際計算。',
+          '它要求 A 是方陣且非奇異；|A| = 0 時公式會除以零，而且也分不出是無解還是無限多解。（後三點是這裡補上的）'
+        ],
+        examples: [
+          {
+            label: 'From the notes',
+            html:
+              '<p>Theorem 3.7: Let AX = B be a system of n linear equations in n variables. ' +
+              'If |A| &ne; 0 there is a unique solution. If |A| = 0 there are many or no solutions.</p>' +
+              '<p>Cramer&rsquo;s Rule: linear equation AX = B, |A| &ne; 0 &rArr; it has unique solution, then solution</p>' +
+              '<p>x&#8321; = |A&#8321;|/|A|, x&#8322; = |A&#8322;|/|A|, &hellip;, x<sub>n</sub> = |A<sub>n</sub>|/|A|</p>' +
+              '<p>&#10033; A<sub>i</sub> is matrix that replacing column i of A with B</p>'
+          },
+          {
+            label: 'Solving a 2 × 2',
+            html:
+              '<p>x + 2y = 5, 3x + 4y = 11: A = ' + M([[1, 2], [3, 4]]) + ', B = ' +
+              M([[5], [11]]) + ', |A| = &minus;2</p>' +
+              '<p>|A&#8321;| = ' + M([[5, 2], [11, 4]]) + ' = &minus;2, |A&#8322;| = ' +
+              M([[1, 5], [3, 11]]) + ' = &minus;4</p>' +
+              '<p>x = &minus;2/&minus;2 = 1, y = &minus;4/&minus;2 = 2</p>'
+          }
+        ]
+      },
+
+      /* ============================================ 11/8 — ch3.4 eigenvalues */
+      {
+        id: 'eigenvalue',
+        term: 'Eigenvalue',
+        abbr: '&lambda;',
+        zh: '特徵值',
+        zhAlt: '固有值',
+        aliases: ['eigenvalue', 'lambda', '特徵值', '固有值', 'Ax = lambda x'],
+        tags: ['ch3.4', 'eigen'],
+        def:
+          'A scalar &lambda; such that multiplying some <strong>non-zero</strong> vector ' +
+          '<strong>x</strong> by &lambda; gives the same result as multiplying it by the n &times; n ' +
+          'matrix A: <span class="mono">Ax = &lambda;x</span>.',
+        notes: [
+          'The vector has to be non-zero — A<strong>0</strong> = &lambda;<strong>0</strong> holds for ' +
+            'every &lambda;, so <strong>0</strong> would make the definition empty. &lambda; = 0 itself ' +
+            '<em>is</em> allowed, and happens exactly when A is ' +
+            '<a href="#singular-matrix">singular</a>.',
+          'Geometrically, A leaves the direction of <strong>x</strong> alone and only stretches it by ' +
+            '&lambda; — the <a href="#rotation">rotation</a> is the opposite case, where no real ' +
+            'direction survives.',
+          'Only square matrices have eigenvalues: Ax and &lambda;x must be the same size.',
+          'You find them by solving the ' +
+            '<a href="#characteristic-equation">characteristic equation</a>.'
+        ],
+        defZh:
+          '一個純量 &lambda;，使得某個<strong>非零</strong>向量 <strong>x</strong> 乘上 &lambda; 的結果，' +
+          '和它乘上 n &times; n 矩陣 A 的結果相同：<span class="mono">Ax = &lambda;x</span>。',
+        notesZh: [
+          '向量必須非零 &mdash; A<strong>0</strong> = &lambda;<strong>0</strong> 對任何 &lambda; 都成立，' +
+            '用 <strong>0</strong> 的話定義就空了。但 &lambda; = 0 本身是允許的，而且恰好發生在 A 是' +
+            '<a href="#singular-matrix">奇異矩陣</a>的時候。',
+          '幾何上，A 不改變 <strong>x</strong> 的方向，只把它伸縮 &lambda; 倍 &mdash; ' +
+            '<a href="#rotation">旋轉</a>就是相反的例子，沒有任何實方向留得下來。',
+          '只有方陣有特徵值：Ax 和 &lambda;x 大小要一樣。',
+          '求法是解<a href="#characteristic-equation">特徵方程式</a>。（前三點是這裡補上的）'
+        ],
+        examples: [
+          {
+            label: 'From the notes',
+            html:
+              '<p>Eigen value: a scalar &lambda; and it multiply a non zero vector x is equal to ' +
+              'a n&times;n matrix A multiplying x. The scalar &lambda; is called eigenvalue.</p>'
+          },
+          {
+            label: 'One by hand',
+            html:
+              '<p>A = ' + M([[2, 0], [0, 3]]) + ', x = ' + M([[1], [0]]) + ': Ax = ' +
+              M([[2], [0]]) + ' = 2x &rArr; &lambda; = 2</p>'
+          }
+        ]
+      },
+
+      {
+        id: 'eigenvector',
+        term: 'Eigenvector',
+        abbr: 'x',
+        zh: '特徵向量',
+        zhAlt: '固有向量',
+        aliases: ['eigenvector', '特徵向量', '固有向量'],
+        tags: ['ch3.4', 'eigen'],
+        def:
+          'The non-zero vector <strong>x</strong> in <span class="mono">Ax = &lambda;x</span> — the one ' +
+          'whose direction A does not change.',
+        notes: [
+          'Eigenvectors come in families: if <strong>x</strong> works then so does c<strong>x</strong> ' +
+            'for every non-zero scalar c, since A(cx) = cAx = c&lambda;x = &lambda;(cx). There is no ' +
+            '"the" eigenvector for a &lambda;, only a direction.',
+          'Collect them all, add <strong>0</strong> back in, and you get the ' +
+            '<a href="#eigenspace">eigenspace</a> of &lambda;.',
+          'Each eigenvector belongs to exactly one <a href="#eigenvalue">eigenvalue</a>: if ' +
+            '&lambda;&#8321;x = &lambda;&#8322;x with x &ne; <strong>0</strong> then ' +
+            '&lambda;&#8321; = &lambda;&#8322;.'
+        ],
+        defZh:
+          '<span class="mono">Ax = &lambda;x</span> 裡的那個非零向量 <strong>x</strong> &mdash; 方向不被 A 改變的向量。',
+        notesZh: [
+          '特徵向量是成群出現的：<strong>x</strong> 可以的話，任何非零純量倍 c<strong>x</strong> 也可以，' +
+            '因為 A(cx) = cAx = c&lambda;x = &lambda;(cx)。所以一個 &lambda; 沒有「那個」特徵向量，只有一個方向。',
+          '把它們全部收集起來、再把 <strong>0</strong> 加回去，就是 &lambda; 的<a href="#eigenspace">特徵空間</a>。',
+          '每個特徵向量只屬於一個<a href="#eigenvalue">特徵值</a>：若 &lambda;&#8321;x = &lambda;&#8322;x 且 x &ne; <strong>0</strong>，則 &lambda;&#8321; = &lambda;&#8322;。（這三點是這裡補上的）'
+        ],
+        examples: [
+          {
+            label: 'From the notes',
+            html: '<p>Eigenvector: according to above description, vector x is eigenvector.</p>'
+          },
+          {
+            label: 'A whole direction at once',
+            html:
+              '<p>A = ' + M([[2, 0], [0, 3]]) + ': (1, 0), (5, 0), (&minus;2, 0) are all eigenvectors for &lambda; = 2</p>'
+          }
+        ]
+      },
+
+      {
+        id: 'characteristic-polynomial',
+        term: 'Characteristic polynomial',
+        abbr: '|A &minus; &lambda;I|',
+        zh: '特徵多項式',
+        aliases: ['characteristic polynomial', '特徵多項式', 'A - lambda I'],
+        tags: ['ch3.4', 'eigen'],
+        def:
+          'The <a href="#determinant">determinant</a> ' +
+          '<span class="mono">|A &minus; &lambda;I|</span>, treated as a polynomial in &lambda;.',
+        notes: [
+          'Where it comes from, as the notes derive it: Ax = &lambda;x &rArr; Ax &minus; &lambda;x = ' +
+            '<strong>0</strong> &rArr; (A &minus; &lambda;I)x = <strong>0</strong>. For a non-zero x to ' +
+            'exist, A &minus; &lambda;I must be <a href="#singular-matrix">singular</a>, so ' +
+            '|A &minus; &lambda;I| = 0.',
+          'Why the I is needed: &lambda; is a scalar and A is a matrix, so A &minus; &lambda; is not ' +
+            'defined. &lambda;I turns the scalar into a matrix of the right size.',
+          'For an n &times; n matrix it has degree n, so there are n ' +
+            '<a href="#eigenvalue">eigenvalues</a> counted with multiplicity — though some may repeat ' +
+            'or be complex.'
+        ],
+        defZh:
+          '把<a href="#determinant">行列式</a> <span class="mono">|A &minus; &lambda;I|</span> 看成 &lambda; 的多項式。',
+        notesZh: [
+          '來源就是筆記上的推導：Ax = &lambda;x &rArr; Ax &minus; &lambda;x = <strong>0</strong> &rArr; ' +
+            '(A &minus; &lambda;I)x = <strong>0</strong>。要有非零的 x，A &minus; &lambda;I 就必須是' +
+            '<a href="#singular-matrix">奇異矩陣</a>，所以 |A &minus; &lambda;I| = 0。',
+          '為什麼要有 I：&lambda; 是純量、A 是矩陣，A &minus; &lambda; 沒有定義。&lambda;I 把純量變成同樣大小的矩陣。',
+          'n &times; n 矩陣的特徵多項式是 n 次，所以連重根一起算有 n 個<a href="#eigenvalue">特徵值</a> &mdash; 不過可能重複，也可能是複數。（後兩點是這裡補上的）'
+        ],
+        examples: [
+          {
+            label: 'From the notes',
+            html:
+              '<p>Characteristic polynomial（特徵多項式）: let A an n&times;n matrix and &lambda; an eigenvalue ' +
+              'and x is eigenvector.</p>' +
+              '<p>Ax = &lambda;x &rArr; Ax &minus; &lambda;x = 0 &rArr; (A &minus; &lambda;I)x = 0</p>' +
+              '<p>Suppose x is nonzero vector, so |A &minus; &lambda;I| = 0. ' +
+              '|A &minus; &lambda;I| is characteristic polynomial.</p>'
+          },
+          {
+            label: 'Writing one out',
+            html:
+              '<p>A = ' + M([[1, 2], [4, 3]]) + ', A &minus; &lambda;I = ' +
+              M([['1 &minus; &lambda;', 2], [4, '3 &minus; &lambda;']]) + '</p>' +
+              '<p>|A &minus; &lambda;I| = (1 &minus; &lambda;)(3 &minus; &lambda;) &minus; 8 = ' +
+              '&lambda;² &minus; 4&lambda; &minus; 5</p>'
+          }
+        ]
+      },
+
+      {
+        id: 'characteristic-equation',
+        term: 'Characteristic equation',
+        abbr: '|A &minus; &lambda;I| = 0',
+        zh: '特徵方程式',
+        aliases: ['characteristic equation', '特徵方程式', '特徵方程'],
+        tags: ['ch3.4', 'eigen'],
+        def:
+          'Setting the <a href="#characteristic-polynomial">characteristic polynomial</a> to zero: ' +
+          '<span class="mono">|A &minus; &lambda;I| = 0</span>. Its roots are the ' +
+          '<a href="#eigenvalue">eigenvalues</a> of A.',
+        notes: [
+          'This is the actual recipe — solve it for &lambda;, then put each &lambda; back into ' +
+            '(A &minus; &lambda;I)x = <strong>0</strong> and solve that ' +
+            '<a href="#homogeneous-system">homogeneous system</a> for the ' +
+            '<a href="#eigenvector">eigenvectors</a>.',
+          'The second step always has infinitely many solutions, by construction: A &minus; &lambda;I was ' +
+            'made singular on purpose, so there are <a href="#free-variable">free variables</a>.',
+          'Real matrices can have complex roots — the 90&deg; ' +
+            '<a href="#rotation">rotation</a> matrix gives &lambda;² + 1 = 0.'
+        ],
+        defZh:
+          '把<a href="#characteristic-polynomial">特徵多項式</a>設為零：' +
+          '<span class="mono">|A &minus; &lambda;I| = 0</span>。它的根就是 A 的<a href="#eigenvalue">特徵值</a>。',
+        notesZh: [
+          '這就是實際的做法 &mdash; 先解出 &lambda;，再把每個 &lambda; 代回 (A &minus; &lambda;I)x = <strong>0</strong>，' +
+            '解這個<a href="#homogeneous-system">齊次方程組</a>得到<a href="#eigenvector">特徵向量</a>。',
+          '第二步一定有無限多解，這是設計出來的：A &minus; &lambda;I 本來就是被弄成奇異的，所以會有' +
+            '<a href="#free-variable">自由變數</a>。',
+          '實矩陣也可能有複數根 &mdash; 90&deg; 的<a href="#rotation">旋轉</a>矩陣就給出 &lambda;² + 1 = 0。（這三點是這裡補上的）'
+        ],
+        examples: [
+          {
+            label: 'From the notes',
+            html:
+              '<p>Characteristic equation: according to above description, |A &minus; &lambda;I| = 0 is ' +
+              'characteristic equation.</p>'
+          },
+          {
+            label: 'All the way through',
+            html:
+              '<p>A = ' + M([[1, 2], [4, 3]]) + ': &lambda;² &minus; 4&lambda; &minus; 5 = 0 &rArr; ' +
+              '&lambda; = 5 or &lambda; = &minus;1</p>' +
+              '<p>&lambda; = 5: (A &minus; 5I)x = 0 &rArr; x = r(1, 2)</p>' +
+              '<p>&lambda; = &minus;1: (A + I)x = 0 &rArr; x = r(1, &minus;1)</p>'
+          }
+        ]
+      },
+
+      {
+        id: 'eigenspace',
+        term: 'Eigenspace',
+        zh: '特徵空間',
+        aliases: ['eigenspace', '特徵空間', 'eigenspaces'],
+        tags: ['ch3.4', 'eigen'],
+        def:
+          'All the <a href="#eigenvector">eigenvectors</a> belonging to one ' +
+          '<a href="#eigenvalue">eigenvalue</a> &lambda;, <strong>together with the ' +
+          '<a href="#zero-vector">zero vector</a></strong>. It is a ' +
+          '<a href="#subspace">subspace</a>.',
+        notes: [
+          'The zero vector has to be added by hand: it is not an eigenvector, but without it the set is ' +
+            'not <a href="#closed-under">closed</a> and so not a subspace.',
+          'The notes\' example: the eigenvectors of &lambda; = 2 are the non-zero vectors ' +
+            'r(&minus;1, 1); adding <strong>0</strong> gives a subspace with ' +
+            '<a href="#basis">basis</a> {(&minus;1, 1)} and ' +
+            '<a href="#dimension">dimension</a> 1. For &lambda; = &minus;1 it is the one-dimensional ' +
+            'space spanned by (&minus;2, 1).',
+          'Its dimension says how many independent directions &lambda; stretches — 1 for a plain line of ' +
+            'eigenvectors, more when &lambda; is a repeated root.'
+        ],
+        defZh:
+          '屬於同一個<a href="#eigenvalue">特徵值</a> &lambda; 的所有<a href="#eigenvector">特徵向量</a>，' +
+          '<strong>再加上<a href="#zero-vector">零向量</a></strong>。它是一個<a href="#subspace">子空間</a>。',
+        notesZh: [
+          '零向量要手動加進去：它不是特徵向量，但少了它這個集合就不<a href="#closed-under">封閉</a>，也就不是子空間。',
+          '筆記的例子：&lambda; = 2 的特徵向量是所有非零的 r(&minus;1, 1)；加上 <strong>0</strong> 之後是一個子空間，' +
+            '<a href="#basis">基底</a>為 {(&minus;1, 1)}、<a href="#dimension">維度</a>為 1。' +
+            '&lambda; = &minus;1 則是由 (&minus;2, 1) 生成的一維空間。',
+          '維度告訴你 &lambda; 拉伸了幾個獨立方向 &mdash; 一條特徵向量直線就是 1，&lambda; 是重根時會更多。（這點是這裡補上的）'
+        ],
+        examples: [
+          {
+            label: 'From the notes (textbook)',
+            html:
+              '<p>Eigenspaces: the eigenvectors of &lambda; = 2 are nonzero vectors of the form r(&minus;1, 1). ' +
+              'Add the zero vector to this set to get the set of <em>all</em> vectors of the form r(&minus;1, 1). ' +
+              'This set is closed under addition and scalar multiplication; it is a subspace.</p>' +
+              '<p>This subspace {r(&minus;1, 1)}, with a basis {(&minus;1, 1)}, is called the eigenspace of ' +
+              '&lambda; = 2. The dimension of the eigenspace is 1. Similarly, the eigenspace for ' +
+              '&lambda; = &minus;1 is the one-dimensional space {s(&minus;2, 1)}, with a basis {(&minus;2, 1)}.</p>'
+          }
+        ]
+      },
+
+      /* ============================================ 11/15 — ch4.1 general vector spaces */
+      {
+        id: 'vector-space',
+        term: 'Vector space (general)',
+        abbr: 'V',
+        zh: '向量空間（一般定義）',
+        zhAlt: '抽象向量空間',
+        aliases: ['vector space', 'general vector space', '向量空間', '抽象向量空間', 'axioms'],
+        tags: ['ch4.1', 'vector spaces'],
+        def:
+          'A set V of elements called <strong>vectors</strong>, with an addition and a scalar ' +
+          'multiplication defined on it that satisfy a fixed list of conditions (for arbitrary ' +
+          '<strong>u</strong>, <strong>v</strong>, <strong>w</strong> in V and scalars c, d).',
+        notes: [
+          'This is <a href="#vector-space-rn">&#8477;<sup>n</sup></a> with the arrows removed. The ' +
+            'elements no longer have to be lists of numbers — matrices, polynomials and functions all ' +
+            'form vector spaces under their usual addition and scaling.',
+          '<strong>Properties that follow</strong> (from the notes), for v in V, the zero vector ' +
+            '<strong>0</strong>, a scalar c and the number 0: &#9312; 0v = <strong>0</strong>; ' +
+            '&#9313; c<strong>0</strong> = <strong>0</strong>; &#9314; (&minus;1)v = &minus;v; ' +
+            '&#9315; if cv = <strong>0</strong> then c = 0 or v = <strong>0</strong>.',
+          'Note the two different zeros in &#9312;: the scalar 0 on the left, the zero <em>vector</em> ' +
+            'on the right. &#9315; is the one that gets used constantly — it is what makes ' +
+            '<a href="#linear-independence">linear independence</a> arguments work.',
+          'The notes\' box stops at "satisfy the following conditions" without listing them. They are ' +
+            'the ten usual axioms: addition is closed, commutative and associative, has an identity ' +
+            '<strong>0</strong> and inverses &minus;u; scalar multiplication is closed, distributes over ' +
+            'both kinds of sum, satisfies c(du) = (cd)u, and 1u = u.',
+          'The 11/15 page gives no chapter number for this block. Tagged <strong>ch4.1</strong> from the ' +
+            'textbook, where the general definition opens the chapter.'
+        ],
+        defZh:
+          '一個集合 V，其元素稱為<strong>向量</strong>，並定義了加法與純量乘法，且滿足一組固定的條件' +
+          '（對 V 中任意 <strong>u</strong>、<strong>v</strong>、<strong>w</strong> 與純量 c、d）。',
+        notesZh: [
+          '這就是把箭頭拿掉的 <a href="#vector-space-rn">&#8477;<sup>n</sup></a>。元素不必再是一串數字 &mdash; ' +
+            '矩陣、多項式、函數在各自的加法與伸縮下都構成向量空間。',
+          '<strong>可以推出的性質</strong>（筆記）：設 v 在 V 中、<strong>0</strong> 是零向量、c 是純量、0 是數字 &mdash; ' +
+            '&#9312; 0v = <strong>0</strong>；&#9313; c<strong>0</strong> = <strong>0</strong>；' +
+            '&#9314; (&minus;1)v = &minus;v；&#9315; 若 cv = <strong>0</strong>，則 c = 0 或 v = <strong>0</strong>。',
+          '注意 &#9312; 裡有兩種零：左邊是純量 0，右邊是零<em>向量</em>。&#9315; 最常用 &mdash; ' +
+            '<a href="#linear-independence">線性獨立</a>的論證全靠它。',
+          '筆記的框框停在「satisfy the following conditions」就沒了。那十條公理是：加法封閉、交換、結合，' +
+            '有單位元 <strong>0</strong> 與反元素 &minus;u；純量乘法封閉，對兩種和都分配，' +
+            'c(du) = (cd)u，以及 1u = u。（這段是這裡補上的）',
+          '11/15 這一段沒有寫章節號。依課本標 <strong>ch4.1</strong>，一般定義正是該章的開頭。'
+        ],
+        examples: [
+          {
+            label: 'From the notes (textbook definition)',
+            html:
+              '<p>A <strong>vector space</strong> is a set V of elements called <strong>vectors</strong>, ' +
+              'having operations of addition and scalar multiplication defined on it that satisfy the ' +
+              'following conditions. (u, v, and w are arbitrary elements of V, and c and d are scalars.)</p>' +
+              '<p>Let V be a vector space, v a vector in V, <strong>0</strong> the zero vector of V, ' +
+              'c a scalar, and 0 the zero scalar. Then</p>' +
+              '<p>(a) 0v = <strong>0</strong> &nbsp; (b) c<strong>0</strong> = <strong>0</strong> &nbsp; ' +
+              '(c) (&minus;1)v = &minus;v &nbsp; (d) If cv = <strong>0</strong>, then either c = 0 or v = <strong>0</strong></p>'
+          },
+          {
+            label: 'Spaces that are not ℝⁿ',
+            html:
+              '<p>all 2 &times; 2 matrices, under matrix addition and scalar multiples</p>' +
+              '<p>all polynomials of degree &le; 3</p>' +
+              '<p>all continuous functions on [0, 1]</p>'
+          }
+        ]
+      },
+
+      /* ============================================ 11/15, 11/16 — ch4.4 basis and dimension */
+      {
+        id: 'basis-tests',
+        term: 'Testing for a basis',
+        abbr: '2 of 3',
+        zh: '基底的判別',
+        zhAlt: '三個條件二取二',
+        aliases: ['basis test', 'base', 'three statements', '基底判別', '基底條件'],
+        tags: ['ch4.4', 'basis'],
+        def:
+          'A set is a <a href="#basis">basis</a> of a vector space V when all three of these hold: ' +
+          '&#9312; the set <strong>spans</strong> V; &#9313; its vectors are <strong>linearly ' +
+          'independent</strong>; &#9314; the <strong>number of vectors equals the ' +
+          '<a href="#dimension">dimension</a></strong> of V. The notes\' shortcut: <strong>any two of ' +
+          'the three imply the third</strong>.',
+          notes: [
+          'That shortcut is what makes basis checking cheap. Once you know dim V = n, a set of exactly ' +
+            'n vectors only has to pass <em>one</em> more test — either spanning or independence, ' +
+            'whichever is easier.',
+          'The counting facts behind it, both in the notes: <strong>all bases of V have the same number ' +
+            'of vectors</strong>, and a set of <strong>more than n vectors in an n-dimensional space is ' +
+            'always dependent</strong>.',
+          'It also works the other way: a <a href="#linear-independence">linearly independent</a> set of ' +
+            'm &lt; n vectors can always be extended with further vectors ' +
+            'v<sub>m+1</sub>, &hellip;, v<sub>n</sub> to a basis of V.',
+          'Terminology: the notes head this section "Base". In English the word is <strong>basis</strong> ' +
+            '(plural <em>bases</em>); "base" is a different term.'
+        ],
+        defZh:
+          '一組向量是向量空間 V 的<a href="#basis">基底</a>，條件是三件事同時成立：' +
+          '&#9312; 這組向量<strong>生成</strong> V；&#9313; 它們<strong>線性獨立</strong>；' +
+          '&#9314; 向量個數等於 V 的<strong><a href="#dimension">維度</a></strong>。' +
+          '筆記的捷徑：<strong>三個條件滿足其中兩個，第三個就自動成立</strong>。',
+        notesZh: [
+          '這個捷徑讓驗證基底變得很省事。只要知道 dim V = n，一組剛好 n 個向量就只需要再過<em>一關</em> &mdash; ' +
+            '生成或獨立，挑好驗的那個就好。',
+          '背後的兩個計數事實，筆記都有：<strong>V 的所有基底向量個數相同</strong>；' +
+            '在 n 維空間裡<strong>超過 n 個向量的集合一定線性相依</strong>。',
+          '反方向也成立：m &lt; n 個向量的<a href="#linear-independence">線性獨立</a>集合，' +
+            '一定可以再補上 v<sub>m+1</sub>、…、v<sub>n</sub> 湊成 V 的基底。',
+          '用詞：筆記這一節的標題寫「Base」。英文的正確說法是 <strong>basis</strong>（複數 <em>bases</em>），' +
+            '「base」是另一個字。'
+        ],
+        examples: [
+          {
+            label: 'From the notes',
+            html:
+              '<p>Base: a finite set of vectors {v&#8321; &hellip; v<sub>m</sub>}. If it spans a vector space V ' +
+              'and it is linearly independent, it is called a basis for a vector space V.</p>' +
+              '<p>&rarr; Each vector in V is <strong>uniquely</strong> a linear combination of the vectors in a basis.</p>' +
+              '<p>&#10033; A basis of V is satisfied under statements:</p>' +
+              '<p>&middot; The set spans V &nbsp; &middot; Vectors in the set are linearly independent &nbsp; ' +
+              '&middot; The number of vectors equals dimension of V</p>' +
+              '<p>&#10033; satisfied two of statements of basis then it is a basis for a vector space V</p>'
+          },
+          {
+            label: 'Using the shortcut in ℝ³',
+            html:
+              '<p>dim &#8477;³ = 3, so (1, 1, 0), (0, 1, 1), (1, 0, 1) already pass &#9314;</p>' +
+              '<p>they are independent &rArr; &#9312; follows, so they are a basis — no need to check spanning</p>'
+          }
+        ]
+      },
+
+      /* ============================================ 11/10, 11/16 — ch4.5 row space and rank */
+      {
+        id: 'row-space',
+        term: 'Row space',
+        zh: '列空間',
+        zhAlt: '橫列生成的空間',
+        aliases: ['row space', 'row vectors', '列空間', '橫列空間'],
+        tags: ['ch4.5', 'rank'],
+        def:
+          'For an m &times; n matrix A, the rows r&#8321;, &hellip;, r<sub>m</sub> are the ' +
+          '<strong>row vectors</strong> of A. Each has <strong>n</strong> components, and the ' +
+          '<a href="#subspace">subspace</a> of &#8477;<sup>n</sup> they ' +
+          '<a href="#span">span</a> is the <strong>row space</strong> of A.',
+        notes: [
+          'A <a href="#basis">basis</a> for it falls out of elimination: if E is the ' +
+            '<a href="#reduced-echelon-form">reduced echelon form</a> of A, the <strong>non-zero row ' +
+            'vectors of E form a basis for the row space of A</strong>.',
+          'That works because <a href="#row-equivalent">row equivalent</a> matrices have the ' +
+            '<strong>same row space</strong> — the three ' +
+            '<a href="#elementary-row-operation">row operations</a> only recombine rows, never reach ' +
+            'outside their span.',
+          'The rows of A themselves are usually <em>not</em> a basis: they span the row space but may be ' +
+            'dependent. The echelon rows are the cleaned-up version.'
+        ],
+        defZh:
+          '設 A 是 m &times; n 矩陣，各列 r&#8321;、…、r<sub>m</sub> 稱為 A 的<strong>列向量</strong>。' +
+          '每個列向量有 <strong>n</strong> 個分量，它們所<a href="#span">生成</a>的 ' +
+          '&#8477;<sup>n</sup> 的<a href="#subspace">子空間</a>就是 A 的<strong>列空間</strong>。',
+        notesZh: [
+          '基底可以從消去法直接得到：設 E 是 A 的<a href="#reduced-echelon-form">簡化列梯形</a>，' +
+            '則 <strong>E 的非零列向量就是 A 的列空間的一組<a href="#basis">基底</a></strong>。',
+          '之所以成立，是因為<a href="#row-equivalent">列等價</a>的矩陣有<strong>相同的列空間</strong> &mdash; ' +
+            '三種<a href="#elementary-row-operation">列運算</a>只是把列重新組合，從不跑出它們的生成空間。',
+          'A 原本的那些列通常<em>不是</em>基底：它們生成列空間，但可能相依。梯形後的列才是整理乾淨的版本。（這點是這裡補上的）',
+          '台灣稱 row 為「列」、column 為「行」。'
+        ],
+        examples: [
+          {
+            label: 'From the notes',
+            html:
+              '<p>Let A be an m&times;n matrix. Rows of A is <strong>row vectors</strong> ' +
+              'r&#8321; &hellip; r<sub>m</sub>. Each vector has <strong>n</strong> components, span a subspace.</p>' +
+              '<p>The nonzero row vectors of a matrix A that is in reduced echelon form are a basis for the ' +
+              'row space of A.</p>' +
+              '<p>Let A and B be row equivalent matrices. Then A and B have the same row space: rank A = rank B</p>'
+          },
+          {
+            label: 'Reading a basis off the echelon form',
+            html:
+              '<p>A = ' + M([[1, 2, 3], [2, 4, 6], [1, 0, 1]]) + ' &rarr; E = ' +
+              M([[1, 0, 1], [0, 1, 1], [0, 0, 0]]) + '</p>' +
+              '<p>basis of the row space: (1, 0, 1), (0, 1, 1)</p>'
+          }
+        ]
+      },
+
+      {
+        id: 'column-space',
+        term: 'Column space',
+        zh: '行空間',
+        zhAlt: '直行生成的空間',
+        aliases: ['column space', 'column vectors', '行空間', '直行空間'],
+        tags: ['ch4.5', 'rank'],
+        def:
+          'The <a href="#subspace">subspace</a> <a href="#span">spanned</a> by the ' +
+          '<strong>column vectors</strong> c&#8321;, &hellip;, c<sub>n</sub> of A. For an m &times; n ' +
+          'matrix each column has m components, so the column space lives in &#8477;<sup>m</sup>.',
+        notes: [
+          'The headline result: the <strong>row space and the column space of a matrix have the same ' +
+            'dimension</strong>, even though they usually sit in different spaces. That shared number is ' +
+            'the <a href="#rank">rank</a>.',
+          'It is the set of all <a href="#matrix-form-of-a-system">AX</a> as X ranges over ' +
+            '&#8477;<sup>n</sup>, so AX = B is solvable exactly when B lies in the column space.',
+          'A quick route to a basis: take the columns of A in the positions where E has ' +
+            '<a href="#leading-1">leading 1s</a> — the columns of A, not of E.'
+        ],
+        defZh:
+          '由 A 的<strong>行向量</strong> c&#8321;、…、c<sub>n</sub> 所<a href="#span">生成</a>的' +
+          '<a href="#subspace">子空間</a>。m &times; n 矩陣的每一行有 m 個分量，所以行空間住在 &#8477;<sup>m</sup> 裡。',
+        notesZh: [
+          '重點結論：<strong>矩陣的列空間與行空間維度相同</strong>，即使兩者通常住在不同的空間裡。' +
+            '這個共同的數就是 <a href="#rank">rank（秩）</a>。',
+          '它就是 X 跑遍 &#8477;<sup>n</sup> 時所有 <a href="#matrix-form-of-a-system">AX</a> 的集合，' +
+            '所以 AX = B 有解，恰好等於 B 落在行空間裡。',
+          '找基底的捷徑：取 E 中有<a href="#leading-1">領先 1</a> 的那些位置，對應回 A 的那幾行 &mdash; 是 A 的行，不是 E 的。（後兩點是這裡補上的）'
+        ],
+        examples: [
+          {
+            label: 'From the notes',
+            html:
+              '<p>Column of A is <strong>column vectors</strong> c&#8321; &hellip;</p>' +
+              '<p>The row space and the column space of a matrix A have the same dimension.</p>'
+          }
+        ]
+      },
+
+      {
+        id: 'rank',
+        term: 'Rank',
+        abbr: 'rank(A)',
+        zh: '秩',
+        zhAlt: '階',
+        aliases: ['rank', 'rank of a matrix', '秩', '階數'],
+        tags: ['ch4.5', 'rank'],
+        def:
+          'The common <a href="#dimension">dimension</a> of the <a href="#row-space">row space</a> and ' +
+          'the <a href="#column-space">column space</a> of A — equivalently, the <strong>number of ' +
+          'non-zero row vectors in the <a href="#reduced-echelon-form">reduced echelon form</a></strong> ' +
+          'of A.',
+        notes: [
+          '<a href="#row-equivalent">Row equivalent</a> matrices have the same rank, which is why ' +
+            'elimination is allowed to compute it. It is also the number of ' +
+            '<a href="#pivot">pivots</a>.',
+          'Bounds: rank(A) &le; min(m, n). A square n &times; n matrix with rank n is ' +
+            '<a href="#nonsingular-matrix">nonsingular</a> — see ' +
+            '<a href="#rank-and-solutions">rank and solutions</a>.',
+          'Because row and column rank agree, rank(A&#7488;) = rank(A).'
+        ],
+        defZh:
+          'A 的<a href="#row-space">列空間</a>與<a href="#column-space">行空間</a>共同的' +
+          '<a href="#dimension">維度</a> &mdash; 等價地說，就是 A 的' +
+          '<a href="#reduced-echelon-form">簡化列梯形</a>中<strong>非零列向量的個數</strong>。',
+        notesZh: [
+          '<a href="#row-equivalent">列等價</a>的矩陣 rank 相同，所以才可以用消去法去算。它也等於' +
+            '<a href="#pivot">主元</a>的個數。',
+          '範圍：rank(A) &le; min(m, n)。n &times; n 方陣的 rank 是 n 時就是' +
+            '<a href="#nonsingular-matrix">非奇異矩陣</a> &mdash; 見' +
+            '<a href="#rank-and-solutions">rank 與解的關係</a>。',
+          '因為列秩等於行秩，所以 rank(A&#7488;) = rank(A)。（後兩點是這裡補上的）'
+        ],
+        examples: [
+          {
+            label: 'From the notes',
+            html:
+              '<p>The rank of A is the number of nonzero row vectors.</p>' +
+              '<p>Let E be the reduced echelon form of a matrix A. The nonzero row vectors of E form a ' +
+              'basis for the row space of A. The rank of A is the number of nonzero row vectors in E</p>'
+          },
+          {
+            label: 'Counting it',
+            html:
+              '<p>E = ' + M([[1, 0, 1], [0, 1, 1], [0, 0, 0]]) + ' &rarr; two non-zero rows &rArr; rank = 2</p>'
+          }
+        ]
+      },
+
+      {
+        id: 'rank-and-solutions',
+        term: 'Rank and the solutions of AX = B',
+        abbr: 'r vs n',
+        zh: 'rank 與解的關係',
+        zhAlt: '秩與解的個數',
+        aliases: ['rank and solutions', 'theorem 4.18', 'consistent', '秩與解', '解的判別'],
+        tags: ['ch4.5', 'rank'],
+        def:
+          'For a system <a href="#matrix-form-of-a-system">AX = B</a> of m equations in n variables, ' +
+          'compare the <a href="#rank">rank</a> of the ' +
+          '<a href="#coefficient-matrix">matrix of coefficients</a> with that of the ' +
+          '<a href="#augmented-matrix">augmented matrix</a>: ' +
+          '&#9312; same rank r and <strong>r = n</strong> &rarr; the solution is <strong>unique</strong>; ' +
+          '&#9313; same rank r and <strong>r &lt; n</strong> &rarr; <strong>many</strong> solutions; ' +
+          '&#9314; <strong>different</strong> ranks &rarr; <strong>no</strong> solution.',
+        notes: [
+          'This is the <a href="#type-of-solution">three types of solution</a> from ch1.1, now decided by ' +
+            'two numbers instead of by inspecting the echelon form.',
+          'Case &#9314; is the inconsistent one: a bigger rank in the augmented matrix means elimination ' +
+            'produced a row reading 0 = non-zero.',
+          'In case &#9313; the number of <a href="#free-variable">free variables</a> is exactly ' +
+            'n &minus; r.',
+          '<strong>Theorem 4.18</strong> collects the square case — for an n &times; n matrix A these are ' +
+            'all the same statement: (a) |A| &ne; 0 (A is ' +
+            '<a href="#nonsingular-matrix">nonsingular</a>); (b) A is ' +
+            '<a href="#matrix-inverse">invertible</a>; (c) A is ' +
+            '<a href="#row-equivalent">row equivalent</a> to I<sub>n</sub>; (d) AX = B has a unique ' +
+            'solution; (e) rank(A) = n; (f) the column vectors of A form a ' +
+            '<a href="#basis">basis</a> for &#8477;<sup>n</sup>.'
+        ],
+        defZh:
+          '對 m 個方程式、n 個變數的 <a href="#matrix-form-of-a-system">AX = B</a>，' +
+          '比較<a href="#coefficient-matrix">係數矩陣</a>與<a href="#augmented-matrix">增廣矩陣</a>的' +
+          '<a href="#rank">rank</a>：&#9312; rank 相同為 r 且 <strong>r = n</strong> &rarr; <strong>唯一解</strong>；' +
+          '&#9313; rank 相同為 r 且 <strong>r &lt; n</strong> &rarr; <strong>無限多解</strong>；' +
+          '&#9314; rank <strong>不同</strong> &rarr; <strong>無解</strong>。',
+        notesZh: [
+          '這就是 ch1.1 的<a href="#type-of-solution">三種解的型態</a>，只是現在由兩個數字決定，不必去看梯形長什麼樣。',
+          '&#9314; 是矛盾的情形：增廣矩陣的 rank 比較大，代表消去後出現「0 = 非零數」那一列。',
+          '&#9313; 的情形下，<a href="#free-variable">自由變數</a>的個數恰好是 n &minus; r。（這兩點是這裡補上的）',
+          '<strong>Theorem 4.18</strong> 把方陣的情形整理在一起 &mdash; 對 n &times; n 矩陣 A，下列說法完全等價：' +
+            '(a) |A| &ne; 0（A <a href="#nonsingular-matrix">非奇異</a>）；(b) A <a href="#matrix-inverse">可逆</a>；' +
+            '(c) A 與 I<sub>n</sub> <a href="#row-equivalent">列等價</a>；(d) AX = B 有唯一解；' +
+            '(e) rank(A) = n；(f) A 的行向量構成 &#8477;<sup>n</sup> 的一組<a href="#basis">基底</a>。'
+        ],
+        examples: [
+          {
+            label: 'From the notes',
+            html:
+              '<p>Consider a system AX = B of m linear equations in n variables.</p>' +
+              '<table>' +
+              '<tr><th>ranks</th><th>result</th></tr>' +
+              '<tr><td>(a) augmented and coefficient matrices have the same rank r, and r = n</td><td>the solution is unique</td></tr>' +
+              '<tr><td>(b) same rank r, and r &lt; n</td><td>there are many solutions</td></tr>' +
+              '<tr><td>(c) the two matrices do not have the same rank</td><td>a solution does not exist</td></tr>' +
+              '</table>'
+          },
+          {
+            label: 'From the notes (Theorem 4.18)',
+            html:
+              '<p>Let A be an n &times; n matrix. The following statements are equivalent.</p>' +
+              '<p>(a) |A| &ne; 0 (A is nonsingular). &nbsp; (b) A is invertible. &nbsp; ' +
+              '(c) A is row equivalent to I<sub>n</sub>.</p>' +
+              '<p>(d) The system of equations AX = B has a unique solution. &nbsp; (e) rank(A) = n. &nbsp; ' +
+              '(f) The column vectors of A form a basis for &#8477;<sup>n</sup>.</p>'
+          }
+        ]
+      },
+
+      /* ============================================ 11/16 — ch4.6 orthonormal bases */
+      {
+        id: 'orthogonal-set',
+        term: 'Orthogonal set / orthonormal set',
+        zh: '正交集／單範正交集',
+        aliases: ['orthogonal set', 'orthonormal set', '正交集', '單範正交集', '標準正交集'],
+        tags: ['ch4.6', 'orthonormal'],
+        def:
+          'A set of vectors in a vector space V is an <strong>orthogonal set</strong> if every pair of ' +
+          'vectors in it is <a href="#orthogonal">orthogonal</a>. It is an <strong>orthonormal ' +
+          'set</strong> if it is orthogonal <em>and</em> every vector is a ' +
+          '<a href="#unit-vector">unit vector</a>.',
+        notes: [
+          '<strong>Theorem 4.19</strong>: an orthogonal set of <strong>non-zero</strong> vectors is ' +
+            '<a href="#linear-independence">linearly independent</a>. Independence comes free — no ' +
+            'elimination needed.',
+          'The non-zero proviso matters: <strong>0</strong> is orthogonal to everything, so a set ' +
+            'containing it is orthogonal yet dependent.',
+          'This is the ch1.6 pair <a href="#orthogonal">orthogonal</a> / ' +
+            '<a href="#orthonormal">orthonormal</a> lifted from two vectors to a whole set, and from ' +
+            '&#8477;<sup>n</sup> to any <a href="#vector-space">vector space</a>.',
+          'Any orthogonal set becomes orthonormal by <a href="#normalizing">normalizing</a> each vector.'
+        ],
+        defZh:
+          '向量空間 V 中的一組向量，若其中任兩個向量都<a href="#orthogonal">正交</a>，就是<strong>正交集</strong>；' +
+          '若它正交<em>而且</em>每個向量都是<a href="#unit-vector">單位向量</a>，就是<strong>單範正交集</strong>。',
+        notesZh: [
+          '<strong>Theorem 4.19</strong>：由<strong>非零</strong>向量組成的正交集一定' +
+            '<a href="#linear-independence">線性獨立</a>。獨立性是免費送的 &mdash; 不必做消去法。',
+          '「非零」這個但書有意義：<strong>0</strong> 和任何向量都正交，所以含有 <strong>0</strong> 的集合雖然正交卻相依。（這點是這裡補上的）',
+          '這是 ch1.6 的<a href="#orthogonal">正交</a>／<a href="#orthonormal">單範正交</a>，' +
+            '從兩個向量推廣到整個集合，也從 &#8477;<sup>n</sup> 推廣到任何<a href="#vector-space">向量空間</a>。',
+          '任何正交集只要把每個向量<a href="#normalizing">正規化</a>，就變成單範正交集。'
+        ],
+        examples: [
+          {
+            label: 'From the notes',
+            html:
+              '<p>A set of vectors in a vector space V is said to be an <strong>orthogonal set</strong> if ' +
+              'every pair of vectors in the set is orthogonal. The set is said to be an ' +
+              '<strong>orthonormal set</strong> if it is orthogonal and each vector is a unit vector.</p>' +
+              '<p>Theorem 4.19: An orthogonal set of nonzero vectors in a vector space is linearly independent.</p>'
+          },
+          {
+            label: 'Orthogonal, then orthonormal',
+            html:
+              '<p>{(1, 1), (1, &minus;1)}: (1, 1)&middot;(1, &minus;1) = 0 &rArr; orthogonal, but ‖(1, 1)‖ = &radic;2</p>' +
+              '<p>normalize: {(1/&radic;2, 1/&radic;2), (1/&radic;2, &minus;1/&radic;2)} &rArr; orthonormal</p>'
+          }
+        ]
+      },
+
+      {
+        id: 'orthonormal-basis',
+        term: 'Orthogonal basis / orthonormal basis',
+        abbr: 'v = &sum;(v&middot;u<sub>i</sub>)u<sub>i</sub>',
+        zh: '正交基底／單範正交基底',
+        aliases: ['orthogonal basis', 'orthonormal basis', '正交基底', '單範正交基底', '標準正交基底'],
+        tags: ['ch4.6', 'orthonormal'],
+        def:
+          'A <a href="#basis">basis</a> that is an <a href="#orthogonal-set">orthogonal set</a> is an ' +
+          '<strong>orthogonal basis</strong>; one that is an orthonormal set is an ' +
+          '<strong>orthonormal basis</strong>.',
+        notes: [
+          '<strong>Theorem 4.20</strong> is the payoff: for an orthonormal basis ' +
+            '{u&#8321;, &hellip;, u<sub>n</sub>} of V, every v in V is ' +
+            '<span class="mono">v = (v&middot;u&#8321;)u&#8321; + (v&middot;u&#8322;)u&#8322; + &hellip; + ' +
+            '(v&middot;u<sub>n</sub>)u<sub>n</sub></span>.',
+          'That is the whole point. With an ordinary basis the coefficients cost a ' +
+            '<a href="#matrix-form-of-a-system">system of equations</a>; with an orthonormal one each ' +
+            'coefficient is a single <a href="#dot-product">dot product</a>.',
+          'The <a href="#standard-basis">standard basis</a> is the orthonormal basis everyone already ' +
+            'uses — v&middot;e<sub>i</sub> is just the i-th component.',
+          'Each term (v&middot;u<sub>i</sub>)u<sub>i</sub> is the projection of v onto that basis ' +
+            'direction, so the formula says: project onto each axis and add the pieces back up.'
+        ],
+        defZh:
+          '本身是<a href="#orthogonal-set">正交集</a>的<a href="#basis">基底</a>叫<strong>正交基底</strong>；' +
+          '本身是單範正交集的基底叫<strong>單範正交基底</strong>。',
+        notesZh: [
+          '<strong>Theorem 4.20</strong> 就是回報：設 {u&#8321;, …, u<sub>n</sub>} 是 V 的單範正交基底，' +
+            '則 V 中每個 v 都可以寫成 <span class="mono">v = (v&middot;u&#8321;)u&#8321; + (v&middot;u&#8322;)u&#8322; + … + ' +
+            '(v&middot;u<sub>n</sub>)u<sub>n</sub></span>。',
+          '這就是重點所在。用一般基底要解一組<a href="#matrix-form-of-a-system">方程組</a>才找得到係數；' +
+            '用單範正交基底的話，每個係數就只是一個<a href="#dot-product">內積</a>。',
+          '<a href="#standard-basis">標準基底</a>就是大家早就在用的單範正交基底 &mdash; v&middot;e<sub>i</sub> 就是第 i 個分量。',
+          '每一項 (v&middot;u<sub>i</sub>)u<sub>i</sub> 是 v 在那個基底方向上的投影，所以這條公式在說：' +
+            '往每個軸投影，再把碎片加回去。（後兩點是這裡補上的）'
+        ],
+        examples: [
+          {
+            label: 'From the notes',
+            html:
+              '<p>A basis that is an orthogonal set is said to be an <strong>orthogonal basis</strong>. ' +
+              'A basis that is an orthonormal set is said to be an <strong>orthonormal basis</strong>.</p>' +
+              '<p>Theorem 4.20: Let {u&#8321;, &hellip;, u<sub>n</sub>} be an orthonormal basis for a vector ' +
+              'space V. Let v be a vector in V. v can be written as a linear combination of these basis ' +
+              'vectors as follows</p>' +
+              '<p>v = (v&middot;u&#8321;)u&#8321; + (v&middot;u&#8322;)u&#8322; + &hellip; + (v&middot;u<sub>n</sub>)u<sub>n</sub></p>'
+          },
+          {
+            label: 'Coefficients by dot product',
+            html:
+              '<p>u&#8321; = (1/&radic;2)(1, 1), u&#8322; = (1/&radic;2)(1, &minus;1), v = (3, 1)</p>' +
+              '<p>v&middot;u&#8321; = 4/&radic;2, v&middot;u&#8322; = 2/&radic;2</p>' +
+              '<p>v = (4/&radic;2)u&#8321; + (2/&radic;2)u&#8322; = (2, 2) + (1, &minus;1) = (3, 1) &#10003;</p>'
           }
         ]
       }
